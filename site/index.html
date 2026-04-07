@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copilot Studio Workshop — Automating Monthly Business Reporting</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="site-header">
+  <div class="header-content">
+    <div class="header-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#0078D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Copilot Studio Workshop
+    </div>
+    <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
+    <div class="header-progress">
+      <span class="progress-text">Section 1 of 6</span>
+      <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ========== SIDEBAR ========== -->
+<nav class="sidebar" aria-label="Workshop navigation">
+  <ul class="sidebar-nav">
+    <li><span class="nav-group-label">Overview</span></li>
+    <li><a href="#big-picture"><span class="nav-icon">1</span> The Big Picture</a></li>
+    <li><a href="#preparation"><span class="nav-icon">2</span> Preparation</a></li>
+
+    <li><span class="nav-group-label">Section A — The Brain</span></li>
+    <li><a href="#agent"><span class="nav-icon">3</span> Build the AI Agent</a></li>
+    <li>
+      <ul class="nav-sub">
+        <li><a href="#a1-create">A1. Create the Agent</a></li>
+        <li><a href="#a2-instructions">A2. Add Instructions</a></li>
+        <li><a href="#a3-knowledge">A3. Add Knowledge</a></li>
+        <li><a href="#a4-save">A4. Save the Agent</a></li>
+        <li><a href="#a5-check-flow">A5. Check Input Flow</a></li>
+        <li><a href="#a6-save-flow">A6. Save Report Flow</a></li>
+        <li><a href="#a7-actions">A7. Add Actions</a></li>
+        <li><a href="#a8-topic">A8. Create Topic</a></li>
+      </ul>
+    </li>
+
+    <li><span class="nav-group-label">Section B — The Plumbing</span></li>
+    <li><a href="#flows"><span class="nav-icon">4</span> Build the Flows</a></li>
+    <li>
+      <ul class="nav-sub">
+        <li><a href="#b1-monitor">B1. Monitor Flow</a></li>
+        <li><a href="#b2-prepare">B2. Preparation Flow</a></li>
+      </ul>
+    </li>
+
+    <li><span class="nav-group-label">Finish</span></li>
+    <li><a href="#testing"><span class="nav-icon">5</span> End-to-End Test</a></li>
+    <li><a href="#summary"><span class="nav-icon">6</span> Summary</a></li>
+  </ul>
+</nav>
+
+<!-- ========== MAIN CONTENT ========== -->
+<main class="main-content">
+
+<!-- ============================== -->
+<!-- SECTION 1: THE BIG PICTURE     -->
+<!-- ============================== -->
+<section class="workshop-section" id="big-picture">
+
+  <div class="hero">
+    <h1>Copilot Studio Workshop</h1>
+    <p>Automating Monthly Business Reporting with AI Agents and Flows</p>
+    <div class="hero-meta">
+      <span>⏱ ~90 minutes</span>
+      <span>📋 6 sections</span>
+      <span>🛠 Copilot Studio + SharePoint + Power Automate</span>
+    </div>
+  </div>
+
+  <h2>What We're Building</h2>
+  <p>A fully automated monthly project reporting pipeline. Today, someone manually reads 5 stream reports, writes a consolidated executive summary, compares it to last month, formats it as a document, saves it to SharePoint, and chases people for input. We're going to automate all of that.</p>
+
+  <h2>The Pipeline</h2>
+  <div class="diagram">
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│   ┌─────────────────────┐                                       │
+│   │  PREPARATION FLOW   │  Scheduled: 1st of each month        │
+│   │  • Archive old files │                                      │
+│   │  • Copy previous     │                                      │
+│   │    report to Input   │                                      │
+│   │  • Send reminders    │                                      │
+│   └─────────┬───────────┘                                       │
+│             │                                                   │
+│             ▼                                                   │
+│   Stream leads upload 5 reports ← only manual step              │
+│             │                                                   │
+│             ▼                                                   │
+│   ┌─────────────────────┐                                       │
+│   │  MONITOR FLOW       │  Event-driven: on each file upload   │
+│   │  • Count files      │                                       │
+│   │  • All 5 present?   │                                       │
+│   │  • Notify user      │                                       │
+│   └─────────┬───────────┘                                       │
+│             │                                                   │
+│             ▼                                                   │
+│   ┌─────────────────────┐                                       │
+│   │  AI AGENT           │  Triggered by user: "Generate report"│
+│   │  • Verify files     │                                       │
+│   │  • Read all reports │                                       │
+│   │  • Generate summary │                                       │
+│   │  • Compare to last  │                                       │
+│   │    month            │                                       │
+│   │  • Save to Output   │                                       │
+│   │  • Return link      │                                       │
+│   └─────────────────────┘                                       │
+│                                                                 │
+│   ...next month, cycle repeats automatically                    │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+  </div>
+
+  <h2>What You'll Build</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-label">AI Agent</div>
+      <h3>Monthly Reports Generator</h3>
+      <p>Reads reports, generates executive summary, saves document</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Scheduled Flow</div>
+      <h3>Prepare Monthly Report Folders &amp; Input Reminder</h3>
+      <p>Archives old files, copies previous report, sends emails</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Event-Driven Flow</div>
+      <h3>Monitor MBR Input and Notify</h3>
+      <p>Watches for uploads, notifies when all 5 are in</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Agent Flow</div>
+      <h3>Check Input MBR (Agent)</h3>
+      <p>Called by agent to count files in the input folder</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Agent Flow</div>
+      <h3>Save MBR Report to SharePoint</h3>
+      <p>Called by agent to save the generated report</p>
+    </div>
+  </div>
+
+  <h2>Flows vs Agent — Why Both?</h2>
+  <table>
+    <thead><tr><th></th><th>Flows</th><th>Agent</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Good at</strong></td><td>Moving files, counting files, sending emails, running on schedules</td><td>Reading documents, understanding content, writing summaries, comparing information</td></tr>
+      <tr><td><strong>Can't do</strong></td><td>Read 5 reports and write an intelligent executive summary</td><td>Move files, send emails, react to SharePoint events</td></tr>
+      <tr><td><strong>Think of it as</strong></td><td>Robot arms</td><td>The brain</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="callout-title">💡 Key Insight</div>
+    You need both. The flows handle logistics. The agent handles thinking.
+  </div>
+
+  <h2>SharePoint Folder Structure</h2>
+  <table>
+    <thead><tr><th>Folder</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><strong>MBR Input</strong></td><td>Stream leads upload here. Agent reads from here. Cleared monthly.</td></tr>
+      <tr><td><strong>MBR Output</strong></td><td>Agent saves completed reports here. Never cleared — serves as report archive.</td></tr>
+      <tr><td><strong>MBR Archive</strong></td><td>Preparation Flow moves old input files here (in dated subfolders like <code>2026-03</code>).</td></tr>
+    </tbody>
+  </table>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================== -->
+<!-- SECTION 2: PREPARATION         -->
+<!-- ============================== -->
+<section class="workshop-section" id="preparation">
+
+  <h1>2. Preparation</h1>
+  <p class="section-intro">Before building anything, you need the SharePoint folders and sample data that the entire pipeline depends on. This takes about 10 minutes.</p>
+
+  <h2>Step 1 — Create SharePoint Folders</h2>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Open SharePoint</div>
+      <p>Open <strong>SharePoint</strong> in your browser → navigate to your team site.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Go to Documents</div>
+      <p>Go to <strong>Documents</strong> (or your main document library).</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Create MBR Input folder</div>
+      <p>Click <strong>+ New → Folder</strong> → name it <strong>MBR Input</strong> → click Create.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Create MBR Output folder</div>
+      <p>Click <strong>+ New → Folder</strong> → name it <strong>MBR Output</strong> → click Create.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Create MBR Archive folder</div>
+      <p>Click <strong>+ New → Folder</strong> → name it <strong>MBR Archive</strong> → click Create.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Copy folder URLs</div>
+      <p>For each folder: click into it, copy the URL from your browser's address bar. <strong>Save all 3 links</strong> — you'll need them throughout.</p>
+    </li>
+  </ol>
+
+  <h2>Step 2 — Upload Sample Files</h2>
+  <p>Upload these 6 files into the <strong>MBR Input</strong> folder:</p>
+  <table>
+    <thead><tr><th>File</th><th>Stream</th></tr></thead>
+    <tbody>
+      <tr><td><code>UX_March2026.docx</code></td><td>UX</td></tr>
+      <tr><td><code>FrontendDev_March2026.docx</code></td><td>Frontend Development</td></tr>
+      <tr><td><code>BackendDev_March2026.docx</code></td><td>Backend Development</td></tr>
+      <tr><td><code>Integration_March2026.docx</code></td><td>Integrations</td></tr>
+      <tr><td><code>Testing_March2026.docx</code></td><td>Testing</td></tr>
+      <tr><td><code>Previous-Report-February-2026.docx</code></td><td>Previous month's consolidated report</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="callout-title">📝 Note</div>
+    File names must contain the stream identifier (UX, FrontendDev, BackendDev, Integration, Testing) as the Monitor Flow uses these to validate which reports are present.
+  </div>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    Open your MBR Input folder in SharePoint. You should see all 6 files listed. MBR Output and MBR Archive should be empty.
+  </div>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================== -->
+<!-- SECTION 3: THE BRAIN — AGENT   -->
+<!-- ============================== -->
+<section class="workshop-section" id="agent">
+
+  <h1>3. Section A: The Brain — Build the AI Agent</h1>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    This is the centrepiece of the entire solution. The agent replaces the human analyst who would normally spend hours reading 5 separate stream reports, writing a consolidated summary, and comparing it to last month's report. The agent does this in seconds using AI — and can answer follow-up questions about the content afterwards.
+    <br><br>
+    <strong>Where it fits in the pipeline:</strong> This is the final step in the monthly cycle. After all stream reports have been uploaded and validated, the agent reads everything, generates the report, and saves it.
+  </div>
+
+  <!-- A1 -->
+  <h2 id="a1-create">A1. Create the Agent</h2>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Open Copilot Studio</div>
+      <p>Go to <a href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">copilotstudio.microsoft.com</a>.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Create a new agent</div>
+      <p>Click <strong>+ Create</strong> → <strong>New agent</strong>.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Skip to configuration</div>
+      <p>Click <strong>"Skip to configuration"</strong> at the bottom.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Fill in agent details</div>
+      <table>
+        <thead><tr><th>Field</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Name</strong></td><td><code class="copyable">Monthly Reports Generator</code></td></tr>
+          <tr><td><strong>Description</strong></td><td><code class="copyable">Analyzes monthly project reports across delivery streams, summarizes the current state, and highlights key changes, risks, and escalations compared to the previous report.</code></td></tr>
+        </tbody>
+      </table>
+    </li>
+  </ol>
+
+  <!-- A2 -->
+  <h2 id="a2-instructions">A2. Add Instructions</h2>
+  <p>In the <strong>Instructions</strong> field, paste the following. This is the "brain" — it tells the AI exactly how to analyse the reports and what format to produce:</p>
+
+  <div class="code-block">
+    <button class="copy-btn">Copy</button>
+<pre><code>ROLE
+You are a project reporting analysis agent for a multi-stream application development program.
+
+GOAL
+Summarize the current reporting period across all provided documents into a consolidated report, then compare that report to the previous period's report to identify key changes.
+
+CONTEXT
+The project is organized into delivery streams:
+- UX
+- Frontend Development
+- Backend Development
+- Integrations
+- Testing
+
+Each stream report follows a structured format including:
+- Status
+- Top Risks
+- Blockers
+- Leadership Asks
+- Delayed Tasks
+- Summary / Outlook
+
+You will be given:
+1) Multiple documents for the current reporting period (one per stream)
+2) One consolidated report from the previous reporting period
+
+TASKS
+1. Summarization
+   - Create a concise consolidated report for the current period.
+   - Preserve stream separation.
+   - Capture only material information (no verbatim copying).
+   - Normalize terminology so items can be compared across months.
+
+2. Comparison
+   Compare the current consolidated report against the previous report and identify key changes, focusing on:
+   - New risks, blockers, leadership asks, or delayed tasks
+   - Removed or resolved items
+   - Material changes to existing items (scope, severity, ownership, or timeline)
+   - Status changes (e.g., GREEN → AMBER, AT RISK → MISSED)
+   - Escalations and de-escalations
+   - New dependencies or critical-path impacts
+
+COMPARISON RULES
+- Treat items as "the same" if they refer to the same underlying issue, even if wording differs.
+- Do not invent changes — if an item cannot be confidently matched, mark it as "New".
+- Ignore cosmetic or editorial differences.
+- Focus on leadership-relevant change, not minor delivery detail.
+
+OUTPUT FORMAT
+1. Executive Summary (max 6 bullets)
+   - The most important changes since the previous report
+   - What worsened, what improved, and what is newly critical
+
+2. Change Log by Stream
+   For each stream:
+   - New Items
+   - Modified Items
+   - Resolved / Removed Items
+
+   Use this structure:
+   - Item
+   - Change Type (New / Modified / Resolved)
+   - Previous State
+   - Current State
+   - Impact / Why It Matters
+
+3. Cross-Stream Observations
+   - Changes that affect multiple streams
+   - Emerging systemic risks or bottlenecks
+   - Downstream impacts (e.g., UX delays affecting Frontend)
+
+4. Open Leadership Attention
+   - Net-new or escalated asks
+   - Decisions or approvals now on the critical path
+
+TONE AND STYLE
+- Clear, factual, and concise
+- Executive-friendly
+- No speculation
+- No recommendations unless explicitly supported by the reports
+
+WHEN INPUT FILES ARE MISSING
+- If the MBR Input folder is empty or does not contain all 5 stream reports, do NOT attempt to generate a report.
+- Tell the user which reports are missing based on the expected streams: UX, Frontend Development, Backend Development, Integrations, Testing.
+- If the previous period's consolidated report is missing, note that the comparison section cannot be generated but the summarization can still proceed if all 5 current stream reports are present.</code></pre>
+  </div>
+
+  <!-- A3 -->
+  <h2 id="a3-knowledge">A3. Add Knowledge Sources</h2>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Add MBR Input knowledge</div>
+      <p>Scroll to <strong>Knowledge</strong> → click <strong>+ Add knowledge</strong>. Select <strong>SharePoint</strong> → paste the link to your <strong>MBR Input</strong> folder → confirm.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Add MBR Output knowledge</div>
+      <p>Click <strong>+ Add knowledge</strong> again → paste the link to your <strong>MBR Output</strong> folder → confirm.</p>
+    </li>
+  </ol>
+
+  <!-- A4 -->
+  <h2 id="a4-save">A4. Save the Agent</h2>
+  <p>Click <strong>Save</strong> at the top. Don't publish yet — we need to add the topic and flows first.</p>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    Your agent has a name, description, detailed instructions, and two SharePoint knowledge sources. It doesn't do anything interactive yet — that comes next.
+  </div>
+
+  <div class="what-happened">
+    <strong>What just happened:</strong> You created an AI agent with domain-specific expertise. The instructions act like a brief for a human analyst — they tell the AI what to look for, how to compare, and what format to produce. The knowledge sources tell it where to find the documents. Without the instructions, the AI would produce generic summaries. With them, it produces structured, executive-level output tailored to your reporting process.
+  </div>
+
+  <!-- A5 -->
+  <h2 id="a5-check-flow">A5. Build the "Check Input" Flow</h2>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    Before the agent generates a report, it needs to verify that all 5 stream reports have been uploaded. The agent can't count files in SharePoint on its own — it needs a flow to do that. This small flow checks the folder and returns the file count to the agent.
+  </div>
+
+  <p>In <strong>Copilot Studio</strong>, go to <strong>Automations</strong> &gt; <strong>Cloud flows</strong> and create a new <strong>Instant cloud flow</strong>.</p>
+
+  <h3>Flow Name: <code>Check Input MBR (Agent)</code></h3>
+
+  <table class="flow-steps">
+    <thead><tr><th>Step</th><th>What to Add</th><th>Configuration</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Run a flow from Copilot</strong> (trigger)</td><td>No inputs needed</td></tr>
+      <tr><td>2</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>Site: your SharePoint site. Library: Documents. Folder: <code class="copyable">Shared Documents/MBR Input</code></td></tr>
+      <tr><td>3</td><td><strong>Compose</strong></td><td>Click <strong>fx</strong> → paste expression below → OK. Rename this step to <code class="copyable">FileCount</code> (click <strong>...</strong> → <strong>Rename</strong>)</td></tr>
+      <tr><td>4</td><td><strong>Respond to Copilot</strong></td><td>Click <strong>+ Add an output</strong> → Number → name: <code class="copyable">FileCount</code> → value: click <strong>fx</strong> → expression below → OK</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Step 3 expression:</strong></p>
+  <div class="code-block">
+    <button class="copy-btn">Copy</button>
+    <pre><code>length(outputs('Get_files_(properties_only)')?['body/value'])</code></pre>
+  </div>
+
+  <p><strong>Step 4 expression:</strong></p>
+  <div class="code-block">
+    <button class="copy-btn">Copy</button>
+    <pre><code>outputs('FileCount')</code></pre>
+  </div>
+
+  <p>Click <strong>Save</strong>.</p>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    Click <strong>Test</strong> → <strong>Manually</strong> → <strong>Run flow</strong>. If your MBR Input folder has files, the flow should succeed and show the file count in the outputs. If the folder is empty, it should return 0.
+  </div>
+
+  <div class="what-happened">
+    <strong>What just happened:</strong> You built a utility flow that the agent can call on demand. The agent handles thinking; this flow handles checking. It's a pattern you'll see repeatedly — agents delegate mechanical tasks to flows.
+  </div>
+
+  <details class="troubleshooting">
+    <summary>⚠️ Troubleshooting</summary>
+    <div class="troubleshooting-content">
+      <p>If the flow fails when the folder is empty, the <code>length()</code> expression may be receiving null. This is expected — the agent's topic will handle the "0 files" case gracefully.</p>
+    </div>
+  </details>
+
+  <!-- A6 -->
+  <h2 id="a6-save-flow">A6. Build the "Save Report" Flow</h2>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    After the agent generates the report, it needs to save it as a Word document in SharePoint. Again, the agent can't write files on its own — it needs a flow. This flow takes the report text, creates a Word document, and returns the SharePoint link.
+  </div>
+
+  <p>Create another new <strong>Instant cloud flow</strong> in Copilot Studio (<strong>Automations</strong> &gt; <strong>Cloud flows</strong>).</p>
+
+  <h3>Flow Name: <code>Save MBR Report to SharePoint</code></h3>
+
+  <table class="flow-steps">
+    <thead><tr><th>Step</th><th>What to Add</th><th>Configuration</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Run a flow from Copilot</strong> (trigger)</td><td>Click <strong>+ Add an input</strong> → Text → name: <code class="copyable">ReportContent</code></td></tr>
+      <tr><td>2</td><td><strong>SharePoint — Create file</strong></td><td>Site: your SharePoint site. Folder path: <code class="copyable">Shared Documents/MBR Output</code>. File name: use expression below. File content: select the <code>ReportContent</code> input</td></tr>
+      <tr><td>3</td><td><strong>Respond to Copilot</strong></td><td>Click <strong>+ Add an output</strong> → Text → name: <code class="copyable">FileLink</code> → value: select <strong>Link to item</strong> from the Create file step's dynamic content</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Step 2 — File name expression:</strong></p>
+  <div class="code-block">
+    <button class="copy-btn">Copy</button>
+    <pre><code>concat('MBR-Report-', formatDateTime(utcNow(), 'yyyy-MM'), '.docx')</code></pre>
+  </div>
+
+  <p>Click <strong>Save</strong>.</p>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    You can't easily test this flow standalone (it needs text input from the agent), but verify it saved without errors. You'll test it end-to-end after wiring everything together.
+  </div>
+
+  <div class="what-happened">
+    <strong>What just happened:</strong> You built the flow that turns the agent's AI-generated text into a permanent document. The file name includes the year and month (<code>MBR-Report-2026-04.docx</code>) so each month's report is kept in MBR Output as a running archive.
+  </div>
+
+  <!-- A7 -->
+  <h2 id="a7-actions">A7. Add Both Flows as Actions in the Agent</h2>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Open your agent</div>
+      <p>Back in <strong>Copilot Studio</strong>, open your agent.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Navigate to Actions</div>
+      <p>Go to <strong>Actions</strong> in the left navigation.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Add Check Input flow</div>
+      <p>Click <strong>+ Add an action</strong> → search for <strong>Check Input MBR (Agent)</strong> → add it.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Add Save Report flow</div>
+      <p>Click <strong>+ Add an action</strong> → search for <strong>Save MBR Report to SharePoint</strong> → add it.</p>
+    </li>
+  </ol>
+
+  <!-- A8 -->
+  <h2 id="a8-topic">A8. Create the "Generate Monthly Report" Topic</h2>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    This is where everything comes together. The topic is the agent's decision tree — when a user says "Generate report", the topic orchestrates: check files → generate report → save document → return link. It's the conductor that coordinates the AI brain with the flow-based actions.
+  </div>
+
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Create a new topic</div>
+      <p>Go to <strong>Topics</strong> → <strong>+ Add a topic</strong> → <strong>From blank</strong>.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Set the trigger</div>
+      <p>Keep trigger as <strong>"The agent chooses"</strong>. Click <strong>Edit</strong> on the trigger → in <strong>"Describe what the topic does"</strong>, paste:</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code>Checks if all 5 stream reports are uploaded to the MBR Input folder and generates the consolidated monthly report if they are present.</code></pre>
+      </div>
+      <p>Click <strong>Save</strong> on the trigger.</p>
+    </li>
+  </ol>
+
+  <p>Now build the canvas step by step:</p>
+
+  <h3>Node 1: Check the files</h3>
+  <p>Click <strong>+</strong> below the trigger → <strong>Call an action</strong> → select <strong>Check Input MBR (Agent)</strong>. This returns the <code>FileCount</code> variable.</p>
+
+  <h3>Node 2: Decision</h3>
+  <p>Click <strong>+</strong> → <strong>Add a node</strong> → <strong>Condition</strong>. Set: <code>FileCount</code> <strong>is greater than or equal to</strong> <code>5</code>.</p>
+
+  <h3>Node 3a: YES branch — Generate and save</h3>
+  <p>In the <strong>Yes</strong> (left) branch, add these nodes in order:</p>
+
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Send a message</div>
+      <p>Click + → <strong>Send a message</strong>. Text:</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code>All reports found. Generating your consolidated report now...</code></pre>
+      </div>
+    </li>
+    <li class="step">
+      <div class="step-title">Generative answers</div>
+      <p>Click + → <strong>Advanced</strong> → <strong>Generative answers</strong>. Input:</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code>Create the consolidated monthly report following your instructions. Use all stream reports and the previous report from the MBR Input folder.</code></pre>
+      </div>
+      <p>Click <strong>Edit</strong> on Data sources → make sure your MBR Input SharePoint knowledge is selected. The output is automatically saved to a variable (e.g., <code>ReportOutput</code>).</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Save the report</div>
+      <p>Click + → <strong>Call an action</strong> → select <strong>Save MBR Report to SharePoint</strong>. Map the input: <code>ReportContent</code> = <code>ReportOutput.Text</code>. This returns the <code>FileLink</code> variable.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Return the link</div>
+      <p>Click + → <strong>Send a message</strong>. Text: <code>Your report has been saved to SharePoint: </code> then click the <strong>{x}</strong> button in the toolbar and insert the <code>FileLink</code> variable.</p>
+    </li>
+  </ol>
+
+  <h3>Node 3b: NO branch — Tell the user</h3>
+  <p>In the <strong>No</strong> (right) branch:</p>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Send a message</div>
+      <p>Click + → <strong>Send a message</strong>. Text: <code>Only </code> then click <strong>{x}</strong> and insert <code>FileCount</code>, then continue typing: <code> file(s) found in MBR Input. Please ensure all 5 stream reports are uploaded before generating the report.</code></p>
+    </li>
+  </ol>
+
+  <p>Click <strong>Save</strong> at the top.</p>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    Click <strong>Test your agent</strong> in the top right. Type: <code>Generate report</code>
+    <br><br>
+    <strong>Expected result (with files in MBR Input):</strong>
+    <ul>
+      <li>Agent says "All reports found. Generating your consolidated report now..."</li>
+      <li>Agent displays the consolidated report in chat</li>
+      <li>Agent says "Your report has been saved to SharePoint: [link]"</li>
+      <li>Click the link — the Word document should open in SharePoint</li>
+    </ul>
+    <br>
+    <strong>Expected result (with empty MBR Input):</strong>
+    <ul>
+      <li>Agent says "Only 0 file(s) found in MBR Input..."</li>
+    </ul>
+    <br>
+    <strong>Test follow-up questions:</strong> After the report is generated, try asking:
+    <ul>
+      <li><code>What are the top risks this month?</code></li>
+      <li><code>What changed since last month?</code></li>
+      <li><code>Summarise just the integrations stream</code></li>
+    </ul>
+  </div>
+
+  <div class="what-happened">
+    <strong>What just happened:</strong> You connected the AI brain (generative answers) with the mechanical arms (check flow + save flow) through a decision tree (topic). The user says one thing — "Generate report" — and the agent coordinates everything: verification, analysis, document creation, and feedback. This is the core pattern of agentic automation: AI + actions + orchestration.
+  </div>
+
+  <details class="troubleshooting">
+    <summary>⚠️ Troubleshooting</summary>
+    <div class="troubleshooting-content">
+      <table>
+        <thead><tr><th>Error</th><th>Cause</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>"Identifier not recognized in expression 'FileLink'"</td><td>Variable name typed as plain text</td><td>Don't type variable names as text. Use the {x} button in the message toolbar to insert variables.</td></tr>
+          <tr><td>Generative answers returns empty</td><td>Knowledge source not linked</td><td>Check that the knowledge source (MBR Input SharePoint folder) is correctly linked and contains files.</td></tr>
+          <tr><td>Save flow fails</td><td>Incorrect folder path</td><td>Verify the folder path includes the <code>Shared Documents/</code> prefix.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================== -->
+<!-- SECTION 4: THE PLUMBING — FLOWS -->
+<!-- ============================== -->
+<section class="workshop-section" id="flows">
+
+  <h1>4. Section B: The Plumbing — Build the Flows</h1>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    The agent is the centrepiece, but it needs supporting automation to manage the monthly cycle. Without these flows, someone would still have to manually archive old files, email stream leads, and check whether all reports are in. These flows eliminate that overhead entirely.
+    <br><br>
+    <strong>Where it fits in the pipeline:</strong> These flows handle everything that happens <em>before</em> the agent runs — the preparation, communication, and monitoring.
+  </div>
+
+  <!-- B1 -->
+  <h2 id="b1-monitor">B1. Monitor MBR Input and Notify</h2>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    Stream leads upload their reports at different times — some on day 1, some on day 8. Instead of someone manually checking "are all reports in yet?", this flow watches the folder and sends a notification the moment the 5th report arrives.
+    <br><br>
+    <strong>Where it fits:</strong> After the reminder emails go out and before the agent runs. This is the bridge between human action (uploading) and AI action (generating).
+  </div>
+
+  <p>In <strong>Copilot Studio</strong>, go to <strong>Automations</strong> &gt; <strong>Cloud flows</strong> and create a new <strong>Automated cloud flow</strong>.</p>
+
+  <h3>Flow Name: <code>Monitor MBR Input and Notify</code></h3>
+
+  <table class="flow-steps">
+    <thead><tr><th>Step</th><th>What to Add</th><th>Configuration</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>SharePoint — When a file is created (properties only)</strong> (trigger)</td><td>Site: your SharePoint site. Library: Documents. Folder: <code class="copyable">MBR Input</code></td></tr>
+      <tr><td>2</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>Site: your SharePoint site. Library: Documents. Folder: <code class="copyable">Shared Documents/MBR Input</code></td></tr>
+      <tr><td>3</td><td><strong>Compose</strong> (rename to <code class="copyable">FileCount</code>)</td><td>Click <strong>fx</strong> → paste expression below</td></tr>
+      <tr><td>4</td><td><strong>Condition</strong></td><td>Left: click <strong>fx</strong> → <code class="copyable">outputs('FileCount')</code>. Operator: <strong>is greater than or equal to</strong>. Right: <code class="copyable">5</code></td></tr>
+      <tr><td>5</td><td><strong>If yes → Office 365 Outlook — Send an email (V2)</strong></td><td>See email details below</td></tr>
+      <tr><td>6</td><td><strong>If no</strong></td><td>Leave empty (no action needed — more files will come)</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Step 3 expression:</strong></p>
+  <div class="code-block">
+    <button class="copy-btn">Copy</button>
+    <pre><code>length(outputs('Get_files_(properties_only)')?['body/value'])</code></pre>
+  </div>
+
+  <p><strong>Step 5 — Email details:</strong></p>
+  <table>
+    <thead><tr><th>Field</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td><strong>To</strong></td><td>your email address</td></tr>
+      <tr><td><strong>Subject</strong></td><td><code class="copyable">All MBR Input Documents Received — Report Ready to Generate</code></td></tr>
+      <tr><td><strong>Body</strong></td><td><code class="copyable">All 5 stream reports have been uploaded to the MBR Input folder. Open the Monthly Reports Generator agent and say "Generate report" to create the consolidated monthly business report.</code></td></tr>
+    </tbody>
+  </table>
+
+  <p>Click <strong>Save</strong>. Make sure the flow is <strong>turned on</strong>.</p>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    Upload a file to MBR Input. Check the flow's run history — it should trigger. If fewer than 5 files are present, the "If no" branch runs (no email). Upload enough files to reach 5 and you should receive the notification email.
+  </div>
+
+  <div class="what-happened">
+    <strong>What just happened:</strong> You created an event-driven automation. Unlike the scheduled Preparation Flow, this one reacts in real-time to user actions. Every upload triggers a check. This pattern — "watch and wait, then act" — is fundamental to workflow automation. It replaces the human habit of periodically checking "is it ready yet?"
+  </div>
+
+  <!-- B2 -->
+  <h2 id="b2-prepare">B2. Prepare Monthly Report Folders &amp; Input Reminder</h2>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    At the start of each month, you need a clean slate: old files archived, the previous report copied in for comparison, and reminder emails sent out. Doing this manually is tedious and easy to forget. This flow runs automatically on schedule and handles all of it.
+    <br><br>
+    <strong>Where it fits:</strong> This is the very first step in each monthly cycle. It sets up everything so the rest of the pipeline works.
+  </div>
+
+  <p>In <strong>Copilot Studio</strong>, go to <strong>Automations</strong> &gt; <strong>Cloud flows</strong> and create a new <strong>Scheduled cloud flow</strong>.</p>
+
+  <h3>Flow Name: <code>Prepare Monthly Report Folders &amp; Input Reminder</code></h3>
+
+  <h3>Trigger Configuration</h3>
+  <ul>
+    <li><strong>Repeat every:</strong> 1 Month</li>
+    <li><strong>Start time:</strong> Set to the 1st of next month (or whatever day your reporting cycle starts)</li>
+  </ul>
+
+  <h3>Build the flow steps in this exact order:</h3>
+
+  <table class="flow-steps">
+    <thead><tr><th>Step</th><th>What to Add</th><th>Configuration</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Recurrence</strong> (trigger)</td><td>Already configured above</td></tr>
+      <tr><td>2</td><td><strong>SharePoint — Create new folder</strong></td><td>Site: your site. List or Library: Documents. Folder Path: use expression below</td></tr>
+      <tr><td>3</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>Site: your site. Library: Documents. Folder: <code class="copyable">Shared Documents/MBR Input</code></td></tr>
+      <tr><td>4</td><td><strong>Apply to each</strong></td><td>Select output: <code class="copyable">body/value</code> from step 3</td></tr>
+      <tr><td>4a</td><td>↳ <strong>SharePoint — Move file</strong> (inside the loop)</td><td>Current Site: your site. <strong>File to Move:</strong> select <strong>Identifier</strong> from dynamic content (NOT "Body"). Destination Site: your site. <strong>Destination Folder:</strong> use expression below</td></tr>
+      <tr><td>5</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>Site: your site. Library: Documents. Folder: <code class="copyable">Shared Documents/MBR Output</code>. Rename this step to <code class="copyable">Get_output_files</code></td></tr>
+      <tr><td>6</td><td><strong>SharePoint — Copy file</strong></td><td>Source: use expression below. Destination: <code class="copyable">Shared Documents/MBR Input/Previous-Report.docx</code></td></tr>
+      <tr><td>7</td><td><strong>Office 365 Outlook — Send an email (V2)</strong></td><td>To: all stream lead email addresses. Subject and body below</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Step 2 — Folder path expression:</strong></p>
+  <div class="code-block">
+    <button class="copy-btn">Copy</button>
+    <pre><code>concat('MBR Archive/', formatDateTime(utcNow(), 'yyyy-MM'))</code></pre>
+  </div>
+
+  <p><strong>Step 4a — Destination folder expression:</strong></p>
+  <div class="code-block">
+    <button class="copy-btn">Copy</button>
+    <pre><code>concat('Shared Documents/MBR Archive/', formatDateTime(utcNow(), 'yyyy-MM'))</code></pre>
+  </div>
+
+  <p><strong>Step 6 — Source expression:</strong></p>
+  <div class="code-block">
+    <button class="copy-btn">Copy</button>
+    <pre><code>last(body('Get_output_files')?['value'])?['{Identifier}']</code></pre>
+  </div>
+
+  <p><strong>Step 7 — Email:</strong></p>
+  <p>Use the rich text editor (not raw HTML). Type the content and use the <strong>link icon</strong> (🔗) in the toolbar to make the folder link clickable:</p>
+  <table>
+    <thead><tr><th>Field</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Subject</strong></td><td><code class="copyable">Action Required: Submit Your Monthly Stream Report</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="email-template">Hi Team,
+
+It's time to submit your monthly stream report for the [current month] reporting period.
+
+What to do:
+1. Prepare your stream report following the standard template
+   (Status, Top Risks, Blockers, Leadership Asks, Delayed Tasks, Summary/Outlook).
+2. Save it as a Word document named: [StreamName]_[Month][Year].docx
+3. Upload it to the MBR Input folder: [clickable link to your MBR Input folder]
+
+Deadline: [date 10 days from now]
+
+Once all 5 stream reports are uploaded, the consolidated monthly business report will be generated automatically.
+
+Thank you,
+PMO Automated Reporting</div>
+
+  <div class="callout tip">
+    <div class="callout-title">💡 Tip</div>
+    To insert dynamic dates (like the current month or a deadline), click the <strong>fx</strong> button and use:
+    <ul>
+      <li><code class="copyable">formatDateTime(utcNow(), 'MMMM yyyy')</code> — for the month</li>
+      <li><code class="copyable">formatDateTime(addDays(utcNow(), 10), 'dddd, MMMM dd, yyyy')</code> — for the deadline</li>
+    </ul>
+  </div>
+
+  <p>Click <strong>Save</strong>. Make sure the flow is <strong>turned on</strong>.</p>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    Click <strong>Test</strong> → <strong>Manually</strong> → <strong>Run flow</strong>. Then verify in SharePoint:
+    <table>
+      <thead><tr><th>Check</th><th>Expected</th></tr></thead>
+      <tbody>
+        <tr><td>MBR Archive</td><td>New subfolder named with current year-month (e.g., <code>2026-04</code>) containing the files that were in MBR Input</td></tr>
+        <tr><td>MBR Input</td><td>Contains <strong>only</strong> <code>Previous-Report.docx</code> (copied from MBR Output)</td></tr>
+        <tr><td>MBR Output</td><td>Unchanged — files still there (we copy, not move)</td></tr>
+        <tr><td>Your inbox</td><td>Reminder email received with correct content and working folder link</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="what-happened">
+    <strong>What just happened:</strong> You automated the entire monthly reset process. This flow handles three distinct responsibilities — archiving, seeding, and communicating — that would normally require a person to remember and execute manually on the right day every month. The scheduled trigger means it happens automatically, even if the person responsible is on holiday.
+  </div>
+
+  <details class="troubleshooting">
+    <summary>⚠️ Troubleshooting — Common Issues</summary>
+    <div class="troubleshooting-content">
+      <table>
+        <thead><tr><th>Error</th><th>Cause</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>"File name too long" on Move file</td><td>The "File to Move" field contains the entire JSON object instead of just the file path</td><td>Delete the value and select <strong>Identifier</strong> from dynamic content — not "Body"</td></tr>
+          <tr><td>"Destination not found" on Move file</td><td>Path is missing <code>Shared Documents/</code></td><td>Prefix the destination with <code>Shared Documents/</code></td></tr>
+          <tr><td>"Source not found" on Move file</td><td>The archive subfolder doesn't exist yet</td><td>Make sure the "Create new folder" step runs before the Apply to each loop</td></tr>
+          <tr><td>Email shows raw HTML tags</td><td>Body was entered as HTML but not rendered</td><td>Use the rich text editor toolbar to format. Insert links using the 🔗 icon, not <code>&lt;a&gt;</code> tags</td></tr>
+          <tr><td>Copy file fails (step 6)</td><td>MBR Output is empty (no previous reports)</td><td>Expected on the very first run. Add a condition to check if MBR Output has files, or manually upload a report to MBR Output first.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================== -->
+<!-- SECTION 5: END-TO-END TEST     -->
+<!-- ============================== -->
+<section class="workshop-section" id="testing">
+
+  <h1>5. Section C: Wire It Together — End-to-End Test</h1>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    You've built all the individual pieces. Now it's time to run the full cycle and see everything working together. This is the demo moment — the payoff for all the building.
+  </div>
+
+  <h2>Step 1: Reset the Environment</h2>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Check MBR Input</div>
+      <p>Make sure all 5 stream reports + previous report are in <strong>MBR Input</strong>.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Check MBR Output</div>
+      <p><strong>MBR Output</strong> should ideally have at least one report (from a previous test, or upload one manually).</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Check MBR Archive</div>
+      <p><strong>MBR Archive</strong> can be empty or have previous archive folders.</p>
+    </li>
+  </ol>
+
+  <h2>Step 2: Test the Agent</h2>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Open the agent</div>
+      <p>Open <strong>Copilot Studio</strong> → open your <strong>Monthly Reports Generator</strong> agent.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Start a test</div>
+      <p>Click <strong>Test your agent</strong> (top right).</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Generate the report</div>
+      <p>Type: <code>Generate report</code></p>
+    </li>
+    <li class="step">
+      <div class="step-title">Verify the output</div>
+      <p>Watch for:</p>
+      <ul>
+        <li>✅ Agent calls the check flow → confirms all files are present</li>
+        <li>✅ Agent generates the consolidated report (displayed in chat)</li>
+        <li>✅ Agent calls the save flow → creates Word document in MBR Output</li>
+        <li>✅ Agent returns a SharePoint link</li>
+      </ul>
+    </li>
+    <li class="step">
+      <div class="step-title">Verify the document</div>
+      <p><strong>Click the link</strong> → verify the document opens in SharePoint.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Test follow-up questions</div>
+      <p>Ask the agent:</p>
+      <ul>
+        <li><code>What are the biggest risks?</code></li>
+        <li><code>What changed compared to last month?</code></li>
+        <li><code>Summarise the integrations stream</code></li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2>Step 3: Test the Monitor Flow</h2>
+  <ol class="steps">
+    <li class="step"><div class="step-title">Delete a file</div><p>Delete one file from <strong>MBR Input</strong>.</p></li>
+    <li class="step"><div class="step-title">Re-upload it</div><p>Re-upload the same file.</p></li>
+    <li class="step"><div class="step-title">Check notification</div><p>Check your email — the <strong>Monitor MBR Input and Notify</strong> flow should send a notification (if the file count is still ≥ 5).</p></li>
+  </ol>
+
+  <h2>Step 4: Test the Preparation Flow</h2>
+  <ol class="steps">
+    <li class="step"><div class="step-title">Run the flow</div><p>Run the <strong>Prepare Monthly Report Folders &amp; Input Reminder</strong> flow manually (Test → Manually → Run).</p></li>
+    <li class="step">
+      <div class="step-title">Verify results</div>
+      <ul>
+        <li>MBR Input files moved to MBR Archive (dated subfolder)</li>
+        <li>Previous report copied back into MBR Input</li>
+        <li>Reminder email received</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2>Step 5: Test the Missing Files Scenario</h2>
+  <ol class="steps">
+    <li class="step"><div class="step-title">Clear MBR Input</div><p>After the preparation flow has cleared MBR Input (only Previous-Report.docx remains):</p></li>
+    <li class="step"><div class="step-title">Test the agent</div><p>Open the agent → type: <code>Generate report</code></p></li>
+    <li class="step"><div class="step-title">Verify error handling</div><p>The agent should say: <code>Only 1 file(s) found in MBR Input. Please ensure all 5 stream reports are uploaded.</code></p></li>
+  </ol>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Final Checkpoint</div>
+    If all 5 steps work, you have a complete, functioning automated reporting pipeline. Congratulations!
+  </div>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================== -->
+<!-- SECTION 6: SUMMARY             -->
+<!-- ============================== -->
+<section class="workshop-section" id="summary">
+
+  <h1>6. Summary</h1>
+
+  <h2>What You Built</h2>
+  <div class="diagram">
+<pre>
+                    ┌──────────────────┐           ┌─────────────────┐
+   Scheduled ──────▶│ Preparation Flow │──────────▶│ Reminder Emails │
+   (1st of month)   │ • Archive files  │           │ to stream leads │
+                    │ • Copy prev rpt  │           └────────┬────────┘
+                    └──────────────────┘                    │
+                                                           ▼
+                                                 Stream leads upload
+                                                    5 reports
+                                                           │
+                    ┌──────────────────┐                    │
+   Event-driven ◀──│  Monitor Flow    │◀───────────────────┘
+   (file upload)    │ • Count files   │
+                    │ • Notify if ≥ 5 │
+                    └────────┬─────────┘
+                             │ notification
+                             ▼
+                    User opens agent
+                    Says "Generate report"
+                             │
+                    ┌────────▼─────────┐
+                    │    AI AGENT      │
+                    │ ┌──────────────┐ │
+                    │ │ Check Flow   │ │ ← counts files
+                    │ ├──────────────┤ │
+                    │ │ AI Brain     │ │ ← reads, analyses, writes
+                    │ ├──────────────┤ │
+                    │ │ Save Flow    │ │ ← creates Word doc
+                    │ └──────────────┘ │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    Report saved to MBR Output
+                    Link returned to user
+</pre>
+  </div>
+
+  <h2>Automated vs Manual</h2>
+  <table class="before-after">
+    <thead><tr><th>Step</th><th>Before</th><th>After</th></tr></thead>
+    <tbody>
+      <tr><td>Archive old files</td><td>Manual — someone remembers and does it</td><td>Automated — scheduled flow</td></tr>
+      <tr><td>Send reminders</td><td>Manual — someone writes and sends 5 emails</td><td>Automated — scheduled flow</td></tr>
+      <tr><td>Check if all reports are in</td><td>Manual — someone checks the folder repeatedly</td><td>Automated — event-driven flow</td></tr>
+      <tr><td>Read 5 reports and write summary</td><td>Manual — hours of analyst work</td><td>Automated — AI agent, seconds</td></tr>
+      <tr><td>Compare to last month</td><td>Manual — open two documents side by side</td><td>Automated — AI agent</td></tr>
+      <tr><td>Save as document</td><td>Manual — copy-paste into Word</td><td>Automated — flow saves to SharePoint</td></tr>
+      <tr><td>Answer questions about the report</td><td>Manual — re-read the reports</td><td>Automated — ask the agent</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="callout-title">💡 Key Takeaway</div>
+    <strong>The only manual step remaining:</strong> Stream leads uploading their 5 reports. Everything else runs automatically.
+  </div>
+
+  <h2>Key Lessons</h2>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Agents think, flows act</div>
+      <p>Use agents when you need AI to read, understand, analyse, or write. Use flows when you need to move files, send emails, count things, or run on a schedule.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Start simple, then enhance</div>
+      <p>We built the agent first (chat output only), then added flows to save documents and automate the surrounding process.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Event-driven beats polling</div>
+      <p>The Monitor Flow reacts to each upload rather than checking on a schedule. This is faster and more efficient.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Scheduled automation removes human dependency</div>
+      <p>The Preparation Flow runs whether someone remembers or not. No more "I forgot to send the reminders."</p>
+    </li>
+    <li class="step">
+      <div class="step-title">The agent is interactive</div>
+      <p>Unlike a static document, the agent can answer follow-up questions about the report content. This makes it a tool, not just a process.</p>
+    </li>
+  </ol>
+
+  <h2>Ideas for Extension</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Approval Step</h3>
+      <p>Route the generated report to a manager for review before it's finalised</p>
+    </div>
+    <div class="card">
+      <h3>Targeted Reminders</h3>
+      <p>When files are missing, email only the stream leads who haven't uploaded yet</p>
+    </div>
+    <div class="card">
+      <h3>Teams Integration</h3>
+      <p>Post the report link to a Teams channel when it's ready</p>
+    </div>
+    <div class="card">
+      <h3>Power BI Dashboard</h3>
+      <p>Read MBR Output reports and visualise trends across months</p>
+    </div>
+    <div class="card">
+      <h3>Adaptive Cards</h3>
+      <p>Send rich interactive cards in Teams instead of plain emails</p>
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

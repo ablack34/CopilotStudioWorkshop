@@ -1,0 +1,772 @@
+/* ============================================
+   Copilot Studio Workshop — Fluent-Inspired Theme
+   ============================================ */
+
+/* --- Tokens --- */
+:root {
+  --color-primary: #0078D4;
+  --color-primary-dark: #005A9E;
+  --color-primary-light: #DEECF9;
+  --color-bg: #F5F5F5;
+  --color-surface: #FFFFFF;
+  --color-text: #323130;
+  --color-text-secondary: #605E5C;
+  --color-border: #EDEBE9;
+  --color-green: #107C10;
+  --color-green-bg: #DFF6DD;
+  --color-green-border: #54B054;
+  --color-orange: #CA5010;
+  --color-orange-bg: #FFF4CE;
+  --color-orange-border: #F7C948;
+  --color-red: #D13438;
+  --color-red-bg: #FDE7E9;
+  --color-purple: #8764B8;
+  --color-purple-bg: #F0E6FA;
+  --color-blue-bg: #EFF6FC;
+  --color-blue-border: #0078D4;
+  --font-main: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  --sidebar-width: 280px;
+  --header-height: 56px;
+  --radius: 8px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.12);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.14);
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 24px);
+}
+
+body {
+  font-family: var(--font-main);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.65;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Header / Progress Bar --- */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-title svg {
+  flex-shrink: 0;
+}
+
+.header-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.progress-bar-container {
+  width: 200px;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: var(--color-text);
+  font-size: 18px;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  width: var(--sidebar-width);
+  height: calc(100vh - var(--header-height));
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  overflow-y: auto;
+  z-index: 90;
+  padding: 20px 0;
+}
+
+.sidebar-nav { list-style: none; }
+
+.sidebar-nav .nav-group-label {
+  display: block;
+  padding: 12px 20px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px;
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  font-size: 13.5px;
+  border-left: 3px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.sidebar-nav a:hover {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.sidebar-nav a.active {
+  color: var(--color-primary);
+  border-left-color: var(--color-primary);
+  background: var(--color-primary-light);
+  font-weight: 600;
+}
+
+.sidebar-nav .nav-sub {
+  list-style: none;
+}
+
+.sidebar-nav .nav-sub a {
+  padding-left: 40px;
+  font-size: 13px;
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: white;
+  background: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.nav-icon.done {
+  background: var(--color-green);
+}
+
+/* --- Main Content --- */
+.main-content {
+  margin-left: var(--sidebar-width);
+  margin-top: var(--header-height);
+  padding: 40px 48px 80px;
+  max-width: 900px;
+}
+
+/* --- Section --- */
+.workshop-section {
+  margin-bottom: 64px;
+}
+
+.workshop-section > h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 8px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.workshop-section > h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 40px;
+  margin-bottom: 12px;
+  color: var(--color-text);
+}
+
+.workshop-section > h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 28px;
+  margin-bottom: 8px;
+}
+
+.section-intro {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+
+/* --- Callout Boxes --- */
+.callout {
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 20px 0;
+  border-left: 4px solid;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.callout-title {
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.callout.context {
+  background: var(--color-blue-bg);
+  border-color: var(--color-blue-border);
+}
+.callout.context .callout-title { color: var(--color-primary); }
+
+.callout.checkpoint {
+  background: var(--color-green-bg);
+  border-color: var(--color-green-border);
+}
+.callout.checkpoint .callout-title { color: var(--color-green); }
+
+.callout.warning {
+  background: var(--color-orange-bg);
+  border-color: var(--color-orange-border);
+}
+.callout.warning .callout-title { color: var(--color-orange); }
+
+.callout.tip {
+  background: var(--color-purple-bg);
+  border-color: var(--color-purple);
+}
+.callout.tip .callout-title { color: var(--color-purple); }
+
+.callout.danger {
+  background: var(--color-red-bg);
+  border-color: var(--color-red);
+}
+.callout.danger .callout-title { color: var(--color-red); }
+
+/* --- Collapsible Troubleshooting --- */
+details.troubleshooting {
+  border: 1px solid var(--color-orange-border);
+  border-radius: var(--radius);
+  margin: 20px 0;
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+details.troubleshooting summary {
+  padding: 12px 20px;
+  background: var(--color-orange-bg);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-orange);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+}
+
+details.troubleshooting summary::before {
+  content: '▶';
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
+
+details.troubleshooting[open] summary::before {
+  transform: rotate(90deg);
+}
+
+details.troubleshooting .troubleshooting-content {
+  padding: 16px 20px;
+}
+
+/* --- Steps --- */
+.steps {
+  list-style: none;
+  counter-reset: step-counter;
+  position: relative;
+  margin: 20px 0;
+}
+
+.steps::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-border);
+}
+
+.step {
+  counter-increment: step-counter;
+  position: relative;
+  padding-left: 48px;
+  padding-bottom: 24px;
+}
+
+.step:last-child { padding-bottom: 0; }
+
+.step::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 4px;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.step-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.step p, .step ul, .step ol, .step table {
+  margin-top: 6px;
+}
+
+/* --- Tables --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+thead th {
+  background: var(--color-primary);
+  color: white;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--color-bg); }
+
+/* Alternate style for comparison tables */
+table.compare thead th:first-child { background: var(--color-text-secondary); }
+table.compare tbody th {
+  font-weight: 600;
+  background: var(--color-bg);
+}
+
+/* --- Code Blocks --- */
+.code-block {
+  position: relative;
+  margin: 16px 0;
+}
+
+.code-block pre {
+  background: #1E1E1E;
+  color: #D4D4D4;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.55;
+  tab-size: 2;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #CCC;
+  border-radius: 5px;
+  padding: 4px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: var(--font-main);
+  transition: all 0.15s ease;
+}
+
+.copy-btn:hover {
+  background: rgba(255,255,255,0.22);
+  color: #FFF;
+}
+
+.copy-btn.copied {
+  background: var(--color-green);
+  color: white;
+  border-color: var(--color-green);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: #F0F0F0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--color-primary-dark);
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+/* --- Inline Copyable Values --- */
+code.copyable {
+  position: relative;
+  cursor: pointer;
+  padding-right: 24px;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+  border: 1px solid transparent;
+}
+
+code.copyable::after {
+  content: '⧉';
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  color: var(--color-primary);
+  font-family: var(--font-main);
+}
+
+code.copyable:hover {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary-light);
+}
+
+code.copyable:hover::after {
+  opacity: 1;
+}
+
+code.copyable.copied {
+  background: var(--color-green-bg);
+  border-color: var(--color-green-border);
+}
+
+code.copyable.copied::after {
+  content: '✓';
+  opacity: 1;
+  color: var(--color-green);
+}
+
+/* Tooltip */
+code.copyable[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #323130;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: var(--font-main);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 10;
+}
+
+code.copyable:hover[data-tooltip]::before {
+  opacity: 1;
+}
+
+/* Don't show copy affordance on copyable codes inside pre blocks */
+pre code.copyable {
+  cursor: default;
+  padding-right: 0;
+}
+pre code.copyable::after { display: none; }
+pre code.copyable::before { display: none; }
+
+/* --- Diagram --- */
+.diagram {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 20px 0;
+  overflow-x: auto;
+  box-shadow: var(--shadow-sm);
+}
+
+.diagram pre {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-text);
+  white-space: pre;
+  margin: 0;
+}
+
+/* --- Pipeline Card Grid --- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover { box-shadow: var(--shadow-md); }
+
+.card-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+  margin-bottom: 6px;
+}
+
+.card h3 {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.card p {
+  font-size: 13.5px;
+  color: var(--color-text-secondary);
+}
+
+/* --- Section Divider --- */
+.section-divider {
+  border: none;
+  height: 1px;
+  background: var(--color-border);
+  margin: 48px 0;
+}
+
+/* --- Inline badge --- */
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
+.badge.agent { background: var(--color-primary-light); color: var(--color-primary); }
+.badge.flow { background: #E8F5E9; color: var(--color-green); }
+.badge.setup { background: var(--color-orange-bg); color: var(--color-orange); }
+
+/* --- Hero Section --- */
+.hero {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: white;
+  border-radius: var(--radius);
+  padding: 40px 36px;
+  margin-bottom: 40px;
+}
+
+.hero h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  border: none;
+}
+
+.hero p {
+  font-size: 16px;
+  opacity: 0.9;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 20px;
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.hero-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 24px 20px 60px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .hero {
+    padding: 28px 24px;
+  }
+
+  .hero h1 {
+    font-size: 24px;
+  }
+
+  .progress-bar-container {
+    width: 120px;
+  }
+}
+
+/* --- Print --- */
+@media print {
+  .site-header, .sidebar, .menu-toggle, .copy-btn { display: none; }
+  .main-content { margin-left: 0; padding: 0; max-width: 100%; }
+  .callout { break-inside: avoid; }
+  .hero { background: none; color: var(--color-text); border: 2px solid var(--color-primary); }
+}
+
+/* --- Scrollbar (Webkit) --- */
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+.sidebar::-webkit-scrollbar-thumb:hover { background: var(--color-text-secondary); }
+
+/* --- Flow step table in compact form --- */
+.flow-steps td:first-child {
+  white-space: nowrap;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* --- What just happened block --- */
+.what-happened {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: 14px;
+}
+
+.what-happened strong {
+  color: var(--color-primary);
+}
+
+/* --- Comparison Summary Table (Before/After) --- */
+.before-after td:nth-child(2) {
+  color: var(--color-text-secondary);
+  text-decoration: line-through;
+  text-decoration-color: var(--color-red);
+}
+
+.before-after td:nth-child(3) {
+  color: var(--color-green);
+  font-weight: 600;
+}
+
+/* --- Email template block --- */
+.email-template {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 16px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-line;
+}
