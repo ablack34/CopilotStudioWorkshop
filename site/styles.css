@@ -323,6 +323,28 @@ body {
   color: #C8C6C4;
 }
 
+/* --- Download All Button --- */
+.download-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-main);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  margin-bottom: 16px;
+}
+
+.download-all-btn:hover {
+  background: var(--color-primary-dark);
+}
+
 /* --- Download Grid --- */
 
 /* --- Screenshots --- */

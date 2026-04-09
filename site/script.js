@@ -131,3 +131,25 @@
   });
 
 })();
+
+// --- Download All Sample Files ---
+function downloadAllFiles() {
+  const files = [
+    'downloads/UX_March2026.docx',
+    'downloads/FrontendDev_March2026.docx',
+    'downloads/BackendDev_March2026.docx',
+    'downloads/Integrations_March2026.docx',
+    'downloads/Testing_March2026.docx',
+    'downloads/MonthlyReport_February2026.docx'
+  ];
+  files.forEach(function (file, i) {
+    setTimeout(function () {
+      var a = document.createElement('a');
+      a.href = file;
+      a.download = file.split('/').pop();
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }, i * 300);
+  });
+}
