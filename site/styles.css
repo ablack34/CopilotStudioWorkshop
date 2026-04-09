@@ -39,7 +39,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-height) + 24px);
+  scroll-padding-top: calc(var(--header-height) + 40px + 24px);
 }
 
 body {
@@ -149,10 +149,10 @@ body {
 /* --- Sidebar --- */
 .sidebar {
   position: fixed;
-  top: var(--header-height);
+  top: calc(var(--header-height) + 40px);
   left: 0;
   width: var(--sidebar-width);
-  height: calc(100vh - var(--header-height));
+  height: calc(100vh - var(--header-height) - 40px);
   background: var(--color-surface);
   border-right: 1px solid var(--color-border);
   overflow-y: auto;
@@ -226,7 +226,7 @@ body {
 /* --- Main Content --- */
 .main-content {
   margin-left: var(--sidebar-width);
-  margin-top: var(--header-height);
+  margin-top: calc(var(--header-height) + 40px);
   padding: 40px 48px 80px;
   max-width: 900px;
 }
@@ -900,12 +900,64 @@ pre code.copyable::before { display: none; }
   color: var(--color-text-secondary);
 }
 
+/* --- Tab Bar --- */
+.tab-bar {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 95;
+  display: flex;
+  align-items: stretch;
+  padding-left: var(--sidebar-width);
+  box-shadow: var(--shadow-sm);
+}
+
+.tab-link {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.tab-link:hover {
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.tab-link.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+@media (max-width: 900px) {
+  .tab-bar {
+    padding-left: 0;
+  }
+}
+
 /* --- Section Divider --- */
 .section-divider {
   border: none;
   height: 1px;
   background: var(--color-border);
   margin: 48px 0;
+}
+
+.section-divider-light {
+  border: none;
+  height: 1px;
+  background: var(--color-border);
+  margin: 32px 0;
+  opacity: 0.5;
 }
 
 /* --- Inline badge --- */

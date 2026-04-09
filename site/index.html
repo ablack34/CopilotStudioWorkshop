@@ -27,6 +27,12 @@
   </div>
 </header>
 
+<!-- ========== TAB BAR ========== -->
+<div class="tab-bar">
+  <a href="index.html" class="tab-link active">Full Workshop (3–4 hrs)</a>
+  <a href="streamlined.html" class="tab-link">Streamlined Workshop (90 min)</a>
+</div>
+
 <!-- ========== SIDEBAR ========== -->
 <nav class="sidebar" aria-label="Workshop navigation">
   <ul class="sidebar-nav">
@@ -44,7 +50,9 @@
         <li><a href="#a4-save">A4. Save the Agent</a></li>
         <li><a href="#a5-check-flow">A5. Check Input Flow</a></li>
         <li><a href="#a6-save-flow">A6. Save Report Flow</a></li>
-        <li><a href="#a7-actions">A7. Add Actions</a></li>
+        <li><a href="#a6b-email">A6b. Email Report Flow</a></li>
+        <li><a href="#a6c-planner">A6c. Planner Tasks Flow</a></li>
+        <li><a href="#a7-actions">A7. Add Tools</a></li>
         <li><a href="#a8-topic">A8. Create Topic</a></li>
       </ul>
     </li>
@@ -587,8 +595,112 @@ WHEN INPUT FILES ARE MISSING
     <strong>What just happened:</strong> You built the flow that turns the agent's AI-generated text into a permanent document. The file name includes the year and month (<code>MBR-Report-2026-04.docx</code>) so each month's report is kept in MBR Output as a running archive.
   </div>
 
+  <!-- A6b -->
+  <h2 id="a6b-email">A6b. Build the "Email Report to Stakeholders" Flow</h2>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    After the agent generates and saves a report, stakeholders need to know it's ready. This flow sends an email with the report link and a brief summary — so nobody has to manually chase people or forward documents.
+  </div>
+
+  <p>In <strong>Copilot Studio</strong>, go to <strong>Actions</strong> and create a new <strong>Agent flow</strong>.</p>
+
+  <h3>Flow Name: <code>Email Report to Stakeholders</code></h3>
+
+  <table class="flow-steps">
+    <thead><tr><th>Step</th><th>What to Search</th><th>Configuration</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>When an agent calls the flow</strong> (trigger)</td><td>
+        <ul>
+          <li>Click <strong>+ Add an input</strong> → Text → name: <code class="copyable">ReportLink</code></li>
+          <li>Click <strong>+ Add an input</strong> again → Text → name: <code class="copyable">ReportSummary</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>2</td><td><strong>Office 365 Outlook — Send an email (V2)</strong></td><td>
+        <ul>
+          <li><strong>To:</strong> your email address (or a distribution list)</li>
+          <li><strong>Subject:</strong> <code class="copyable">Monthly Business Report — Ready for Review</code></li>
+          <li><strong>Body:</strong> Type <code>The consolidated monthly report has been generated and saved to SharePoint.</code></li>
+          <li>Press Enter, type <code>Link: </code> then click ⚡ → select <strong>ReportLink</strong></li>
+          <li>Press Enter, type <code>Summary: </code> then click ⚡ → select <strong>ReportSummary</strong></li>
+        </ul>
+      </td></tr>
+      <tr><td>3</td><td><strong>Respond to the agent</strong></td><td>
+        <ul>
+          <li>Click <strong>+ Add an output</strong> → Text</li>
+          <li>Name: <code class="copyable">EmailStatus</code></li>
+          <li>Value: type <code class="copyable">Email sent successfully</code></li>
+        </ul>
+      </td></tr>
+    </tbody>
+  </table>
+
+  <p>Click <strong>Save</strong>.</p>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    Verify the flow saved without errors. You'll test it end-to-end with the agent later.
+  </div>
+
+  <div class="what-happened">
+    <strong>What just happened:</strong> You gave the agent the ability to send emails. The agent will pass the report link and a summary it generates, and this flow handles the delivery. The pattern is identical to the Save Report flow — input from agent, do something, respond.
+  </div>
+
+  <!-- A6c -->
+  <h2 id="a6c-planner">A6c. Build the "Create Planner Tasks" Flow</h2>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    The monthly report often surfaces action items — open risks, unresolved blockers, and leadership asks. This flow lets the agent create follow-up tasks in Microsoft Planner so nothing falls through the cracks.
+    <br><br>
+    <strong>Pre-requisite:</strong> You need a Planner plan. Go to <a href="https://tasks.office.com" target="_blank" rel="noopener">tasks.office.com</a> → create a new plan called <code>MBR Action Items</code> with a bucket called <code>From Report</code>.
+  </div>
+
+  <p>In <strong>Copilot Studio</strong>, go to <strong>Actions</strong> and create a new <strong>Agent flow</strong>.</p>
+
+  <h3>Flow Name: <code>Create Planner Task from Report</code></h3>
+
+  <table class="flow-steps">
+    <thead><tr><th>Step</th><th>What to Search</th><th>Configuration</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>When an agent calls the flow</strong> (trigger)</td><td>
+        <ul>
+          <li>Click <strong>+ Add an input</strong> → Text → name: <code class="copyable">TaskTitle</code></li>
+          <li>Click <strong>+ Add an input</strong> again → Text → name: <code class="copyable">TaskDetails</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>2</td><td><strong>Planner — Create a task</strong></td><td>
+        <ul>
+          <li><strong>Group Id:</strong> select the Microsoft 365 Group that owns the plan</li>
+          <li><strong>Plan Id:</strong> select <code class="copyable">MBR Action Items</code></li>
+          <li><strong>Title:</strong> click ⚡ → select <strong>TaskTitle</strong></li>
+          <li><strong>Bucket Id:</strong> select <code class="copyable">From Report</code></li>
+          <li>Click <strong>Show advanced options</strong> → <strong>Description:</strong> click ⚡ → select <strong>TaskDetails</strong></li>
+        </ul>
+      </td></tr>
+      <tr><td>3</td><td><strong>Respond to the agent</strong></td><td>
+        <ul>
+          <li>Click <strong>+ Add an output</strong> → Text</li>
+          <li>Name: <code class="copyable">TaskStatus</code></li>
+          <li>Value: type <code class="copyable">Task created successfully</code></li>
+        </ul>
+      </td></tr>
+    </tbody>
+  </table>
+
+  <p>Click <strong>Save</strong>.</p>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    Verify the flow saved without errors. You can test it by clicking <strong>Test</strong> → <strong>Manually</strong> → providing a sample title and details → <strong>Run flow</strong>. Check your Planner board — a new task should appear in the "From Report" bucket.
+  </div>
+
+  <div class="what-happened">
+    <strong>What just happened:</strong> You gave the agent the ability to create tasks in Planner. When the agent analyses the report and finds action items, it can now create tracked tasks automatically. This closes the loop from "insight" to "action".
+  </div>
+
   <!-- A7 -->
-  <h2 id="a7-actions">A7. Add Both Flows as Tools in the Agent</h2>
+  <h2 id="a7-actions">A7. Add All Flows as Tools in the Agent</h2>
   <ol class="steps">
     <li class="step">
       <div class="step-title">Open your agent</div>
@@ -598,23 +710,21 @@ WHEN INPUT FILES ARE MISSING
       <div class="step-title">Add Check Input flow</div>
       <p>Click <strong>+ Add a tool</strong> → search for <strong>Check Input MBR (Agent)</strong> → add it.</p>
     </li>
-  </ol>
-
-  <div class="screenshot">
-    <img src="images/a7-add-tool-dialog.png" alt="Add tool dialog showing agent flows" loading="lazy">
-  </div>
-
-  <ol class="steps" start="3">
     <li class="step">
       <div class="step-title">Add Save Report flow</div>
       <p>Click <strong>+ Add a tool</strong> → search for <strong>Save MBR Report to SharePoint</strong> → add it.</p>
     </li>
+    <li class="step">
+      <div class="step-title">Add Email Report flow</div>
+      <p>Click <strong>+ Add a tool</strong> → search for <strong>Email Report to Stakeholders</strong> → add it.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Add Planner Tasks flow</div>
+      <p>Click <strong>+ Add a tool</strong> → search for <strong>Create Planner Task from Report</strong> → add it.</p>
+    </li>
   </ol>
 
-  <p>Your Tools section should now show both flows:</p>
-  <div class="screenshot">
-    <img src="images/a7-tools-added.png" alt="Tools section with both flows added" loading="lazy">
-  </div>
+  <p>Your Tools section should now show all four flows.</p>
 
   <!-- A8 -->
   <h2 id="a8-topic">A8. Create the "Generate Monthly Report" Topic</h2>

@@ -304,18 +304,63 @@ You can't easily test this flow standalone (it needs text input from the agent),
 
 ---
 
-## A7. Add Both Flows as Tools in the Agent
+## A6b. Build the "Email Report to Stakeholders" Flow
+
+> **Context:** After the agent generates and saves a report, stakeholders need to know it's ready. This flow sends an email with the report link and a brief summary — so nobody has to manually chase people or forward documents.
+
+In **Copilot Studio**, go to **Actions** and create a new **Agent flow**.
+
+### Flow Name: `Email Report to Stakeholders`
+
+| Step | What to Search | Configuration |
+|------|----------------|---------------|
+| 1 | **When an agent calls the flow** (trigger) | Click **+ Add an input** → Text → name: `ReportLink`. Click **+ Add an input** again → Text → name: `ReportSummary` |
+| 2 | **Office 365 Outlook — Send an email (V2)** | **To:** your email address (or a distribution list). **Subject:** `Monthly Business Report — Ready for Review`. **Body:** Type `The consolidated monthly report has been generated and saved to SharePoint.` then press Enter, type `Link: ` and click the ⚡ lightning bolt → select **ReportLink**. Press Enter again, type `Summary:` and click ⚡ → select **ReportSummary** |
+| 3 | **Respond to the agent** | Click **+ Add an output** → Text → name: `EmailStatus` → value: type `Email sent successfully` |
+
+Click **Save**.
+
+### ✅ Checkpoint
+Verify the flow saved without errors. You'll test it end-to-end with the agent later.
+
+> **What just happened:** You gave the agent the ability to send emails. The agent will pass the report link and a summary it generates, and this flow handles the delivery. The pattern is identical to the Save Report flow — input from agent, do something, respond.
+
+---
+
+## A6c. Build the "Create Planner Tasks" Flow
+
+> **Context:** The monthly report often surfaces action items — open risks, unresolved blockers, and leadership asks. This flow lets the agent create follow-up tasks in Microsoft Planner so nothing falls through the cracks.
+>
+> **Pre-requisite:** You need a Planner plan. Go to **tasks.office.com** → create a new plan called `MBR Action Items` with a bucket called `From Report`. Note the plan name.
+
+In **Copilot Studio**, go to **Actions** and create a new **Agent flow**.
+
+### Flow Name: `Create Planner Task from Report`
+
+| Step | What to Search | Configuration |
+|------|----------------|---------------|
+| 1 | **When an agent calls the flow** (trigger) | Click **+ Add an input** → Text → name: `TaskTitle`. Click **+ Add an input** again → Text → name: `TaskDetails` |
+| 2 | **Planner — Create a task** | **Group Id:** select the Microsoft 365 Group that owns the plan. **Plan Id:** select `MBR Action Items`. **Title:** click ⚡ → select **TaskTitle**. **Bucket Id:** select `From Report`. Click **Show advanced options** → **Description:** click ⚡ → select **TaskDetails** |
+| 3 | **Respond to the agent** | Click **+ Add an output** → Text → name: `TaskStatus` → value: type `Task created successfully` |
+
+Click **Save**.
+
+### ✅ Checkpoint
+Verify the flow saved without errors. You can test it by clicking **Test** → **Manually** → providing a sample title and details → **Run flow**. Check your Planner board — a new task should appear in the "From Report" bucket.
+
+> **What just happened:** You gave the agent the ability to create tasks in Planner. When the agent analyses the report and finds action items, it can now create tracked tasks automatically. This closes the loop from "insight" to "action".
+
+---
+
+## A7. Add All Flows as Tools in the Agent
 
 1. Back in **Copilot Studio**, open your agent.
 2. Click **+ Add a tool** → search for **Check Input MBR (Agent)** → add it.
-
-![Add tool dialog showing agent flows](site/images/a7-add-tool-dialog.png)
-
 3. Click **+ Add a tool** → search for **Save MBR Report to SharePoint** → add it.
+4. Click **+ Add a tool** → search for **Email Report to Stakeholders** → add it.
+5. Click **+ Add a tool** → search for **Create Planner Task from Report** → add it.
 
-Your Tools section should now show both flows:
-
-![Tools section with both flows added](site/images/a7-tools-added.png)
+Your Tools section should now show all four flows.
 
 ---
 

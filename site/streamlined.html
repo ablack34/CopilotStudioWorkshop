@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copilot Studio Workshop — Streamlined (90 min)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="site-header">
+  <div class="header-content">
+    <div class="header-title">
+      <div class="header-logos">
+        <img src="images/PMI_LOGO.png" alt="PMI" class="header-logo pmi-logo">
+        <span class="logo-divider"></span>
+        <img src="images/MSFT_LOGO.webp" alt="Microsoft" class="header-logo msft-logo">
+      </div>
+      Copilot Studio Workshop
+    </div>
+    <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
+    <div class="header-progress">
+      <span class="progress-text">Section 1 of 5</span>
+      <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ========== TAB BAR ========== -->
+<div class="tab-bar">
+  <a href="index.html" class="tab-link">Full Workshop (3–4 hrs)</a>
+  <a href="streamlined.html" class="tab-link active">Streamlined Workshop (90 min)</a>
+</div>
+
+<!-- ========== SIDEBAR ========== -->
+<nav class="sidebar" aria-label="Workshop navigation">
+  <ul class="sidebar-nav">
+    <li><span class="nav-group-label">Overview</span></li>
+    <li><a href="#overview"><span class="nav-icon">1</span> Overview &amp; Context</a></li>
+
+    <li><span class="nav-group-label">Build the Agent</span></li>
+    <li><a href="#create-agent"><span class="nav-icon">2</span> Create the Agent</a></li>
+    <li>
+      <ul class="nav-sub">
+        <li><a href="#s2-create">Create &amp; Configure</a></li>
+        <li><a href="#s2-instructions">Add Instructions</a></li>
+        <li><a href="#s2-knowledge">Add Knowledge</a></li>
+      </ul>
+    </li>
+
+    <li><span class="nav-group-label">Build the Flows</span></li>
+    <li><a href="#build-flows"><span class="nav-icon">3</span> Build 4 Agent Flows</a></li>
+    <li>
+      <ul class="nav-sub">
+        <li><a href="#f1-check">Check Input Flow</a></li>
+        <li><a href="#f2-save">Save Report Flow</a></li>
+        <li><a href="#f3-email">Email Stakeholders Flow</a></li>
+        <li><a href="#f4-planner">Create Planner Task Flow</a></li>
+        <li><a href="#f5-register">Register All Tools</a></li>
+      </ul>
+    </li>
+
+    <li><span class="nav-group-label">Wire It Together</span></li>
+    <li><a href="#topic"><span class="nav-icon">4</span> Create the Topic</a></li>
+
+    <li><span class="nav-group-label">Finish</span></li>
+    <li><a href="#test"><span class="nav-icon">5</span> Test &amp; Explore</a></li>
+  </ul>
+</nav>
+
+<!-- ========== MAIN CONTENT ========== -->
+<main class="main-content">
+
+<!-- ============================== -->
+<!-- SECTION 1: OVERVIEW            -->
+<!-- ============================== -->
+<section class="workshop-section" id="overview">
+
+  <div class="hero">
+    <div class="hero-logos">
+      <img src="images/PMI_LOGO.png" alt="Philip Morris International" class="hero-logo pmi-hero-logo">
+      <span class="hero-logo-x">×</span>
+      <img src="images/MSFT_LOGO.webp" alt="Microsoft" class="hero-logo msft-hero-logo">
+    </div>
+    <h1>Copilot Studio Workshop</h1>
+    <p>Automating Monthly Business Reporting with AI Agents and Flows</p>
+    <div class="hero-meta">
+      <span>⏱ ~90 minutes</span>
+      <span>📋 5 sections</span>
+      <span>🛠 Copilot Studio + SharePoint + Planner + Outlook</span>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-title">⚡ Streamlined Version</div>
+    This is the hands-on version of the workshop. SharePoint folders, sample files, and the Planner board have been pre-configured by the facilitator. You'll jump straight into building in Copilot Studio.
+  </div>
+
+  <h2>What We're Building</h2>
+  <p>A fully automated monthly project reporting pipeline. Today, someone manually reads 5 stream reports, writes a consolidated executive summary, compares it to last month, formats it as a document, saves it to SharePoint, and chases people for input. We're going to automate all of that.</p>
+
+  <p>By the end of this workshop you will have an agent that:</p>
+  <ol>
+    <li>Checks that all stream reports have been uploaded</li>
+    <li>Reads and analyses all 5 reports using AI</li>
+    <li>Generates a consolidated executive summary with comparison to last month</li>
+    <li>Saves the report as a Word document in SharePoint</li>
+    <li>Emails stakeholders with the report link</li>
+    <li>Creates follow-up tasks in Planner for open action items</li>
+  </ol>
+
+  <h2>The Pipeline</h2>
+  <div class="diagram">
+<pre>
+    User says "Generate report"
+               │
+    ┌──────────▼──────────┐
+    │      AI AGENT       │
+    │                     │
+    │  ┌───────────────┐  │
+    │  │ Check Flow    │  │  ← counts files in SharePoint
+    │  ├───────────────┤  │
+    │  │ AI Brain      │  │  ← reads, analyses, compares, writes
+    │  ├───────────────┤  │
+    │  │ Save Flow     │  │  ← creates Word doc in SharePoint
+    │  ├───────────────┤  │
+    │  │ Email Flow    │  │  ← notifies stakeholders
+    │  ├───────────────┤  │
+    │  │ Planner Flow  │  │  ← creates follow-up tasks
+    │  └───────────────┘  │
+    └──────────┬──────────┘
+               │
+               ▼
+    Report saved · Email sent · Tasks created
+</pre>
+  </div>
+
+  <h2>Flows vs Agent — Why Both?</h2>
+  <table>
+    <thead><tr><th></th><th>Flows</th><th>Agent</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Good at</strong></td><td>Moving files, counting files, sending emails, creating tasks, running on schedules</td><td>Reading documents, understanding content, writing summaries, comparing information</td></tr>
+      <tr><td><strong>Can't do</strong></td><td>Read 5 reports and write an intelligent executive summary</td><td>Move files, send emails, create Planner tasks, react to SharePoint events</td></tr>
+      <tr><td><strong>Think of it as</strong></td><td>Robot arms</td><td>The brain</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="callout-title">💡 Key Insight</div>
+    You need both. The flows handle logistics. The agent handles thinking.
+  </div>
+
+  <h2>Pre-Configured Environment</h2>
+  <p>The facilitator has already set up the following. Copy these details from the handout:</p>
+
+  <div class="url-reference-box">
+    <h3>📋 Workshop Environment Details</h3>
+    <div class="url-input-group">
+      <label for="url-site">SharePoint Site Address</label>
+      <input type="url" id="url-site" class="url-input" placeholder="https://yourorg.sharepoint.com/sites/MBRWorkshop">
+    </div>
+    <div class="url-input-group">
+      <label for="url-input">MBR Input Folder</label>
+      <input type="url" id="url-input" class="url-input" placeholder="https://yoursite.sharepoint.com/...MBR%20Input">
+    </div>
+    <div class="url-input-group">
+      <label for="url-output">MBR Output Folder</label>
+      <input type="url" id="url-output" class="url-input" placeholder="https://yoursite.sharepoint.com/...MBR%20Output">
+    </div>
+    <div class="url-input-group">
+      <label for="url-archive">MBR Archive Folder</label>
+      <input type="url" id="url-archive" class="url-input" placeholder="https://yoursite.sharepoint.com/...MBR%20Archive">
+    </div>
+    <div class="url-input-group">
+      <label for="url-planner-group">Planner Group ID</label>
+      <input type="text" id="url-planner-group" class="url-input" placeholder="e.g. 4e94c2eb-3fdc-47c0-8bc8-49f57d5cee82">
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>Resource</th><th>Status</th><th>What's in it</th></tr></thead>
+    <tbody>
+      <tr><td><strong>MBR Input</strong> folder</td><td>✅ Ready</td><td>5 stream reports + 1 previous report (6 files)</td></tr>
+      <tr><td><strong>MBR Output</strong> folder</td><td>✅ Ready</td><td>Empty — agent will save reports here</td></tr>
+      <tr><td><strong>MBR Archive</strong> folder</td><td>✅ Ready</td><td>Empty — used by preparation flow (not in this workshop)</td></tr>
+      <tr><td><strong>MBR Action Items</strong> plan</td><td>✅ Ready</td><td>Planner board with "From Report" bucket</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Before You Start</div>
+    <ul>
+      <li>Open <a href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">copilotstudio.microsoft.com</a> and sign in</li>
+      <li>Verify you can see the SharePoint site (click the MBR Input link — you should see 6 files)</li>
+      <li>Open <a href="https://tasks.office.com" target="_blank" rel="noopener">tasks.office.com</a> and verify you can see the MBR Action Items plan</li>
+    </ul>
+  </div>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================== -->
+<!-- SECTION 2: CREATE THE AGENT    -->
+<!-- ============================== -->
+<section class="workshop-section" id="create-agent">
+
+  <h1>2. Create the AI Agent</h1>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    This is the centrepiece of the entire solution. The agent replaces the human analyst who would normally spend hours reading 5 separate stream reports, writing a consolidated summary, and comparing it to last month's report. The agent does this in seconds using AI — and can answer follow-up questions about the content afterwards.
+  </div>
+
+  <!-- Create -->
+  <h2 id="s2-create">Create &amp; Configure the Agent</h2>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Open Copilot Studio</div>
+      <p>Go to <a href="https://copilotstudio.microsoft.com" target="_blank" rel="noopener">copilotstudio.microsoft.com</a>.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Create a new agent</div>
+      <p>Click <strong>+ Create</strong> → <strong>New agent</strong>.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Skip to configuration</div>
+      <p>Click <strong>"Skip to configuration"</strong> at the bottom.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Fill in agent details</div>
+      <table>
+        <thead><tr><th>Field</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Name</strong></td><td><code class="copyable">Monthly Reports Generator</code></td></tr>
+          <tr><td><strong>Description</strong></td><td><code class="copyable">Analyzes monthly project reports across delivery streams, summarizes the current state, and highlights key changes, risks, and escalations compared to the previous report.</code></td></tr>
+        </tbody>
+      </table>
+    </li>
+  </ol>
+
+  <!-- Instructions -->
+  <h2 id="s2-instructions">Add Instructions</h2>
+  <p>In the <strong>Instructions</strong> field, paste the following. This is the "brain" — it tells the AI exactly how to analyse the reports and what format to produce:</p>
+
+  <div class="code-block">
+    <button class="copy-btn">Copy</button>
+<pre><code>ROLE
+You are a project reporting analysis agent for a multi-stream application development program.
+
+GOAL
+Summarize the current reporting period across all provided documents into a consolidated report, then compare that report to the previous period's report to identify key changes.
+
+CONTEXT
+The project is organized into delivery streams:
+- UX
+- Frontend Development
+- Backend Development
+- Integrations
+- Testing
+
+Each stream report follows a structured format including:
+- Status
+- Top Risks
+- Blockers
+- Leadership Asks
+- Delayed Tasks
+- Summary / Outlook
+
+You will be given:
+1) Multiple documents for the current reporting period (one per stream)
+2) One consolidated report from the previous reporting period
+
+TASKS
+1. Summarization
+   - Create a concise consolidated report for the current period.
+   - Preserve stream separation.
+   - Capture only material information (no verbatim copying).
+   - Normalize terminology so items can be compared across months.
+
+2. Comparison
+   Compare the current consolidated report against the previous report and identify key changes, focusing on:
+   - New risks, blockers, leadership asks, or delayed tasks
+   - Removed or resolved items
+   - Material changes to existing items (scope, severity, ownership, or timeline)
+   - Status changes (e.g., GREEN → AMBER, AT RISK → MISSED)
+   - Escalations and de-escalations
+   - New dependencies or critical-path impacts
+
+3. Action Item Extraction
+   After generating the report and comparison, identify concrete follow-up items that require attention:
+   - Unresolved blockers that need escalation
+   - New or escalated leadership asks
+   - High-severity risks without a mitigation plan
+   - Missed deadlines or critical-path items
+   For each action item, provide:
+   - A clear, concise task title (suitable for a Planner task)
+   - A brief description explaining the context and urgency
+
+COMPARISON RULES
+- Treat items as "the same" if they refer to the same underlying issue, even if wording differs.
+- Do not invent changes — if an item cannot be confidently matched, mark it as "New".
+- Ignore cosmetic or editorial differences.
+- Focus on leadership-relevant change, not minor delivery detail.
+
+OUTPUT FORMAT
+1. Executive Summary (max 6 bullets)
+   - The most important changes since the previous report
+   - What worsened, what improved, and what is newly critical
+
+2. Change Log by Stream
+   For each stream:
+   - New Items
+   - Modified Items
+   - Resolved / Removed Items
+
+   Use this structure:
+   - Item
+   - Change Type (New / Modified / Resolved)
+   - Previous State
+   - Current State
+   - Impact / Why It Matters
+
+3. Cross-Stream Observations
+   - Changes that affect multiple streams
+   - Emerging systemic risks or bottlenecks
+   - Downstream impacts (e.g., UX delays affecting Frontend)
+
+4. Open Leadership Attention
+   - Net-new or escalated asks
+   - Decisions or approvals now on the critical path
+
+5. Action Items for Follow-Up
+   List each action item as:
+   - Task Title: [concise task name]
+   - Details: [1-2 sentence description with context]
+
+TONE AND STYLE
+- Clear, factual, and concise
+- Executive-friendly
+- No speculation
+- No recommendations unless explicitly supported by the reports
+
+WHEN INPUT FILES ARE MISSING
+- If the MBR Input folder is empty or does not contain all 5 stream reports, do NOT attempt to generate a report.
+- Tell the user which reports are missing based on the expected streams: UX, Frontend Development, Backend Development, Integrations, Testing.
+- If the previous period's consolidated report is missing, note that the comparison section cannot be generated but the summarization can still proceed if all 5 current stream reports are present.</code></pre>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-title">💡 What's different here</div>
+    Compared to the full workshop, this version includes <strong>Task 3: Action Item Extraction</strong> in the instructions. This tells the agent to identify follow-up items in a format that can be sent directly to Planner. The agent will use this when we wire up the Planner flow later.
+  </div>
+
+  <!-- Knowledge -->
+  <h2 id="s2-knowledge">Add Knowledge Sources</h2>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Add MBR Input knowledge</div>
+      <p>Scroll to <strong>Knowledge</strong> → click <strong>+ Add knowledge</strong>. Select <strong>SharePoint</strong> → paste the link to your <strong>MBR Input</strong> folder → confirm.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Add MBR Output knowledge</div>
+      <p>Click <strong>+ Add knowledge</strong> again → paste the link to your <strong>MBR Output</strong> folder → confirm.</p>
+    </li>
+  </ol>
+
+  <h2>Save the Agent</h2>
+  <p>Click <strong>Save</strong> at the top. Don't publish yet — we need to add the flows and topic first.</p>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    Your agent has a name, description, detailed instructions (with action item extraction), and two SharePoint knowledge sources. It doesn't do anything interactive yet — that comes next.
+  </div>
+
+  <div class="what-happened">
+    <strong>What just happened:</strong> You created an AI agent with domain-specific expertise. The instructions act like a brief for a human analyst — they tell the AI what to look for, how to compare, and what format to produce. The knowledge sources tell it where to find the documents. Without the instructions, the AI would produce generic summaries. With them, it produces structured, executive-level output tailored to your reporting process.
+  </div>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================== -->
+<!-- SECTION 3: BUILD THE FLOWS     -->
+<!-- ============================== -->
+<section class="workshop-section" id="build-flows">
+
+  <h1>3. Build the Agent Flows</h1>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    The agent is the brain, but it can't interact with SharePoint, Outlook, or Planner on its own. You'll build 4 small flows that act as the agent's "hands":
+    <ol>
+      <li><strong>Check Input</strong> — counts files in MBR Input</li>
+      <li><strong>Save Report</strong> — creates a Word document in MBR Output</li>
+      <li><strong>Email Stakeholders</strong> — sends the report link via email</li>
+      <li><strong>Create Planner Task</strong> — creates follow-up tasks from the report</li>
+    </ol>
+    Each flow follows the same pattern: receive input from the agent → do something → respond to the agent.
+  </div>
+
+  <!-- Flow 1: Check Input -->
+  <h2 id="f1-check">Flow 1: Check Input MBR</h2>
+
+  <p>In <strong>Copilot Studio</strong>, go to <strong>Actions</strong> and create a new <strong>Agent flow</strong>.</p>
+
+  <h3>Flow Name: <code class="copyable">Check Input MBR (Agent)</code></h3>
+
+  <table class="flow-steps">
+    <thead><tr><th>Step</th><th>What to Search</th><th>Configuration</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>When an agent calls the flow</strong> (trigger)</td><td>No inputs needed</td></tr>
+      <tr><td>2</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>
+        <ul>
+          <li>Create a SharePoint connection if you haven't already</li>
+          <li>Select your <strong>Site Address</strong> from the dropdown</li>
+          <li>Set <strong>Library Name</strong> to <code class="copyable">Documents</code></li>
+          <li>Expand <strong>Advanced parameters</strong> → in <strong>Limit Entries to Folder</strong>, browse to or type <code class="copyable">/Shared Documents/MBR Input</code></li>
+          <li><em>⚠️ Tip: If you can't find the SharePoint action, check <strong>See more</strong> for additional connectors.</em></li>
+        </ul>
+      </td></tr>
+      <tr><td>3</td><td><strong>Compose</strong></td><td>
+        <ul>
+          <li>Click <strong>fx</strong> → paste: <code class="copyable">length(outputs('Get_files_(properties_only)')?['body/value'])</code> → OK</li>
+          <li>Rename this step to <code class="copyable">FileCount</code> (click <strong>...</strong> → <strong>Rename</strong>)</li>
+        </ul>
+      </td></tr>
+      <tr><td>4</td><td><strong>Respond to the agent</strong></td><td>
+        <ul>
+          <li>Click <strong>+ Add an output</strong> → Number</li>
+          <li>Name: <code class="copyable">FileCount</code></li>
+          <li>Value: click <strong>fx</strong> → paste: <code class="copyable">outputs('FileCount')</code> → OK</li>
+        </ul>
+      </td></tr>
+    </tbody>
+  </table>
+
+  <p>Click <strong>Save</strong>.</p>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    Click <strong>Test</strong> → <strong>Manually</strong> → <strong>Run flow</strong>. The flow should return <code>6</code> (the 5 stream reports + 1 previous report in MBR Input).
+  </div>
+
+  <div class="what-happened">
+    <strong>What just happened:</strong> You built a utility flow that the agent can call on demand. The agent handles thinking; this flow handles checking. It's a pattern you'll see repeatedly — agents delegate mechanical tasks to flows.
+  </div>
+
+  <details class="troubleshooting">
+    <summary>⚠️ Troubleshooting</summary>
+    <div class="troubleshooting-content">
+      <p>If the flow fails when the folder is empty, the <code>length()</code> expression may be receiving null. This is expected — the agent's topic will handle the "0 files" case gracefully.</p>
+    </div>
+  </details>
+
+  <hr class="section-divider-light">
+
+  <!-- Flow 2: Save Report -->
+  <h2 id="f2-save">Flow 2: Save MBR Report to SharePoint</h2>
+
+  <p>Create another new <strong>Agent flow</strong> in Copilot Studio (<strong>Actions</strong>).</p>
+
+  <h3>Flow Name: <code class="copyable">Save MBR Report to SharePoint</code></h3>
+
+  <table class="flow-steps">
+    <thead><tr><th>Step</th><th>What to Search</th><th>Configuration</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>When an agent calls the flow</strong> (trigger)</td><td>
+        <ul>
+          <li>Click <strong>+ Add an input</strong> → Text</li>
+          <li>Name: <code class="copyable">ReportContent</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>2</td><td><strong>SharePoint — Create file</strong></td><td>
+        <ul>
+          <li>Site: your SharePoint site</li>
+          <li>Folder path: <code class="copyable">Shared Documents/MBR Output</code></li>
+          <li>File name: click <strong>fx</strong> → paste: <code class="copyable">concat('MBR-Report-', formatDateTime(utcNow(), 'yyyy-MM'), '.docx')</code></li>
+          <li><strong>File Content</strong>: click in the field → select the ⚡ lightning bolt (dynamic content) icon → under the trigger step, select <strong>ReportContent</strong></li>
+        </ul>
+      </td></tr>
+      <tr><td>3</td><td><strong>Respond to the agent</strong></td><td>
+        <ul>
+          <li>Click <strong>+ Add an output</strong> → <strong>Text</strong></li>
+          <li>Name: <code class="copyable">FileLink</code></li>
+          <li>Value: click ⚡ → look under the <strong>Create file</strong> step → click <strong>See more</strong> if needed → select <strong>body/Path</strong></li>
+        </ul>
+      </td></tr>
+    </tbody>
+  </table>
+
+  <p>Click <strong>Save</strong>.</p>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    You can't easily test this flow standalone (it needs text input from the agent), but verify it saved without errors. You'll test it end-to-end after wiring everything together.
+  </div>
+
+  <div class="what-happened">
+    <strong>What just happened:</strong> You built the flow that turns the agent's AI-generated text into a permanent document. The file name includes the year and month (<code>MBR-Report-2026-04.docx</code>) so each month's report is kept in MBR Output as a running archive.
+  </div>
+
+  <hr class="section-divider-light">
+
+  <!-- Flow 3: Email Stakeholders -->
+  <h2 id="f3-email">Flow 3: Email Report to Stakeholders</h2>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    After the agent generates and saves a report, stakeholders need to know it's ready. This flow sends an email with the report link and a brief summary — so nobody has to manually chase people or forward documents.
+  </div>
+
+  <p>In <strong>Copilot Studio</strong>, go to <strong>Actions</strong> and create a new <strong>Agent flow</strong>.</p>
+
+  <h3>Flow Name: <code class="copyable">Email Report to Stakeholders</code></h3>
+
+  <table class="flow-steps">
+    <thead><tr><th>Step</th><th>What to Search</th><th>Configuration</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>When an agent calls the flow</strong> (trigger)</td><td>
+        <ul>
+          <li>Click <strong>+ Add an input</strong> → Text → name: <code class="copyable">ReportLink</code></li>
+          <li>Click <strong>+ Add an input</strong> again → Text → name: <code class="copyable">ReportSummary</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>2</td><td><strong>Office 365 Outlook — Send an email (V2)</strong></td><td>
+        <ul>
+          <li><strong>To:</strong> your email address (or a distribution list)</li>
+          <li><strong>Subject:</strong> <code class="copyable">Monthly Business Report — Ready for Review</code></li>
+          <li><strong>Body:</strong> Type <code>The consolidated monthly report has been generated and saved to SharePoint.</code></li>
+          <li>Press Enter, type <code>Link: </code> then click ⚡ → select <strong>ReportLink</strong></li>
+          <li>Press Enter, type <code>Summary: </code> then click ⚡ → select <strong>ReportSummary</strong></li>
+        </ul>
+      </td></tr>
+      <tr><td>3</td><td><strong>Respond to the agent</strong></td><td>
+        <ul>
+          <li>Click <strong>+ Add an output</strong> → Text</li>
+          <li>Name: <code class="copyable">EmailStatus</code></li>
+          <li>Value: type <code class="copyable">Email sent successfully</code></li>
+        </ul>
+      </td></tr>
+    </tbody>
+  </table>
+
+  <p>Click <strong>Save</strong>.</p>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    Verify the flow saved without errors. You'll test it end-to-end with the agent later.
+  </div>
+
+  <div class="what-happened">
+    <strong>What just happened:</strong> You gave the agent the ability to send emails. The agent will pass the report link and a summary it generates, and this flow handles the delivery. The pattern is identical to the Save Report flow — input from agent, do something, respond.
+  </div>
+
+  <hr class="section-divider-light">
+
+  <!-- Flow 4: Planner Tasks -->
+  <h2 id="f4-planner">Flow 4: Create Planner Task from Report</h2>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    The monthly report often surfaces action items — open risks, unresolved blockers, and leadership asks. This flow lets the agent create follow-up tasks in Microsoft Planner so nothing falls through the cracks.
+  </div>
+
+  <p>In <strong>Copilot Studio</strong>, go to <strong>Actions</strong> and create a new <strong>Agent flow</strong>.</p>
+
+  <h3>Flow Name: <code class="copyable">Create Planner Task from Report</code></h3>
+
+  <table class="flow-steps">
+    <thead><tr><th>Step</th><th>What to Search</th><th>Configuration</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>When an agent calls the flow</strong> (trigger)</td><td>
+        <ul>
+          <li>Click <strong>+ Add an input</strong> → Text → name: <code class="copyable">TaskTitle</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>2</td><td><strong>Planner — Create a task</strong></td><td>
+        <ul>
+          <li><strong>Group Id:</strong> select the Microsoft 365 Group from the dropdown. If your group doesn't appear, click <strong>"Enter custom value"</strong> and paste the Group ID from the handout.</li>
+          <li><strong>Plan Id:</strong> select <code class="copyable">MBR Action Items</code></li>
+          <li><strong>Title:</strong> click ⚡ → select <strong>TaskTitle</strong></li>
+          <li><strong>Bucket Id:</strong> select <code class="copyable">From Report</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>3</td><td><strong>Respond to the agent</strong></td><td>
+        <ul>
+          <li>Click <strong>+ Add an output</strong> → Text</li>
+          <li>Name: <code class="copyable">TaskStatus</code></li>
+          <li>Value: type <code class="copyable">Task created successfully</code></li>
+        </ul>
+      </td></tr>
+    </tbody>
+  </table>
+
+  <p>Click <strong>Save</strong>.</p>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    Test the flow: click <strong>Test</strong> → <strong>Manually</strong> → enter a sample title like <code>Test task from workshop</code> → <strong>Run flow</strong>. Open <a href="https://tasks.office.com" target="_blank" rel="noopener">tasks.office.com</a> and check the "From Report" bucket — you should see the new task.
+  </div>
+
+  <div class="what-happened">
+    <strong>What just happened:</strong> You gave the agent the ability to create tasks in Planner. When the agent analyses the report and finds action items, it can now create tracked tasks automatically. This closes the loop from "insight" to "action".
+  </div>
+
+  <details class="troubleshooting">
+    <summary>⚠️ Troubleshooting — Planner Issues</summary>
+    <div class="troubleshooting-content">
+      <table>
+        <thead><tr><th>Issue</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>Group ID dropdown doesn't show your group</td><td>Click <strong>"Enter custom value"</strong> at the bottom of the dropdown and paste the Group ID from the handout</td></tr>
+          <tr><td>"From Report" bucket not listed</td><td>Go to <a href="https://tasks.office.com" target="_blank">tasks.office.com</a> → open <strong>MBR Action Items</strong> → scroll right past existing buckets → click <strong>"+ Add new bucket"</strong> → name it <strong>From Report</strong>. Return to the flow and re-select the Bucket Id.</td></tr>
+          <tr><td>Plan not showing in Plan Id</td><td>Make sure you are a <strong>member</strong> (not guest) of the Microsoft 365 Group that owns the plan</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <hr class="section-divider-light">
+
+  <!-- Register tools -->
+  <h2 id="f5-register">Register All Flows as Tools</h2>
+
+  <p>Now add all 4 flows to your agent so it can call them.</p>
+
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Open your agent</div>
+      <p>Back in <strong>Copilot Studio</strong>, open your <strong>Monthly Reports Generator</strong> agent.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Add Check Input flow</div>
+      <p>Click <strong>+ Add a tool</strong> → search for <code class="copyable">Check Input MBR (Agent)</code> → add it.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Add Save Report flow</div>
+      <p>Click <strong>+ Add a tool</strong> → search for <code class="copyable">Save MBR Report to SharePoint</code> → add it.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Add Email Report flow</div>
+      <p>Click <strong>+ Add a tool</strong> → search for <code class="copyable">Email Report to Stakeholders</code> → add it.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Add Planner Tasks flow</div>
+      <p>Click <strong>+ Add a tool</strong> → search for <code class="copyable">Create Planner Task from Report</code> → add it.</p>
+    </li>
+  </ol>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Checkpoint</div>
+    Your agent's <strong>Tools</strong> section should now show all four flows. If any are missing, use the search to find them.
+  </div>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================== -->
+<!-- SECTION 4: CREATE THE TOPIC    -->
+<!-- ============================== -->
+<section class="workshop-section" id="topic">
+
+  <h1>4. Create the "Generate Monthly Report" Topic</h1>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    This is where everything comes together. The topic is the agent's decision tree — when a user says "Generate report", the topic orchestrates: check files → generate report → save document → email stakeholders → create tasks → return link. It's the conductor that coordinates the AI brain with all four flow-based actions.
+  </div>
+
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Create a new topic</div>
+      <p>Go to <strong>Topics</strong> → <strong>+ Add a topic</strong> → <strong>From blank</strong>.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Set the trigger</div>
+      <p>Keep trigger as <strong>"The agent chooses"</strong>. Click <strong>Edit</strong> on the trigger → in <strong>"Describe what the topic does"</strong>, paste:</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code>Checks if all 5 stream reports are uploaded to the MBR Input folder, generates the consolidated monthly report, saves it to SharePoint, emails stakeholders, and creates follow-up tasks in Planner.</code></pre>
+      </div>
+      <p>Click <strong>Save</strong> on the trigger.</p>
+    </li>
+  </ol>
+
+  <p>Now build the canvas step by step:</p>
+
+  <h3>Node 1: Check the files</h3>
+  <p>Click <strong>+</strong> below the trigger → <strong>Add a tool</strong> → select <strong>Check Input MBR (Agent)</strong>. This returns the <code>FileCount</code> variable.</p>
+
+  <h3>Node 2: Decision</h3>
+  <p>Click <strong>+</strong> → <strong>Add a node</strong> → <strong>Condition</strong>. Set: <code>FileCount</code> <strong>is greater than or equal to</strong> <code>6</code>.</p>
+
+  <h3>Node 3a: YES branch — Generate, Save, Email, Create Tasks</h3>
+  <p>In the <strong>Yes</strong> (left) branch, add these nodes in order:</p>
+
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Send a message</div>
+      <p>Click + → <strong>Send a message</strong>. Text:</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code>All reports found. Generating your consolidated report now...</code></pre>
+      </div>
+    </li>
+    <li class="step">
+      <div class="step-title">Generative answers</div>
+      <p>Click + → <strong>Advanced</strong> → <strong>Generative answers</strong>. Input:</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code>Create the consolidated monthly report following your instructions. Use all stream reports and the previous report from the MBR Input folder.</code></pre>
+      </div>
+      <ul>
+        <li>Click <strong>Edit</strong> on Data sources → make sure your MBR Input SharePoint knowledge is selected</li>
+        <li>Expand the <strong>Advanced</strong> section on the right-hand properties panel → set <strong>Save LLM response</strong> to <strong>Complete (recommended)</strong></li>
+        <li>Click on <strong>Save bot response</strong> and save as the variable <code class="copyable">ReportOutput</code></li>
+      </ul>
+    </li>
+    <li class="step">
+      <div class="step-title">Save the report to SharePoint</div>
+      <p>Click + → <strong>Add a tool</strong> → select <strong>Save MBR Report to SharePoint</strong>.</p>
+      <p>For the <code>ReportContent</code> input, click <strong>fx</strong> (formula) and enter:</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code>Topic.ReportOutput.Text.Content</code></pre>
+      </div>
+      <p>This returns the <code>FileLink</code> variable.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Email stakeholders</div>
+      <p>Click + → <strong>Add a tool</strong> → select <strong>Email Report to Stakeholders</strong>.</p>
+      <ul>
+        <li>For <code>ReportLink</code>: click <strong>{x}</strong> → select the <code>FileLink</code> variable (returned from the Save flow)</li>
+        <li>For <code>ReportSummary</code>: click <strong>fx</strong> and enter: <code class="copyable">Topic.ReportOutput.Text.Content</code></li>
+      </ul>
+    </li>
+    <li class="step">
+      <div class="step-title">Create Planner tasks</div>
+      <p>Click + → <strong>Add a tool</strong> → select <strong>Create Planner Task from Report</strong>.</p>
+      <ul>
+        <li>For <code>TaskTitle</code>: click <strong>fx</strong> and enter: <code class="copyable">'Review MBR Action Items — ' + Text(Now(), "[$-en-US]mmmm yyyy")</code></li>
+      </ul>
+      <div class="callout tip">
+        <div class="callout-title">💡 Tip — Multiple tasks</div>
+        The agent can only call this flow once in the topic canvas. For the workshop, we create one summary task. In production, you could use a <strong>Parse JSON + Apply to Each</strong> pattern in the flow to create multiple tasks from the agent's action items list. Alternatively, after the report is generated, you can ask the agent in chat: <code>Create a Planner task for each action item</code> — the agent will call the flow multiple times autonomously.
+      </div>
+    </li>
+    <li class="step">
+      <div class="step-title">Send confirmation message</div>
+      <p>Click + → <strong>Send a message</strong>. Text:</p>
+      <p><code>Your report has been saved to SharePoint: </code> then click <strong>{x}</strong> and insert the <code>FileLink</code> variable. Continue with:</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code>
+
+Stakeholders have been notified by email and a follow-up task has been created in Planner.
+
+You can ask me follow-up questions about the report content.</code></pre>
+      </div>
+    </li>
+  </ol>
+
+  <h3>Node 3b: NO branch — Tell the user</h3>
+  <p>In the <strong>No</strong> (right) branch:</p>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Send a message</div>
+      <p>Click + → <strong>Send a message</strong>. Text: <code>Only </code> then click <strong>{x}</strong> and insert <code>FileCount</code>, then continue typing: <code> file(s) found in MBR Input. Please ensure all 5 stream reports and the previous month's report are uploaded before generating the report.</code></p>
+    </li>
+  </ol>
+
+  <h3>Save the topic</h3>
+  <p>Click <strong>Save</strong> at the top.</p>
+
+  <details class="troubleshooting">
+    <summary>⚠️ Troubleshooting</summary>
+    <div class="troubleshooting-content">
+      <table>
+        <thead><tr><th>Error</th><th>Cause</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>"Identifier not recognized in expression 'FileLink'"</td><td>Variable name typed as plain text</td><td>Don't type variable names as text. Use the {x} button in the message toolbar to insert variables.</td></tr>
+          <tr><td>Generative answers returns empty</td><td>Knowledge source not linked</td><td>Check that the knowledge source (MBR Input SharePoint folder) is correctly linked and contains files.</td></tr>
+          <tr><td>Save flow fails</td><td>Incorrect folder path</td><td>Verify the folder path includes the <code>Shared Documents/</code> prefix.</td></tr>
+          <tr><td>Email not received</td><td>Outlook connector not configured</td><td>Check the Email flow's connection — click <strong>...</strong> on the Send email step and verify/re-add the Outlook connection.</td></tr>
+          <tr><td>Planner task not created</td><td>Group ID or Plan ID issue</td><td>Re-check the Planner flow — ensure Group ID and Plan ID are set correctly.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================== -->
+<!-- SECTION 5: TEST & EXPLORE      -->
+<!-- ============================== -->
+<section class="workshop-section" id="test">
+
+  <h1>5. Test &amp; Explore</h1>
+
+  <div class="callout context">
+    <div class="callout-title">📘 Context</div>
+    You've built all the pieces: an AI agent with instructions, 4 supporting flows, and a topic that orchestrates everything. Now it's time to run the full pipeline and verify that every component works together.
+  </div>
+
+  <h2>Run the Agent</h2>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Open the test pane</div>
+      <p>In Copilot Studio, click <strong>Test your agent</strong> (top right).</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Generate the report</div>
+      <p>Type: <code class="copyable">Generate report</code></p>
+    </li>
+    <li class="step">
+      <div class="step-title">Watch the pipeline execute</div>
+      <p>You should see:</p>
+      <ul>
+        <li>✅ Agent calls the check flow → confirms all files are present</li>
+        <li>✅ Agent says "All reports found. Generating your consolidated report now..."</li>
+        <li>✅ Agent generates the consolidated report (displayed in chat)</li>
+        <li>✅ Agent calls the Save flow → creates a Word document in MBR Output</li>
+        <li>✅ Agent calls the Email flow → sends notification</li>
+        <li>✅ Agent calls the Planner flow → creates a follow-up task</li>
+        <li>✅ Agent returns the SharePoint link and confirmation</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2>Verify the Results</h2>
+  <table>
+    <thead><tr><th>Check</th><th>Where to Look</th><th>What to Expect</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Report document</strong></td><td>Click the SharePoint link in the agent's response</td><td>Word document (<code>MBR-Report-2026-04.docx</code>) opens with the consolidated report</td></tr>
+      <tr><td><strong>Email notification</strong></td><td>Check your Outlook inbox</td><td>Email with subject "Monthly Business Report — Ready for Review" containing the report link and summary</td></tr>
+      <tr><td><strong>Planner task</strong></td><td>Open <a href="https://tasks.office.com" target="_blank" rel="noopener">tasks.office.com</a> → MBR Action Items → "From Report" bucket</td><td>A new task for reviewing the MBR action items</td></tr>
+      <tr><td><strong>Report content</strong></td><td>Read the chat output</td><td>Executive Summary, Change Log by Stream, Cross-Stream Observations, Open Leadership Attention, Action Items</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Try Follow-Up Questions</h2>
+  <p>The agent retains context from the report. Try asking:</p>
+  <ul>
+    <li><code class="copyable">What are the top risks this month?</code></li>
+    <li><code class="copyable">What changed since last month?</code></li>
+    <li><code class="copyable">Summarise just the integrations stream</code></li>
+    <li><code class="copyable">Which streams have blockers?</code></li>
+    <li><code class="copyable">Create a Planner task for the SAP escalation</code></li>
+  </ul>
+
+  <div class="callout tip">
+    <div class="callout-title">💡 Interactive agent</div>
+    Notice how the agent can answer questions about the report content <em>and</em> take actions (create tasks, send emails) based on your follow-up requests. This is what makes it a tool, not just a report generator.
+  </div>
+
+  <h2>Test the Error Path</h2>
+  <p>If you have access to modify the MBR Input folder:</p>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Remove a file</div>
+      <p>Delete one stream report from MBR Input.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Re-test the agent</div>
+      <p>Type <code>Generate report</code> again. The agent should say: <code>Only 5 file(s) found in MBR Input. Please ensure all 5 stream reports and the previous month's report are uploaded.</code></p>
+    </li>
+    <li class="step">
+      <div class="step-title">Restore the file</div>
+      <p>Re-upload the removed file to restore the folder to its original state.</p>
+    </li>
+  </ol>
+
+  <div class="callout checkpoint">
+    <div class="callout-title">✅ Final Checkpoint</div>
+    If the report was generated, saved to SharePoint, emailed, and a Planner task was created — <strong>congratulations!</strong> You've built a complete AI-powered reporting pipeline.
+  </div>
+
+  <h2>What You Built</h2>
+  <div class="diagram">
+<pre>
+    User says "Generate report"
+               │
+    ┌──────────▼──────────┐
+    │      AI AGENT       │
+    │                     │
+    │  1. Check Flow      │ ← Verifies all 6 files present
+    │  2. AI Brain        │ ← Reads, analyses, compares, writes
+    │  3. Save Flow       │ ← Creates Word doc in SharePoint
+    │  4. Email Flow      │ ← Sends notification to stakeholders
+    │  5. Planner Flow    │ ← Creates follow-up tasks
+    │                     │
+    └──────────┬──────────┘
+               │
+               ▼
+    ✅ Report saved to SharePoint
+    ✅ Stakeholders notified by email
+    ✅ Action items tracked in Planner
+    ✅ Agent available for follow-up questions
+</pre>
+  </div>
+
+  <h2>Automated vs Manual</h2>
+  <table class="before-after">
+    <thead><tr><th>Step</th><th>Before</th><th>After</th></tr></thead>
+    <tbody>
+      <tr><td>Read 5 reports and write summary</td><td>Manual — hours of analyst work</td><td>Automated — AI agent, seconds</td></tr>
+      <tr><td>Compare to last month</td><td>Manual — open two documents side by side</td><td>Automated — AI agent</td></tr>
+      <tr><td>Save as document</td><td>Manual — copy-paste into Word</td><td>Automated — flow saves to SharePoint</td></tr>
+      <tr><td>Notify stakeholders</td><td>Manual — write and send email</td><td>Automated — email flow</td></tr>
+      <tr><td>Create follow-up tasks</td><td>Manual — read report, open Planner, type tasks</td><td>Automated — Planner flow</td></tr>
+      <tr><td>Answer questions about the report</td><td>Manual — re-read the reports</td><td>Automated — ask the agent</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Key Lessons</h2>
+  <ol class="steps">
+    <li class="step">
+      <div class="step-title">Agents think, flows act</div>
+      <p>Use agents when you need AI to read, understand, analyse, or write. Use flows when you need to move files, send emails, create tasks, or interact with external services.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">One pattern, four flows</div>
+      <p>Every flow follows the same structure: receive input from agent → perform action → respond to agent. Once you've built one, the rest are variations on the same theme.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">Instructions are everything</div>
+      <p>The quality of the agent's output depends entirely on the instructions prompt. Adding "Action Item Extraction" to the instructions is what enables the Planner integration — the agent needs to know what format to produce.</p>
+    </li>
+    <li class="step">
+      <div class="step-title">The agent is interactive</div>
+      <p>Unlike a static report, the agent can answer follow-up questions and take additional actions on demand. This makes it a tool, not just a process.</p>
+    </li>
+  </ol>
+
+  <h2>Ideas for Extension</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Monitor Flow</h3>
+      <p>Watch the MBR Input folder for uploads and automatically notify when all 5 reports are in</p>
+    </div>
+    <div class="card">
+      <h3>Preparation Flow</h3>
+      <p>Scheduled monthly flow to archive old files, copy previous report, and send reminder emails</p>
+    </div>
+    <div class="card">
+      <h3>Approval Step</h3>
+      <p>Route the generated report to a manager for review before it's finalised</p>
+    </div>
+    <div class="card">
+      <h3>Teams Integration</h3>
+      <p>Post the report link to a Teams channel when it's ready</p>
+    </div>
+    <div class="card">
+      <h3>Adaptive Cards</h3>
+      <p>Send rich interactive cards in Teams instead of plain emails</p>
+    </div>
+    <div class="card">
+      <h3>Power BI Dashboard</h3>
+      <p>Read MBR Output reports and visualise trends across months</p>
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<!-- ========== FLOATING URL WIDGET ========== -->
+<div class="url-widget" id="url-widget">
+  <div class="url-widget-header" id="url-widget-toggle">
+    <span>📋 Your URLs</span>
+    <button class="url-widget-collapse" aria-label="Toggle widget">▲</button>
+  </div>
+  <div class="url-widget-body" id="url-widget-body">
+    <div class="url-widget-row">
+      <span class="url-widget-label">Site Address</span>
+      <span class="url-widget-value" id="widget-site" data-source="url-site">Not set</span>
+      <button class="url-widget-copy" title="Copy">Copy</button>
+    </div>
+    <div class="url-widget-row">
+      <span class="url-widget-label">MBR Input</span>
+      <span class="url-widget-value" id="widget-input" data-source="url-input">Not set</span>
+      <button class="url-widget-copy" title="Copy">Copy</button>
+    </div>
+    <div class="url-widget-row">
+      <span class="url-widget-label">MBR Output</span>
+      <span class="url-widget-value" id="widget-output" data-source="url-output">Not set</span>
+      <button class="url-widget-copy" title="Copy">Copy</button>
+    </div>
+    <div class="url-widget-row">
+      <span class="url-widget-label">MBR Archive</span>
+      <span class="url-widget-value" id="widget-archive" data-source="url-archive">Not set</span>
+      <button class="url-widget-copy" title="Copy">Copy</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
