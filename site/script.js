@@ -132,6 +132,88 @@
 
 })();
 
+// --- Floating URL Widget ---
+(function () {
+  'use strict';
+
+  var toggle = document.getElementById('url-widget-toggle');
+  var widget = document.getElementById('url-widget');
+  var sources = ['url-site', 'url-input', 'url-output', 'url-archive'];
+  var widgetIds = ['widget-site', 'widget-input', 'widget-output', 'widget-archive'];
+  var STORAGE_KEY = 'workshop-urls';
+
+  // Collapse/expand
+  if (toggle && widget) {
+    toggle.addEventListener('click', function () {
+      widget.classList.toggle('collapsed');
+    });
+  }
+
+  // Load saved URLs from localStorage
+  function loadSaved() {
+    try {
+      var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      sources.forEach(function (id) {
+        var input = document.getElementById(id);
+        if (input && saved[id]) {
+          input.value = saved[id];
+        }
+      });
+    } catch (e) { /* ignore */ }
+  }
+
+  // Sync input values to widget display
+  function syncWidget() {
+    var toSave = {};
+    sources.forEach(function (srcId, i) {
+      var input = document.getElementById(srcId);
+      var display = document.getElementById(widgetIds[i]);
+      if (!input || !display) return;
+      var val = input.value.trim();
+      toSave[srcId] = val;
+      if (val) {
+        display.textContent = val;
+        display.classList.remove('empty');
+      } else {
+        display.textContent = 'Not set';
+        display.classList.add('empty');
+      }
+    });
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave)); } catch (e) { /* ignore */ }
+  }
+
+  // Listen to input changes
+  sources.forEach(function (id) {
+    var input = document.getElementById(id);
+    if (input) {
+      input.addEventListener('input', syncWidget);
+      input.addEventListener('change', syncWidget);
+    }
+  });
+
+  // Copy buttons
+  document.querySelectorAll('.url-widget-copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var row = btn.closest('.url-widget-row');
+      var valueEl = row.querySelector('.url-widget-value');
+      var text = valueEl.textContent;
+      if (!text || text === 'Not set') return;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = '\u2713';
+        btn.classList.add('copied');
+        setTimeout(function () {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 1500);
+      });
+    });
+  });
+
+  // Init
+  loadSaved();
+  syncWidget();
+})();
+
 // --- Download All Sample Files ---
 function downloadAllFiles() {
   const files = [

@@ -227,7 +227,11 @@
   </ol>
 
   <div class="url-reference-box">
-    <h3>📋 Paste your folder URLs here for reference</h3>
+    <h3>📋 Paste your URLs here for reference</h3>
+    <div class="url-input-group">
+      <label for="url-site">Site Address</label>
+      <input type="url" id="url-site" class="url-input" placeholder="https://yourorg.sharepoint.com/sites/YourTeamSite">
+    </div>
     <div class="url-input-group">
       <label for="url-input">MBR Input</label>
       <input type="url" id="url-input" class="url-input" placeholder="https://yoursite.sharepoint.com/...MBR%20Input">
@@ -486,26 +490,33 @@ WHEN INPUT FILES ARE MISSING
   <h3>Flow Name: <code>Check Input MBR (Agent)</code></h3>
 
   <table class="flow-steps">
-    <thead><tr><th>Step</th><th>What to Add</th><th>Configuration</th></tr></thead>
+    <thead><tr><th>Step</th><th>What to Search</th><th>Configuration</th></tr></thead>
     <tbody>
       <tr><td>1</td><td><strong>When an agent calls the flow</strong> (trigger)</td><td>No inputs needed</td></tr>
-      <tr><td>2</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>Create a SharePoint connection if you haven't already. Select your <strong>Site Address</strong> from the dropdown. Set <strong>Library Name</strong> to <code class="copyable">Documents</code>. Expand <strong>Advanced parameters</strong> → in <strong>Limit Entries to Folder</strong>, browse to or type <code class="copyable">/Shared Documents/MBR Input</code></td></tr>
-      <tr><td>3</td><td><strong>Compose</strong></td><td>Click <strong>fx</strong> → paste expression below → OK. Rename this step to <code class="copyable">FileCount</code> (click <strong>...</strong> → <strong>Rename</strong>)</td></tr>
-      <tr><td>4</td><td><strong>Respond to the agent</strong></td><td>Click <strong>+ Add an output</strong> → Number → name: <code class="copyable">FileCount</code> → value: click <strong>fx</strong> → expression below → OK</td></tr>
+      <tr><td>2</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>
+        <ul>
+          <li>Create a SharePoint connection if you haven't already</li>
+          <li>Select your <strong>Site Address</strong> from the dropdown</li>
+          <li>Set <strong>Library Name</strong> to <code class="copyable">Documents</code></li>
+          <li>Expand <strong>Advanced parameters</strong> → in <strong>Limit Entries to Folder</strong>, browse to or type <code class="copyable">/Shared Documents/MBR Input</code></li>
+          <li><em>⚠️ Tip: If you can't find the SharePoint action, check <strong>See more</strong> for additional connectors.</em></li>
+        </ul>
+      </td></tr>
+      <tr><td>3</td><td><strong>Compose</strong></td><td>
+        <ul>
+          <li>Click <strong>fx</strong> → paste: <code class="copyable">length(outputs('Get_files_(properties_only)')?['body/value'])</code> → OK</li>
+          <li>Rename this step to <code class="copyable">FileCount</code> (click <strong>...</strong> → <strong>Rename</strong>)</li>
+        </ul>
+      </td></tr>
+      <tr><td>4</td><td><strong>Respond to the agent</strong></td><td>
+        <ul>
+          <li>Click <strong>+ Add an output</strong> → Number</li>
+          <li>Name: <code class="copyable">FileCount</code></li>
+          <li>Value: click <strong>fx</strong> → paste: <code class="copyable">outputs('FileCount')</code> → OK</li>
+        </ul>
+      </td></tr>
     </tbody>
   </table>
-
-  <p><strong>Step 3 expression:</strong></p>
-  <div class="code-block">
-    <button class="copy-btn">Copy</button>
-    <pre><code>length(outputs('Get_files_(properties_only)')?['body/value'])</code></pre>
-  </div>
-
-  <p><strong>Step 4 expression:</strong></p>
-  <div class="code-block">
-    <button class="copy-btn">Copy</button>
-    <pre><code>outputs('FileCount')</code></pre>
-  </div>
 
   <p>Click <strong>Save</strong>.</p>
 
@@ -538,19 +549,32 @@ WHEN INPUT FILES ARE MISSING
   <h3>Flow Name: <code>Save MBR Report to SharePoint</code></h3>
 
   <table class="flow-steps">
-    <thead><tr><th>Step</th><th>What to Add</th><th>Configuration</th></tr></thead>
+    <thead><tr><th>Step</th><th>What to Search</th><th>Configuration</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td><strong>When an agent calls the flow</strong> (trigger)</td><td>Click <strong>+ Add an input</strong> → Text → name: <code class="copyable">ReportContent</code></td></tr>
-      <tr><td>2</td><td><strong>SharePoint — Create file</strong></td><td>Site: your SharePoint site. Folder path: <code class="copyable">Shared Documents/MBR Output</code>. File name: use expression below. For <strong>File Content</strong>: click in the field, then select the ⚡ lightning bolt (dynamic content) icon → under the trigger step, select <strong>ReportContent</strong>. This passes the agent's generated report text into the file.</td></tr>
-      <tr><td>3</td><td><strong>Respond to the agent</strong></td><td>Click <strong>+ Add an output</strong> → <strong>Text</strong> → name: <code class="copyable">FileLink</code>. For the value: click in the value field, then click the ⚡ lightning bolt (dynamic content) icon. Look under the <strong>Create file</strong> step → click <strong>See more</strong> if needed → select <strong>body/Path</strong>. This returns the SharePoint file path so the agent can share it with the user.</td></tr>
+      <tr><td>1</td><td><strong>When an agent calls the flow</strong> (trigger)</td><td>
+        <ul>
+          <li>Click <strong>+ Add an input</strong> → Text</li>
+          <li>Name: <code class="copyable">ReportContent</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>2</td><td><strong>SharePoint — Create file</strong></td><td>
+        <ul>
+          <li>Site: your SharePoint site</li>
+          <li>Folder path: <code class="copyable">Shared Documents/MBR Output</code></li>
+          <li>File name: click <strong>fx</strong> → paste: <code class="copyable">concat('MBR-Report-', formatDateTime(utcNow(), 'yyyy-MM'), '.docx')</code></li>
+          <li><strong>File Content</strong>: click in the field → select the ⚡ lightning bolt (dynamic content) icon → under the trigger step, select <strong>ReportContent</strong></li>
+        </ul>
+      </td></tr>
+      <tr><td>3</td><td><strong>Respond to the agent</strong></td><td>
+        <ul>
+          <li>Click <strong>+ Add an output</strong> → <strong>Text</strong></li>
+          <li>Name: <code class="copyable">FileLink</code></li>
+          <li>Value: click in the value field → click the ⚡ lightning bolt (dynamic content) icon</li>
+          <li>Look under the <strong>Create file</strong> step → click <strong>See more</strong> if needed → select <strong>body/Path</strong></li>
+        </ul>
+      </td></tr>
     </tbody>
   </table>
-
-  <p><strong>Step 2 — File name expression:</strong></p>
-  <div class="code-block">
-    <button class="copy-btn">Copy</button>
-    <pre><code>concat('MBR-Report-', formatDateTime(utcNow(), 'yyyy-MM'), '.docx')</code></pre>
-  </div>
 
   <p>Click <strong>Save</strong>.</p>
 
@@ -619,7 +643,7 @@ WHEN INPUT FILES ARE MISSING
   <p>Now build the canvas step by step:</p>
 
   <h3>Node 1: Check the files</h3>
-  <p>Click <strong>+</strong> below the trigger → <strong>Call an action</strong> → select <strong>Check Input MBR (Agent)</strong>. This returns the <code>FileCount</code> variable.</p>
+  <p>Click <strong>+</strong> below the trigger → <strong>Add a tool</strong> → select <strong>Check Input MBR (Agent)</strong>. This returns the <code>FileCount</code> variable.</p>
 
   <h3>Node 2: Decision</h3>
   <p>Click <strong>+</strong> → <strong>Add a node</strong> → <strong>Condition</strong>. Set: <code>FileCount</code> <strong>is greater than or equal to</strong> <code>6</code>.</p>
@@ -644,11 +668,11 @@ WHEN INPUT FILES ARE MISSING
         <pre><code>Create the consolidated monthly report following your instructions. Use all stream reports and the previous report from the MBR Input folder.</code></pre>
       </div>
       <p>Click <strong>Edit</strong> on Data sources → make sure your MBR Input SharePoint knowledge is selected.</p>
-      <p>Expand the <strong>Advanced</strong> section on the right-hand properties panel → set <strong>Save LLM response</strong> to <strong>Complete (recommended)</strong>. This saves the output to a variable called <code>ReportOutput</code> which you can use in the next step.</p>
+      <p>Expand the <strong>Advanced</strong> section on the right-hand properties panel → set <strong>Save LLM response</strong> to <strong>Complete (recommended)</strong>. Click on <strong>Save bot response</strong> and save as the variable <code>ReportOutput</code>.</p>
     </li>
     <li class="step">
       <div class="step-title">Save the report</div>
-      <p>Click + → <strong>Call an action</strong> → select <strong>Save MBR Report to SharePoint</strong>. For the <code>ReportContent</code> input, click <strong>fx</strong> (formula) and enter:</p>
+      <p>Click + → <strong>Add a tool</strong> → select <strong>Save MBR Report to SharePoint</strong>. For the <code>ReportContent</code> input, click <strong>fx</strong> (formula) and enter:</p>
       <div class="code-block">
         <button class="copy-btn">Copy</button>
         <pre><code>Topic.ReportOutput.Text.Content</code></pre>
@@ -752,22 +776,38 @@ WHEN INPUT FILES ARE MISSING
   <h3>Flow Name: <code>Monitor MBR Input and Notify</code></h3>
 
   <table class="flow-steps">
-    <thead><tr><th>Step</th><th>What to Add</th><th>Configuration</th></tr></thead>
+    <thead><tr><th>Step</th><th>What to Search</th><th>Configuration</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td><strong>SharePoint — When a file is created (properties only)</strong> (trigger)</td><td>Site: your SharePoint site. Library: Documents. Folder: <code class="copyable">MBR Input</code></td></tr>
-      <tr><td>2</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>Site: your SharePoint site. Library: Documents. Folder: <code class="copyable">Shared Documents/MBR Input</code></td></tr>
-      <tr><td>3</td><td><strong>Compose</strong> (rename to <code class="copyable">FileCount</code>)</td><td>Click <strong>fx</strong> → paste expression below</td></tr>
-      <tr><td>4</td><td><strong>Condition</strong></td><td>Left: click <strong>fx</strong> → <code class="copyable">outputs('FileCount')</code>. Operator: <strong>is greater than or equal to</strong>. Right: <code class="copyable">6</code></td></tr>
+      <tr><td>1</td><td><strong>SharePoint — When a file is created (properties only)</strong> (trigger)</td><td>
+        <ul>
+          <li>Site: your SharePoint site</li>
+          <li>Library: Documents</li>
+          <li>Folder: <code class="copyable">MBR Input</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>2</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>
+        <ul>
+          <li>Site: your SharePoint site</li>
+          <li>Library: Documents</li>
+          <li>Folder: <code class="copyable">Shared Documents/MBR Input</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>3</td><td><strong>Compose</strong> (rename to <code class="copyable">FileCount</code>)</td><td>
+        <ul>
+          <li>Click <strong>fx</strong> → paste: <code class="copyable">length(outputs('Get_files_(properties_only)')?['body/value'])</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>4</td><td><strong>Condition</strong></td><td>
+        <ul>
+          <li>Left: click <strong>fx</strong> → <code class="copyable">outputs('FileCount')</code></li>
+          <li>Operator: <strong>is greater than or equal to</strong></li>
+          <li>Right: <code class="copyable">6</code></li>
+        </ul>
+      </td></tr>
       <tr><td>5</td><td><strong>If yes → Office 365 Outlook — Send an email (V2)</strong></td><td>See email details below</td></tr>
       <tr><td>6</td><td><strong>If no</strong></td><td>Leave empty (no action needed — more files will come)</td></tr>
     </tbody>
   </table>
-
-  <p><strong>Step 3 expression:</strong></p>
-  <div class="code-block">
-    <button class="copy-btn">Copy</button>
-    <pre><code>length(outputs('Get_files_(properties_only)')?['body/value'])</code></pre>
-  </div>
 
   <p><strong>Step 5 — Email details:</strong></p>
   <table>
@@ -813,36 +853,60 @@ WHEN INPUT FILES ARE MISSING
   <h3>Build the flow steps in this exact order:</h3>
 
   <table class="flow-steps">
-    <thead><tr><th>Step</th><th>What to Add</th><th>Configuration</th></tr></thead>
+    <thead><tr><th>Step</th><th>What to Search</th><th>Configuration</th></tr></thead>
     <tbody>
       <tr><td>1</td><td><strong>Recurrence</strong> (trigger)</td><td>Already configured above</td></tr>
-      <tr><td>2</td><td><strong>SharePoint — Create new folder</strong></td><td>Site: your site. List or Library: Documents. Folder Path: use expression below</td></tr>
-      <tr><td>3</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>Site: your site. Library: Documents. Folder: <code class="copyable">Shared Documents/MBR Input</code></td></tr>
-      <tr><td>4</td><td><strong>Apply to each</strong></td><td>Select output: <code class="copyable">body/value</code> from step 3</td></tr>
-      <tr><td>4a</td><td>↳ <strong>SharePoint — Move file</strong> (inside the loop)</td><td>Current Site: your site. <strong>File to Move:</strong> select <strong>Identifier</strong> from dynamic content (NOT "Body"). Destination Site: your site. <strong>Destination Folder:</strong> use expression below</td></tr>
-      <tr><td>5</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>Site: your site. Library: Documents. Folder: <code class="copyable">Shared Documents/MBR Output</code>. Rename this step to <code class="copyable">Get_output_files</code></td></tr>
-      <tr><td>6</td><td><strong>SharePoint — Copy file</strong></td><td>Current Site Address: your site. <strong>File to Copy:</strong> use expression below. <strong>Destination Folder:</strong> <code class="copyable">Shared Documents/MBR Input</code>. <strong>If another file is already there:</strong> <code>Replace</code></td></tr>
-      <tr><td>7</td><td><strong>Office 365 Outlook — Send an email (V2)</strong></td><td>To: all stream lead email addresses. Subject and body below</td></tr>
+      <tr><td>2</td><td><strong>SharePoint — Create new folder</strong></td><td>
+        <ul>
+          <li>Site: your site</li>
+          <li>List or Library: Documents</li>
+          <li>Folder Path: click <strong>fx</strong> → paste: <code class="copyable">concat('MBR Archive/', formatDateTime(utcNow(), 'yyyy-MM'))</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>3</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>
+        <ul>
+          <li>Site: your site</li>
+          <li>Library: Documents</li>
+          <li>Folder: <code class="copyable">Shared Documents/MBR Input</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>4</td><td><strong>Apply to each</strong></td><td>
+        <ul>
+          <li>Select output: <code class="copyable">body/value</code> from step 3</li>
+        </ul>
+      </td></tr>
+      <tr><td>4a</td><td>↳ <strong>SharePoint — Move file</strong> (inside the loop)</td><td>
+        <ul>
+          <li>Current Site: your site</li>
+          <li><strong>File to Move:</strong> select <strong>Identifier</strong> from dynamic content (NOT "Body")</li>
+          <li>Destination Site: your site</li>
+          <li><strong>Destination Folder:</strong> click <strong>fx</strong> → paste: <code class="copyable">concat('Shared Documents/MBR Archive/', formatDateTime(utcNow(), 'yyyy-MM'))</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>5</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>
+        <ul>
+          <li>Site: your site</li>
+          <li>Library: Documents</li>
+          <li>Folder: <code class="copyable">Shared Documents/MBR Output</code></li>
+          <li>Rename this step to <code class="copyable">Get_output_files</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>6</td><td><strong>SharePoint — Copy file</strong></td><td>
+        <ul>
+          <li>Current Site Address: your site</li>
+          <li><strong>File to Copy:</strong> click <strong>fx</strong> → paste: <code class="copyable">last(body('Get_output_files')?['value'])?['{Identifier}']</code></li>
+          <li><strong>Destination Folder:</strong> <code class="copyable">Shared Documents/MBR Input</code></li>
+          <li><strong>If another file is already there:</strong> <code>Replace</code></li>
+        </ul>
+      </td></tr>
+      <tr><td>7</td><td><strong>Office 365 Outlook — Send an email (V2)</strong></td><td>
+        <ul>
+          <li>To: all stream lead email addresses</li>
+          <li>Subject and body below</li>
+        </ul>
+      </td></tr>
     </tbody>
   </table>
-
-  <p><strong>Step 2 — Folder path expression:</strong></p>
-  <div class="code-block">
-    <button class="copy-btn">Copy</button>
-    <pre><code>concat('MBR Archive/', formatDateTime(utcNow(), 'yyyy-MM'))</code></pre>
-  </div>
-
-  <p><strong>Step 4a — Destination folder expression:</strong></p>
-  <div class="code-block">
-    <button class="copy-btn">Copy</button>
-    <pre><code>concat('Shared Documents/MBR Archive/', formatDateTime(utcNow(), 'yyyy-MM'))</code></pre>
-  </div>
-
-  <p><strong>Step 6 — Source expression:</strong></p>
-  <div class="code-block">
-    <button class="copy-btn">Copy</button>
-    <pre><code>last(body('Get_output_files')?['value'])?['{Identifier}']</code></pre>
-  </div>
 
   <p><strong>Step 7 — Email:</strong></p>
   <p>Use the rich text editor (not raw HTML). Type the content and use the <strong>link icon</strong> (🔗) in the toolbar to make the folder link clickable:</p>
@@ -1138,6 +1202,36 @@ PMO Automated Reporting</div>
 </section>
 
 </main>
+
+<!-- ========== FLOATING URL WIDGET ========== -->
+<div class="url-widget" id="url-widget">
+  <div class="url-widget-header" id="url-widget-toggle">
+    <span>📋 Your URLs</span>
+    <button class="url-widget-collapse" aria-label="Toggle widget">▲</button>
+  </div>
+  <div class="url-widget-body" id="url-widget-body">
+    <div class="url-widget-row">
+      <span class="url-widget-label">Site Address</span>
+      <span class="url-widget-value" id="widget-site" data-source="url-site">Not set</span>
+      <button class="url-widget-copy" title="Copy">Copy</button>
+    </div>
+    <div class="url-widget-row">
+      <span class="url-widget-label">MBR Input</span>
+      <span class="url-widget-value" id="widget-input" data-source="url-input">Not set</span>
+      <button class="url-widget-copy" title="Copy">Copy</button>
+    </div>
+    <div class="url-widget-row">
+      <span class="url-widget-label">MBR Output</span>
+      <span class="url-widget-value" id="widget-output" data-source="url-output">Not set</span>
+      <button class="url-widget-copy" title="Copy">Copy</button>
+    </div>
+    <div class="url-widget-row">
+      <span class="url-widget-label">MBR Archive</span>
+      <span class="url-widget-value" id="widget-archive" data-source="url-archive">Not set</span>
+      <button class="url-widget-copy" title="Copy">Copy</button>
+    </div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>

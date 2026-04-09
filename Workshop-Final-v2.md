@@ -97,6 +97,7 @@ You need both. The flows handle logistics. The agent handles thinking.
 
 | Folder | URL |
 |--------|-----|
+| SharePoint Site Address | |
 | MBR Input | |
 | MBR Output | |
 | MBR Archive | |
@@ -262,10 +263,10 @@ In **Copilot Studio**, go to **Actions** and create a new **Agent flow**.
 
 ### Flow Name: `Check Input MBR (Agent)`
 
-| Step | What to Add | Configuration |
+| Step | What to Search | Configuration |
 |------|-------------|---------------|
 | 1 | **When an agent calls the flow** (trigger) | No inputs needed |
-| 2 | **SharePoint — Get files (properties only)** | Create a SharePoint connection if you haven't already. Select your **Site Address** from the dropdown. Set **Library Name** to `Documents`. Expand **Advanced parameters** → in **Limit Entries to Folder**, browse to or type `/Shared Documents/MBR Input` |
+| 2 | **SharePoint — Get files (properties only)** | Create a SharePoint connection if you haven't already. Select your **Site Address** from the dropdown. Set **Library Name** to `Documents`. Expand **Advanced parameters** → in **Limit Entries to Folder**, browse to or type `/Shared Documents/MBR Input`. ⚠️ *Tip: If you can't find the SharePoint action, check **See more** for additional connectors.* |
 | 3 | **Compose** | Click **fx** → paste: `length(outputs('Get_files_(properties_only)')?['body/value'])` → click OK. Rename this step to `FileCount` (click **...** → Rename) |
 | 4 | **Respond to the agent** | Click **+ Add an output** → Number → name: `FileCount` → value: click **fx** → `outputs('FileCount')` → OK |
 
@@ -288,7 +289,7 @@ Create another new **Agent flow** in Copilot Studio (**Actions**).
 
 ### Flow Name: `Save MBR Report to SharePoint`
 
-| Step | What to Add | Configuration |
+| Step | What to Search | Configuration |
 |------|-------------|---------------|
 | 1 | **When an agent calls the flow** (trigger) | Click **+ Add an input** → Text → name: `ReportContent` |
 | 2 | **SharePoint — Create file** | Site: your SharePoint site. Folder path: `Shared Documents/MBR Output`. File name: click **fx** → `concat('MBR-Report-', formatDateTime(utcNow(), 'yyyy-MM'), '.docx')`. For **File Content**: click in the field, then select the ⚡ lightning bolt (dynamic content) icon → under the trigger step, select **ReportContent**. This passes the agent's generated report text into the file. |
@@ -333,7 +334,7 @@ Your Tools section should now show both flows:
 Now build the canvas step by step:
 
 ### Node 1: Check the files
-- Click **+** below the trigger → **Call an action** → select **Check Input MBR (Agent)**
+- Click **+** below the trigger → **Add a tool** → select **Check Input MBR (Agent)**
 - This returns the `FileCount` variable
 
 ### Node 2: Decision
@@ -350,9 +351,9 @@ In the **Yes** (left) branch, add these nodes in order:
    - Input: `Create the consolidated monthly report following your instructions. Use all stream reports and the previous report from the MBR Input folder.`
    - Click **Edit** on Data sources → make sure your MBR Input SharePoint knowledge is selected
    - Expand the **Advanced** section on the right-hand properties panel → set **Save LLM response** to **Complete (recommended)**
-   - This saves the output to a variable called `ReportOutput` which you can use in the next step
+   - Click on **Save bot response** and save as the variable `ReportOutput`
 
-3. **Click + → Call an action** → select **Save MBR Report to SharePoint**
+3. **Click + → Add a tool** → select **Save MBR Report to SharePoint**
    - For the `ReportContent` input, click **fx** (formula) and enter: `Topic.ReportOutput.Text.Content`
    - This returns the `FileLink` variable
 
@@ -416,7 +417,7 @@ In **Copilot Studio**, go to **Actions** and create a new **Agent flow**.
 
 ### Flow Name: `Monitor MBR Input and Notify`
 
-| Step | What to Add | Configuration |
+| Step | What to Search | Configuration |
 |------|-------------|---------------|
 | 1 | **SharePoint — When a file is created (properties only)** (trigger) | Site: your SharePoint site. Library: Documents. Folder: `MBR Input` |
 | 2 | **SharePoint — Get files (properties only)** | Site: your SharePoint site. Library: Documents. Folder: `Shared Documents/MBR Input` |
@@ -450,7 +451,7 @@ In **Copilot Studio**, go to **Automations** > **Cloud flows** and create a new 
 
 ### Build the flow steps in this exact order:
 
-| Step | What to Add | Configuration |
+| Step | What to Search | Configuration |
 |------|-------------|---------------|
 | 1 | **Recurrence** (trigger) | Already configured above |
 | 2 | **SharePoint — Create new folder** | Site: your site. List or Library: Documents. Folder Path: click **fx** → `concat('MBR Archive/', formatDateTime(utcNow(), 'yyyy-MM'))` |
