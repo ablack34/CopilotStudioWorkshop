@@ -477,7 +477,7 @@ WHEN INPUT FILES ARE MISSING
         <ul>
           <li>Site: your SharePoint site</li>
           <li>Folder path: <code class="copyable">Shared Documents/MBR Output</code></li>
-          <li>File name: click <strong>fx</strong> → paste: <code class="copyable">concat('MBR-Report-', formatDateTime(utcNow(), 'yyyy-MM'), '.docx')</code></li>
+          <li>File name: click <strong>fx</strong> → paste: <code class="copyable">concat('MBR-Report-', formatDateTime(utcNow(), 'yyyy-MM'), '.md')</code></li>
           <li><strong>File Content</strong>: click in the field → select the ⚡ lightning bolt (dynamic content) icon → under the trigger step, select <strong>ReportContent</strong></li>
         </ul>
       </td></tr>
@@ -742,7 +742,7 @@ WHEN INPUT FILES ARE MISSING
       <div class="step-title">Create Planner tasks</div>
       <p>Click + → <strong>Add a tool</strong> → select <strong>Create Planner Task from Report</strong>.</p>
       <ul>
-        <li>For <code>TaskTitle</code>: click <strong>fx</strong> and enter: <code class="copyable">'Review MBR Action Items — ' + Text(Now(), "[$-en-US]mmmm yyyy")</code></li>
+        <li>For <code>TaskTitle</code>: click <strong>fx</strong> and enter: <code class="copyable">Concatenate("Review MBR Action Items - ", Text(Now(), "mmmm yyyy"))</code></li>
       </ul>
       <div class="callout tip">
         <div class="callout-title">💡 Tip — Multiple tasks</div>
@@ -837,7 +837,7 @@ You can ask me follow-up questions about the report content.</code></pre>
   <table>
     <thead><tr><th>Check</th><th>Where to Look</th><th>What to Expect</th></tr></thead>
     <tbody>
-      <tr><td><strong>Report document</strong></td><td>Click the SharePoint link in the agent's response</td><td>Word document (<code>MBR-Report-2026-04.docx</code>) opens with the consolidated report</td></tr>
+      <tr><td><strong>Report document</strong></td><td>Click the SharePoint link in the agent's response</td><td>Markdown file (<code>MBR-Report-2026-04.md</code>) opens with the consolidated report</td></tr>
       <tr><td><strong>Email notification</strong></td><td>Check your Outlook inbox</td><td>Email with subject "Monthly Business Report — Ready for Review" containing the report link and summary</td></tr>
       <tr><td><strong>Planner task</strong></td><td>Open <a href="https://tasks.office.com" target="_blank" rel="noopener">tasks.office.com</a> → MBR Action Items → "From Report" bucket</td><td>A new task for reviewing the MBR action items</td></tr>
       <tr><td><strong>Report content</strong></td><td>Read the chat output</td><td>Executive Summary, Change Log by Stream, Cross-Stream Observations, Open Leadership Attention, Action Items</td></tr>
