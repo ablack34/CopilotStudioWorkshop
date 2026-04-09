@@ -82,7 +82,29 @@ body {
   color: var(--color-primary);
   display: flex;
   align-items: center;
+  gap: 12px;
+}
+
+.header-logos {
+  display: flex;
+  align-items: center;
   gap: 10px;
+}
+
+.header-logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
+.pmi-logo {
+  height: 32px;
+}
+
+.logo-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--color-border);
 }
 
 .header-title svg {
@@ -243,6 +265,124 @@ body {
   color: var(--color-text-secondary);
   margin-bottom: 24px;
   line-height: 1.7;
+}
+
+/* --- URL Reference Box --- */
+.url-reference-box {
+  background: var(--color-blue-bg);
+  border: 1px solid var(--color-blue-border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+
+.url-reference-box h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--color-text);
+}
+
+.url-input-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.url-input-group:last-child {
+  margin-bottom: 0;
+}
+
+.url-input-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  min-width: 100px;
+}
+
+.url-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-text);
+  background: var(--color-surface);
+  transition: border-color 0.15s ease;
+}
+
+.url-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.15);
+}
+
+.url-input::placeholder {
+  color: #C8C6C4;
+}
+
+/* --- Download Grid --- */
+
+/* --- Screenshots --- */
+.screenshot {
+  margin: 20px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.screenshot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.download-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 20px 0 28px;
+}
+
+.download-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--color-text);
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.download-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.download-icon {
+  font-size: 28px;
+}
+
+.download-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  text-align: center;
+  word-break: break-all;
+}
+
+.download-stream {
+  font-size: 11.5px;
+  color: var(--color-text-secondary);
 }
 
 /* --- Callout Boxes --- */
@@ -648,6 +788,34 @@ pre code.copyable::before { display: none; }
   border-radius: var(--radius);
   padding: 40px 36px;
   margin-bottom: 40px;
+}
+
+.hero-logos {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.hero-logo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.pmi-hero-logo {
+  height: 56px;
+  filter: brightness(0) invert(1);
+}
+
+.msft-hero-logo {
+  height: 44px;
+}
+
+.hero-logo-x {
+  font-size: 20px;
+  font-weight: 300;
+  opacity: 0.6;
 }
 
 .hero h1 {

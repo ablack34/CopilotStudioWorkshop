@@ -12,7 +12,11 @@
 <header class="site-header">
   <div class="header-content">
     <div class="header-title">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#0078D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="header-logos">
+        <img src="images/PMI_LOGO.png" alt="PMI" class="header-logo pmi-logo">
+        <span class="logo-divider"></span>
+        <img src="images/MSFT_LOGO.webp" alt="Microsoft" class="header-logo msft-logo">
+      </div>
       Copilot Studio Workshop
     </div>
     <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
@@ -69,6 +73,11 @@
 <section class="workshop-section" id="big-picture">
 
   <div class="hero">
+    <div class="hero-logos">
+      <img src="images/PMI_LOGO.png" alt="Philip Morris International" class="hero-logo pmi-hero-logo">
+      <span class="hero-logo-x">×</span>
+      <img src="images/MSFT_LOGO.webp" alt="Microsoft" class="hero-logo msft-hero-logo">
+    </div>
     <h1>Copilot Studio Workshop</h1>
     <p>Automating Monthly Business Reporting with AI Agents and Flows</p>
     <div class="hero-meta">
@@ -86,36 +95,36 @@
 <pre>
 ┌─────────────────────────────────────────────────────────────────┐
 │                                                                 │
-│   ┌─────────────────────┐                                       │
-│   │  PREPARATION FLOW   │  Scheduled: 1st of each month        │
-│   │  • Archive old files │                                      │
-│   │  • Copy previous     │                                      │
-│   │    report to Input   │                                      │
-│   │  • Send reminders    │                                      │
-│   └─────────┬───────────┘                                       │
-│             │                                                   │
-│             ▼                                                   │
+│   ┌───────────────────────┐                                     │
+│   │  PREPARATION FLOW     │  Scheduled: 1st of each month      │
+│   │  • Archive old files  │                                     │
+│   │  • Copy previous      │                                     │
+│   │    report to Input    │                                     │
+│   │  • Send reminders     │                                     │
+│   └───────────┬───────────┘                                     │
+│               │                                                 │
+│               ▼                                                 │
 │   Stream leads upload 5 reports ← only manual step              │
-│             │                                                   │
-│             ▼                                                   │
-│   ┌─────────────────────┐                                       │
-│   │  MONITOR FLOW       │  Event-driven: on each file upload   │
-│   │  • Count files      │                                       │
-│   │  • All 5 present?   │                                       │
-│   │  • Notify user      │                                       │
-│   └─────────┬───────────┘                                       │
-│             │                                                   │
-│             ▼                                                   │
-│   ┌─────────────────────┐                                       │
-│   │  AI AGENT           │  Triggered by user: "Generate report"│
-│   │  • Verify files     │                                       │
-│   │  • Read all reports │                                       │
-│   │  • Generate summary │                                       │
-│   │  • Compare to last  │                                       │
-│   │    month            │                                       │
-│   │  • Save to Output   │                                       │
-│   │  • Return link      │                                       │
-│   └─────────────────────┘                                       │
+│               │                                                 │
+│               ▼                                                 │
+│   ┌───────────────────────┐                                     │
+│   │  MONITOR FLOW         │  Event-driven: on each file upload  │
+│   │  • Count files        │                                     │
+│   │  • All 5 present?     │                                     │
+│   │  • Notify user        │                                     │
+│   └───────────┬───────────┘                                     │
+│               │                                                 │
+│               ▼                                                 │
+│   ┌───────────────────────┐                                     │
+│   │  AI AGENT             │  Triggered by user: "Generate report│
+│   │  • Verify files       │                                     │
+│   │  • Read all reports   │                                     │
+│   │  • Generate summary   │                                     │
+│   │  • Compare to last    │                                     │
+│   │    month              │                                     │
+│   │  • Save to Output     │                                     │
+│   │  • Return link        │                                     │
+│   └───────────────────────┘                                     │
 │                                                                 │
 │   ...next month, cycle repeats automatically                    │
 │                                                                 │
@@ -217,8 +226,58 @@
     </li>
   </ol>
 
+  <div class="url-reference-box">
+    <h3>📋 Paste your folder URLs here for reference</h3>
+    <div class="url-input-group">
+      <label for="url-input">MBR Input</label>
+      <input type="url" id="url-input" class="url-input" placeholder="https://yoursite.sharepoint.com/...MBR%20Input">
+    </div>
+    <div class="url-input-group">
+      <label for="url-output">MBR Output</label>
+      <input type="url" id="url-output" class="url-input" placeholder="https://yoursite.sharepoint.com/...MBR%20Output">
+    </div>
+    <div class="url-input-group">
+      <label for="url-archive">MBR Archive</label>
+      <input type="url" id="url-archive" class="url-input" placeholder="https://yoursite.sharepoint.com/...MBR%20Archive">
+    </div>
+  </div>
+
   <h2>Step 2 — Upload Sample Files</h2>
-  <p>Upload these 6 files into the <strong>MBR Input</strong> folder:</p>
+  <p>Upload these 6 files into the <strong>MBR Input</strong> folder. Download them below, then upload to SharePoint:</p>
+
+  <div class="download-grid">
+    <a href="downloads/UX_March2026.docx" download class="download-card">
+      <span class="download-icon">📄</span>
+      <span class="download-name">UX_March2026.docx</span>
+      <span class="download-stream">UX</span>
+    </a>
+    <a href="downloads/FrontendDev_March2026.docx" download class="download-card">
+      <span class="download-icon">📄</span>
+      <span class="download-name">FrontendDev_March2026.docx</span>
+      <span class="download-stream">Frontend Development</span>
+    </a>
+    <a href="downloads/BackendDev_March2026.docx" download class="download-card">
+      <span class="download-icon">📄</span>
+      <span class="download-name">BackendDev_March2026.docx</span>
+      <span class="download-stream">Backend Development</span>
+    </a>
+    <a href="downloads/Integrations_March2026.docx" download class="download-card">
+      <span class="download-icon">📄</span>
+      <span class="download-name">Integrations_March2026.docx</span>
+      <span class="download-stream">Integrations</span>
+    </a>
+    <a href="downloads/Testing_March2026.docx" download class="download-card">
+      <span class="download-icon">📄</span>
+      <span class="download-name">Testing_March2026.docx</span>
+      <span class="download-stream">Testing</span>
+    </a>
+    <a href="downloads/MonthlyReport_February2026.docx" download class="download-card">
+      <span class="download-icon">📄</span>
+      <span class="download-name">MonthlyReport_February2026.docx</span>
+      <span class="download-stream">Previous month's report</span>
+    </a>
+  </div>
+
   <table>
     <thead><tr><th>File</th><th>Stream</th></tr></thead>
     <tbody>
@@ -392,6 +451,11 @@ WHEN INPUT FILES ARE MISSING
     </li>
   </ol>
 
+  <p>Your agent should now look like this — with instructions, knowledge sources (MBR Input &amp; MBR Output), and the agent details filled in:</p>
+  <div class="screenshot">
+    <img src="images/agent-builder-after-a3.png" alt="Agent Builder after A3 — Instructions and Knowledge configured" loading="lazy">
+  </div>
+
   <!-- A4 -->
   <h2 id="a4-save">A4. Save the Agent</h2>
   <p>Click <strong>Save</strong> at the top. Don't publish yet — we need to add the topic and flows first.</p>
@@ -413,17 +477,17 @@ WHEN INPUT FILES ARE MISSING
     Before the agent generates a report, it needs to verify that all 5 stream reports have been uploaded. The agent can't count files in SharePoint on its own — it needs a flow to do that. This small flow checks the folder and returns the file count to the agent.
   </div>
 
-  <p>In <strong>Copilot Studio</strong>, go to <strong>Automations</strong> &gt; <strong>Cloud flows</strong> and create a new <strong>Instant cloud flow</strong>.</p>
+  <p>In <strong>Copilot Studio</strong>, go to <strong>Actions</strong> and create a new <strong>Agent flow</strong>.</p>
 
   <h3>Flow Name: <code>Check Input MBR (Agent)</code></h3>
 
   <table class="flow-steps">
     <thead><tr><th>Step</th><th>What to Add</th><th>Configuration</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td><strong>Run a flow from Copilot</strong> (trigger)</td><td>No inputs needed</td></tr>
-      <tr><td>2</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>Site: your SharePoint site. Library: Documents. Folder: <code class="copyable">Shared Documents/MBR Input</code></td></tr>
+      <tr><td>1</td><td><strong>When an agent calls the flow</strong> (trigger)</td><td>No inputs needed</td></tr>
+      <tr><td>2</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>Create a SharePoint connection if you haven't already. Select your <strong>Site Address</strong> from the dropdown. Set <strong>Library Name</strong> to <code class="copyable">Documents</code>. Expand <strong>Advanced parameters</strong> → in <strong>Limit Entries to Folder</strong>, browse to or type <code class="copyable">/Shared Documents/MBR Input</code></td></tr>
       <tr><td>3</td><td><strong>Compose</strong></td><td>Click <strong>fx</strong> → paste expression below → OK. Rename this step to <code class="copyable">FileCount</code> (click <strong>...</strong> → <strong>Rename</strong>)</td></tr>
-      <tr><td>4</td><td><strong>Respond to Copilot</strong></td><td>Click <strong>+ Add an output</strong> → Number → name: <code class="copyable">FileCount</code> → value: click <strong>fx</strong> → expression below → OK</td></tr>
+      <tr><td>4</td><td><strong>Respond to the agent</strong></td><td>Click <strong>+ Add an output</strong> → Number → name: <code class="copyable">FileCount</code> → value: click <strong>fx</strong> → expression below → OK</td></tr>
     </tbody>
   </table>
 
@@ -465,16 +529,16 @@ WHEN INPUT FILES ARE MISSING
     After the agent generates the report, it needs to save it as a Word document in SharePoint. Again, the agent can't write files on its own — it needs a flow. This flow takes the report text, creates a Word document, and returns the SharePoint link.
   </div>
 
-  <p>Create another new <strong>Instant cloud flow</strong> in Copilot Studio (<strong>Automations</strong> &gt; <strong>Cloud flows</strong>).</p>
+  <p>Create another new <strong>Agent flow</strong> in Copilot Studio (<strong>Actions</strong>).</p>
 
   <h3>Flow Name: <code>Save MBR Report to SharePoint</code></h3>
 
   <table class="flow-steps">
     <thead><tr><th>Step</th><th>What to Add</th><th>Configuration</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td><strong>Run a flow from Copilot</strong> (trigger)</td><td>Click <strong>+ Add an input</strong> → Text → name: <code class="copyable">ReportContent</code></td></tr>
-      <tr><td>2</td><td><strong>SharePoint — Create file</strong></td><td>Site: your SharePoint site. Folder path: <code class="copyable">Shared Documents/MBR Output</code>. File name: use expression below. File content: select the <code>ReportContent</code> input</td></tr>
-      <tr><td>3</td><td><strong>Respond to Copilot</strong></td><td>Click <strong>+ Add an output</strong> → Text → name: <code class="copyable">FileLink</code> → value: select <strong>Link to item</strong> from the Create file step's dynamic content</td></tr>
+      <tr><td>1</td><td><strong>When an agent calls the flow</strong> (trigger)</td><td>Click <strong>+ Add an input</strong> → Text → name: <code class="copyable">ReportContent</code></td></tr>
+      <tr><td>2</td><td><strong>SharePoint — Create file</strong></td><td>Site: your SharePoint site. Folder path: <code class="copyable">Shared Documents/MBR Output</code>. File name: use expression below. For <strong>File Content</strong>: click in the field, then select the ⚡ lightning bolt (dynamic content) icon → under the trigger step, select <strong>ReportContent</strong>. This passes the agent's generated report text into the file.</td></tr>
+      <tr><td>3</td><td><strong>Respond to the agent</strong></td><td>Click <strong>+ Add an output</strong> → <strong>Text</strong> → name: <code class="copyable">FileLink</code>. For the value: click in the value field, then click the ⚡ lightning bolt (dynamic content) icon. Look under the <strong>Create file</strong> step → click <strong>See more</strong> if needed → select <strong>body/Path</strong>. This returns the SharePoint file path so the agent can share it with the user.</td></tr>
     </tbody>
   </table>
 
@@ -496,25 +560,33 @@ WHEN INPUT FILES ARE MISSING
   </div>
 
   <!-- A7 -->
-  <h2 id="a7-actions">A7. Add Both Flows as Actions in the Agent</h2>
+  <h2 id="a7-actions">A7. Add Both Flows as Tools in the Agent</h2>
   <ol class="steps">
     <li class="step">
       <div class="step-title">Open your agent</div>
       <p>Back in <strong>Copilot Studio</strong>, open your agent.</p>
     </li>
     <li class="step">
-      <div class="step-title">Navigate to Actions</div>
-      <p>Go to <strong>Actions</strong> in the left navigation.</p>
-    </li>
-    <li class="step">
       <div class="step-title">Add Check Input flow</div>
-      <p>Click <strong>+ Add an action</strong> → search for <strong>Check Input MBR (Agent)</strong> → add it.</p>
-    </li>
-    <li class="step">
-      <div class="step-title">Add Save Report flow</div>
-      <p>Click <strong>+ Add an action</strong> → search for <strong>Save MBR Report to SharePoint</strong> → add it.</p>
+      <p>Click <strong>+ Add a tool</strong> → search for <strong>Check Input MBR (Agent)</strong> → add it.</p>
     </li>
   </ol>
+
+  <div class="screenshot">
+    <img src="images/a7-add-tool-dialog.png" alt="Add tool dialog showing agent flows" loading="lazy">
+  </div>
+
+  <ol class="steps" start="3">
+    <li class="step">
+      <div class="step-title">Add Save Report flow</div>
+      <p>Click <strong>+ Add a tool</strong> → search for <strong>Save MBR Report to SharePoint</strong> → add it.</p>
+    </li>
+  </ol>
+
+  <p>Your Tools section should now show both flows:</p>
+  <div class="screenshot">
+    <img src="images/a7-tools-added.png" alt="Tools section with both flows added" loading="lazy">
+  </div>
 
   <!-- A8 -->
   <h2 id="a8-topic">A8. Create the "Generate Monthly Report" Topic</h2>
@@ -546,7 +618,7 @@ WHEN INPUT FILES ARE MISSING
   <p>Click <strong>+</strong> below the trigger → <strong>Call an action</strong> → select <strong>Check Input MBR (Agent)</strong>. This returns the <code>FileCount</code> variable.</p>
 
   <h3>Node 2: Decision</h3>
-  <p>Click <strong>+</strong> → <strong>Add a node</strong> → <strong>Condition</strong>. Set: <code>FileCount</code> <strong>is greater than or equal to</strong> <code>5</code>.</p>
+  <p>Click <strong>+</strong> → <strong>Add a node</strong> → <strong>Condition</strong>. Set: <code>FileCount</code> <strong>is greater than or equal to</strong> <code>6</code>.</p>
 
   <h3>Node 3a: YES branch — Generate and save</h3>
   <p>In the <strong>Yes</strong> (left) branch, add these nodes in order:</p>
@@ -567,11 +639,17 @@ WHEN INPUT FILES ARE MISSING
         <button class="copy-btn">Copy</button>
         <pre><code>Create the consolidated monthly report following your instructions. Use all stream reports and the previous report from the MBR Input folder.</code></pre>
       </div>
-      <p>Click <strong>Edit</strong> on Data sources → make sure your MBR Input SharePoint knowledge is selected. The output is automatically saved to a variable (e.g., <code>ReportOutput</code>).</p>
+      <p>Click <strong>Edit</strong> on Data sources → make sure your MBR Input SharePoint knowledge is selected.</p>
+      <p>Expand the <strong>Advanced</strong> section on the right-hand properties panel → set <strong>Save LLM response</strong> to <strong>Complete (recommended)</strong>. This saves the output to a variable called <code>ReportOutput</code> which you can use in the next step.</p>
     </li>
     <li class="step">
       <div class="step-title">Save the report</div>
-      <p>Click + → <strong>Call an action</strong> → select <strong>Save MBR Report to SharePoint</strong>. Map the input: <code>ReportContent</code> = <code>ReportOutput.Text</code>. This returns the <code>FileLink</code> variable.</p>
+      <p>Click + → <strong>Call an action</strong> → select <strong>Save MBR Report to SharePoint</strong>. For the <code>ReportContent</code> input, click <strong>fx</strong> (formula) and enter:</p>
+      <div class="code-block">
+        <button class="copy-btn">Copy</button>
+        <pre><code>Topic.ReportOutput.Text.Content</code></pre>
+      </div>
+      <p>This returns the <code>FileLink</code> variable.</p>
     </li>
     <li class="step">
       <div class="step-title">Return the link</div>
@@ -579,12 +657,16 @@ WHEN INPUT FILES ARE MISSING
     </li>
   </ol>
 
+  <div class="screenshot">
+    <img src="images/a8-topic-canvas-node3a.png" alt="Topic canvas showing the YES branch with condition, message, generative answers, and save action" loading="lazy">
+  </div>
+
   <h3>Node 3b: NO branch — Tell the user</h3>
   <p>In the <strong>No</strong> (right) branch:</p>
   <ol class="steps">
     <li class="step">
       <div class="step-title">Send a message</div>
-      <p>Click + → <strong>Send a message</strong>. Text: <code>Only </code> then click <strong>{x}</strong> and insert <code>FileCount</code>, then continue typing: <code> file(s) found in MBR Input. Please ensure all 5 stream reports are uploaded before generating the report.</code></p>
+      <p>Click + → <strong>Send a message</strong>. Text: <code>Only </code> then click <strong>{x}</strong> and insert <code>FileCount</code>, then continue typing: <code> file(s) found in MBR Input. Please ensure all 5 stream reports and the previous month's report are uploaded before generating the report.</code></p>
     </li>
   </ol>
 
@@ -661,7 +743,7 @@ WHEN INPUT FILES ARE MISSING
     <strong>Where it fits:</strong> After the reminder emails go out and before the agent runs. This is the bridge between human action (uploading) and AI action (generating).
   </div>
 
-  <p>In <strong>Copilot Studio</strong>, go to <strong>Automations</strong> &gt; <strong>Cloud flows</strong> and create a new <strong>Automated cloud flow</strong>.</p>
+  <p>In <strong>Copilot Studio</strong>, go to <strong>Actions</strong> and create a new <strong>Agent flow</strong>.</p>
 
   <h3>Flow Name: <code>Monitor MBR Input and Notify</code></h3>
 
@@ -671,7 +753,7 @@ WHEN INPUT FILES ARE MISSING
       <tr><td>1</td><td><strong>SharePoint — When a file is created (properties only)</strong> (trigger)</td><td>Site: your SharePoint site. Library: Documents. Folder: <code class="copyable">MBR Input</code></td></tr>
       <tr><td>2</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>Site: your SharePoint site. Library: Documents. Folder: <code class="copyable">Shared Documents/MBR Input</code></td></tr>
       <tr><td>3</td><td><strong>Compose</strong> (rename to <code class="copyable">FileCount</code>)</td><td>Click <strong>fx</strong> → paste expression below</td></tr>
-      <tr><td>4</td><td><strong>Condition</strong></td><td>Left: click <strong>fx</strong> → <code class="copyable">outputs('FileCount')</code>. Operator: <strong>is greater than or equal to</strong>. Right: <code class="copyable">5</code></td></tr>
+      <tr><td>4</td><td><strong>Condition</strong></td><td>Left: click <strong>fx</strong> → <code class="copyable">outputs('FileCount')</code>. Operator: <strong>is greater than or equal to</strong>. Right: <code class="copyable">6</code></td></tr>
       <tr><td>5</td><td><strong>If yes → Office 365 Outlook — Send an email (V2)</strong></td><td>See email details below</td></tr>
       <tr><td>6</td><td><strong>If no</strong></td><td>Leave empty (no action needed — more files will come)</td></tr>
     </tbody>
@@ -735,7 +817,7 @@ WHEN INPUT FILES ARE MISSING
       <tr><td>4</td><td><strong>Apply to each</strong></td><td>Select output: <code class="copyable">body/value</code> from step 3</td></tr>
       <tr><td>4a</td><td>↳ <strong>SharePoint — Move file</strong> (inside the loop)</td><td>Current Site: your site. <strong>File to Move:</strong> select <strong>Identifier</strong> from dynamic content (NOT "Body"). Destination Site: your site. <strong>Destination Folder:</strong> use expression below</td></tr>
       <tr><td>5</td><td><strong>SharePoint — Get files (properties only)</strong></td><td>Site: your site. Library: Documents. Folder: <code class="copyable">Shared Documents/MBR Output</code>. Rename this step to <code class="copyable">Get_output_files</code></td></tr>
-      <tr><td>6</td><td><strong>SharePoint — Copy file</strong></td><td>Source: use expression below. Destination: <code class="copyable">Shared Documents/MBR Input/Previous-Report.docx</code></td></tr>
+      <tr><td>6</td><td><strong>SharePoint — Copy file</strong></td><td>Current Site Address: your site. <strong>File to Copy:</strong> use expression below. <strong>Destination Folder:</strong> <code class="copyable">Shared Documents/MBR Input</code>. <strong>If another file is already there:</strong> <code>Replace</code></td></tr>
       <tr><td>7</td><td><strong>Office 365 Outlook — Send an email (V2)</strong></td><td>To: all stream lead email addresses. Subject and body below</td></tr>
     </tbody>
   </table>
