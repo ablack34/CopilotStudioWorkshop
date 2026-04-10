@@ -138,8 +138,8 @@
 
   var toggle = document.getElementById('url-widget-toggle');
   var widget = document.getElementById('url-widget');
-  var sources = ['url-site', 'url-input', 'url-output', 'url-archive'];
-  var widgetIds = ['widget-site', 'widget-input', 'widget-output', 'widget-archive'];
+  var sources = ['url-site', 'url-input', 'url-output', 'url-archive', 'url-planner-group'];
+  var widgetIds = ['widget-site', 'widget-input', 'widget-output', 'widget-archive', 'widget-planner-group'];
   var STORAGE_KEY = 'workshop-urls';
 
   // Collapse/expand

@@ -158,23 +158,23 @@
     <h3>📋 Workshop Environment Details</h3>
     <div class="url-input-group">
       <label for="url-site">SharePoint Site Address</label>
-      <input type="url" id="url-site" class="url-input" placeholder="https://yourorg.sharepoint.com/sites/MBRWorkshop">
+      <input type="url" id="url-site" class="url-input" value="https://pmicloud.sharepoint.com/teams/MSCopilotStudioWorkshop-ITLT-Global">
     </div>
     <div class="url-input-group">
       <label for="url-input">MBR Input Folder</label>
-      <input type="url" id="url-input" class="url-input" placeholder="https://yoursite.sharepoint.com/...MBR%20Input">
+      <input type="url" id="url-input" class="url-input" value="https://pmicloud.sharepoint.com/teams/MSCopilotStudioWorkshop-ITLT-Global/Shared%20Documents/General/MBR%20Input">
     </div>
     <div class="url-input-group">
       <label for="url-output">MBR Output Folder</label>
-      <input type="url" id="url-output" class="url-input" placeholder="https://yoursite.sharepoint.com/...MBR%20Output">
+      <input type="url" id="url-output" class="url-input" value="https://pmicloud.sharepoint.com/teams/MSCopilotStudioWorkshop-ITLT-Global/Shared%20Documents/General/MBR%20Output">
     </div>
     <div class="url-input-group">
       <label for="url-archive">MBR Archive Folder</label>
-      <input type="url" id="url-archive" class="url-input" placeholder="https://yoursite.sharepoint.com/...MBR%20Archive">
+      <input type="url" id="url-archive" class="url-input" value="https://pmicloud.sharepoint.com/teams/MSCopilotStudioWorkshop-ITLT-Global/Shared%20Documents/General/MBR%20Archive">
     </div>
     <div class="url-input-group">
       <label for="url-planner-group">Planner Group ID</label>
-      <input type="text" id="url-planner-group" class="url-input" placeholder="e.g. 4e94c2eb-3fdc-47c0-8bc8-49f57d5cee82">
+      <input type="text" id="url-planner-group" class="url-input" value="eb9d38df-0809-4a2f-9fc7-e30f60d67ad9">
     </div>
   </div>
 
@@ -223,10 +223,6 @@
     <li class="step">
       <div class="step-title">Create a new agent</div>
       <p>Click <strong>+ Create</strong> → <strong>New agent</strong>.</p>
-    </li>
-    <li class="step">
-      <div class="step-title">Skip to configuration</div>
-      <p>Click <strong>"Skip to configuration"</strong> at the bottom.</p>
     </li>
     <li class="step">
       <div class="step-title">Fill in agent details</div>
@@ -358,13 +354,18 @@ WHEN INPUT FILES ARE MISSING
   <ol class="steps">
     <li class="step">
       <div class="step-title">Add MBR Input knowledge</div>
-      <p>Scroll to <strong>Knowledge</strong> → click <strong>+ Add knowledge</strong>. Select <strong>SharePoint</strong> → paste the link to your <strong>MBR Input</strong> folder → confirm.</p>
+      <p>Scroll to <strong>Knowledge</strong> → click <strong>+ Add knowledge</strong>. Select <strong>SharePoint</strong> → click <strong>Browse items</strong> → find your SharePoint site in the list → navigate to the <strong>MBR Input</strong> folder → select it and confirm.</p>
     </li>
     <li class="step">
       <div class="step-title">Add MBR Output knowledge</div>
-      <p>Click <strong>+ Add knowledge</strong> again → paste the link to your <strong>MBR Output</strong> folder → confirm.</p>
+      <p>Click <strong>+ Add knowledge</strong> again → <strong>SharePoint</strong> → <strong>Browse items</strong> → select the <strong>MBR Output</strong> folder → confirm.</p>
     </li>
   </ol>
+
+  <div class="callout tip">
+    <div class="callout-title">💡 Tip — "In progress" stuck?</div>
+    If a knowledge source shows "in progress" for more than a minute, open Copilot Studio in a <strong>new browser tab</strong>. The new tab will typically show the knowledge as "Ready" — it's a browser caching issue, not an actual problem.
+  </div>
 
   <h2>Save the Agent</h2>
   <p>Click <strong>Save</strong> at the top. Don't publish yet — we need to add the flows and topic first.</p>
@@ -417,7 +418,7 @@ WHEN INPUT FILES ARE MISSING
           <li>Create a SharePoint connection if you haven't already</li>
           <li>Select your <strong>Site Address</strong> from the dropdown</li>
           <li>Set <strong>Library Name</strong> to <code class="copyable">Documents</code></li>
-          <li>Expand <strong>Advanced parameters</strong> → in <strong>Limit Entries to Folder</strong>, browse to or type <code class="copyable">/Shared Documents/MBR Input</code></li>
+          <li>Expand <strong>Advanced parameters</strong> → in <strong>Limit Entries to Folder</strong>, browse to or type <code class="copyable">/Shared Documents/General/MBR Input</code></li>
           <li><em>⚠️ Tip: If you can't find the SharePoint action, check <strong>See more</strong> for additional connectors.</em></li>
         </ul>
       </td></tr>
@@ -476,7 +477,7 @@ WHEN INPUT FILES ARE MISSING
       <tr><td>2</td><td><strong>SharePoint — Create file</strong></td><td>
         <ul>
           <li>Site: your SharePoint site</li>
-          <li>Folder path: <code class="copyable">Shared Documents/MBR Output</code></li>
+          <li>Folder path: <code class="copyable">Shared Documents/General/MBR Output</code></li>
           <li>File name: click <strong>fx</strong> → paste: <code class="copyable">concat('MBR-Report-', formatDateTime(utcNow(), 'yyyy-MM'), '.md')</code></li>
           <li><strong>File Content</strong>: click in the field → select the ⚡ lightning bolt (dynamic content) icon → under the trigger step, select <strong>ReportContent</strong></li>
         </ul>
@@ -495,7 +496,7 @@ WHEN INPUT FILES ARE MISSING
 
   <div class="callout checkpoint">
     <div class="callout-title">✅ Checkpoint</div>
-    You can't easily test this flow standalone (it needs text input from the agent), but verify it saved without errors. You'll test it end-to-end after wiring everything together.
+    You can't easily test this flow standalone (it needs text input from the agent), but verify it saved without errors. Click <strong>Test</strong> → <strong>Manually</strong> → enter any text as <code>ReportContent</code> → <strong>Run flow</strong>. Check that a file appears in your MBR Output folder on SharePoint.
   </div>
 
   <div class="what-happened">
@@ -548,7 +549,7 @@ WHEN INPUT FILES ARE MISSING
 
   <div class="callout checkpoint">
     <div class="callout-title">✅ Checkpoint</div>
-    Verify the flow saved without errors. You'll test it end-to-end with the agent later.
+    Test the flow: click <strong>Test</strong> → <strong>Manually</strong> → enter any text for <code>ReportLink</code> and <code>ReportSummary</code> → <strong>Run flow</strong>. Check your inbox — you should receive the email.
   </div>
 
   <div class="what-happened">
@@ -634,21 +635,26 @@ WHEN INPUT FILES ARE MISSING
     </li>
     <li class="step">
       <div class="step-title">Add Check Input flow</div>
-      <p>Click <strong>+ Add a tool</strong> → search for <code class="copyable">Check Input MBR (Agent)</code> → add it.</p>
+      <p>Click <strong>+ Add a tool</strong> → in the <strong>Basic tools</strong> tab, search for <code class="copyable">Check Input MBR (Agent)</code> → add it.</p>
     </li>
     <li class="step">
       <div class="step-title">Add Save Report flow</div>
-      <p>Click <strong>+ Add a tool</strong> → search for <code class="copyable">Save MBR Report to SharePoint</code> → add it.</p>
+      <p>Click <strong>+ Add a tool</strong> → in the <strong>Basic tools</strong> tab, search for <code class="copyable">Save MBR Report to SharePoint</code> → add it.</p>
     </li>
     <li class="step">
       <div class="step-title">Add Email Report flow</div>
-      <p>Click <strong>+ Add a tool</strong> → search for <code class="copyable">Email Report to Stakeholders</code> → add it.</p>
+      <p>Click <strong>+ Add a tool</strong> → in the <strong>Basic tools</strong> tab, search for <code class="copyable">Email Report to Stakeholders</code> → add it.</p>
     </li>
     <li class="step">
       <div class="step-title">Add Planner Tasks flow</div>
-      <p>Click <strong>+ Add a tool</strong> → search for <code class="copyable">Create Planner Task from Report</code> → add it.</p>
+      <p>Click <strong>+ Add a tool</strong> → in the <strong>Basic tools</strong> tab, search for <code class="copyable">Create Planner Task from Report</code> → add it.</p>
     </li>
   </ol>
+
+  <div class="callout tip">
+    <div class="callout-title">⚠️ Important — use the Basic tools tab</div>
+    Always add flows from the <strong>Basic tools</strong> tab, not the "Tool" tab. Adding from the "Tool" tab can cause flows to disappear or inputs not to appear correctly. If a flow doesn't show in Basic tools, go to <strong>Flows</strong> → open the flow → <strong>Save draft</strong> → <strong>Publish</strong> → return and try again.
+  </div>
 
   <div class="callout checkpoint">
     <div class="callout-title">✅ Checkpoint</div>
@@ -665,6 +671,8 @@ WHEN INPUT FILES ARE MISSING
 <section class="workshop-section" id="topic">
 
   <h1>4. Create the "Generate Monthly Report" Topic</h1>
+
+  <p><strong>Topic Name:</strong> <code class="copyable">Generate Monthly Report</code></p>
 
   <div class="callout context">
     <div class="callout-title">📘 Context</div>
@@ -715,7 +723,7 @@ WHEN INPUT FILES ARE MISSING
         <pre><code>Create the consolidated monthly report following your instructions. Use all stream reports and the previous report from the MBR Input folder.</code></pre>
       </div>
       <ul>
-        <li>Click <strong>Edit</strong> on Data sources → make sure your MBR Input SharePoint knowledge is selected</li>
+        <li>Click <strong>Edit</strong> on Data sources → make sure your MBR Input SharePoint knowledge is selected → toggle on <strong>"Search only selected sources"</strong></li>
         <li>Expand the <strong>Advanced</strong> section on the right-hand properties panel → set <strong>Save LLM response</strong> to <strong>Complete (recommended)</strong></li>
         <li>Click on <strong>Save bot response</strong> and save as the variable <code class="copyable">ReportOutput</code></li>
       </ul>
@@ -809,6 +817,12 @@ You can ask me follow-up questions about the report content.</code></pre>
   </div>
 
   <h2>Run the Agent</h2>
+
+  <div class="callout tip">
+    <div class="callout-title">⚠️ Consent Prompts</div>
+    The first time you test, the agent will ask you to <strong>"Allow"</strong> connections to SharePoint, Outlook, and Planner. This is normal — click <strong>Allow</strong> for each one. These are one-time consent prompts so the agent can use the flows you built. You may see up to 3 prompts.
+  </div>
+
   <ol class="steps">
     <li class="step">
       <div class="step-title">Open the test pane</div>
@@ -995,6 +1009,11 @@ You can ask me follow-up questions about the report content.</code></pre>
     <div class="url-widget-row">
       <span class="url-widget-label">MBR Archive</span>
       <span class="url-widget-value" id="widget-archive" data-source="url-archive">Not set</span>
+      <button class="url-widget-copy" title="Copy">Copy</button>
+    </div>
+    <div class="url-widget-row">
+      <span class="url-widget-label">Group ID</span>
+      <span class="url-widget-value" id="widget-planner-group" data-source="url-planner-group">Not set</span>
       <button class="url-widget-copy" title="Copy">Copy</button>
     </div>
   </div>
