@@ -292,7 +292,7 @@ Create another new **Agent flow** in Copilot Studio (**Actions**).
 | Step | What to Search | Configuration |
 |------|-------------|---------------|
 | 1 | **When an agent calls the flow** (trigger) | Click **+ Add an input** → Text → name: `ReportContent` |
-| 2 | **SharePoint — Create file** | Site: your SharePoint site. Folder path: `Shared Documents/MBR Output`. File name: click **fx** → `concat('MBR-Report-', formatDateTime(utcNow(), 'yyyy-MM'), '.md')`. For **File Content**: click in the field, then select the ⚡ lightning bolt (dynamic content) icon → under the trigger step, select **ReportContent**. This passes the agent's generated report text into the file. |
+| 2 | **SharePoint — Create file** | Site: your SharePoint site. Folder path: `Shared Documents/MBR Output`. File name: click **fx** → `concat('MBR-Report-', formatDateTime(utcNow(), 'yyyy-MM'), '-', guid(), '.md')`. For **File Content**: click in the field, then select the ⚡ lightning bolt (dynamic content) icon → under the trigger step, select **ReportContent**. This passes the agent's generated report text into the file. |
 | 3 | **Respond to the agent** | Click **+ Add an output** → **Text** → name: `FileLink`. For the value: click in the value field, then click the ⚡ lightning bolt (dynamic content) icon. Look under the **Create file** step → click **See more** if needed → select **body/Path**. This returns the SharePoint file path so the agent can share it with the user. |
 
 Click **Save**.
@@ -300,7 +300,7 @@ Click **Save**.
 ### ✅ Checkpoint
 You can't easily test this flow standalone (it needs text input from the agent), but verify it saved without errors. You'll test it end-to-end after wiring everything together.
 
-> **What just happened:** You built the flow that turns the agent's AI-generated text into a permanent document. The file name includes the year and month (`MBR-Report-2026-04.md`) so each month's report is kept in MBR Output as a running archive.
+> **What just happened:** You built the flow that turns the agent's AI-generated text into a permanent document. The file name includes the year, month, and a unique identifier (`MBR-Report-2026-04-a1b2c3d4.md`) so each report is unique and kept in MBR Output as a running archive.
 
 ---
 
