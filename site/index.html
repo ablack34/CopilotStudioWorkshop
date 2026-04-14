@@ -52,7 +52,7 @@
         <li><a href="#a6-save-flow">A6. Save Report Flow</a></li>
         <li><a href="#a6b-email">A6b. Email Report Flow</a></li>
         <li><a href="#a6c-planner">A6c. Planner Tasks Flow</a></li>
-        <li><a href="#a7-actions">A7. Add Tools</a></li>
+        <li><a href="#a7-Flows">A7. Add Tools</a></li>
         <li><a href="#a8-topic">A8. Create Topic</a></li>
       </ul>
     </li>
@@ -498,7 +498,7 @@ WHEN INPUT FILES ARE MISSING
     Before the agent generates a report, it needs to verify that all 5 stream reports have been uploaded. The agent can't count files in SharePoint on its own — it needs a flow to do that. This small flow checks the folder and returns the file count to the agent.
   </div>
 
-  <p>In <strong>Copilot Studio</strong>, go to <strong>Actions</strong> and create a new <strong>Agent flow</strong>.</p>
+  <p>In <strong>Copilot Studio</strong>, got to <strong>Flows</strong> and create a new <strong>Agent flow</strong>.</p>
 
   <h3>Flow Name: <code class="copyable">Check Input MBR (Agent)</code></h3>
 
@@ -557,7 +557,7 @@ WHEN INPUT FILES ARE MISSING
     After the agent generates the report, it needs to save it as a Word document in SharePoint. Again, the agent can't write files on its own — it needs a flow. This flow takes the report text, creates a Word document, and returns the SharePoint link.
   </div>
 
-  <p>Create another new <strong>Agent flow</strong> in Copilot Studio (<strong>Actions</strong>).</p>
+  <p>Create another new <strong>Agent flow</strong> in Copilot Studio (<strong>Flows</strong>).</p>
 
   <h3>Flow Name: <code class="copyable">Save MBR Report to SharePoint</code></h3>
 
@@ -608,7 +608,7 @@ WHEN INPUT FILES ARE MISSING
     After the agent generates and saves a report, stakeholders need to know it's ready. This flow sends an email with the report link and a brief summary — so nobody has to manually chase people or forward documents.
   </div>
 
-  <p>In <strong>Copilot Studio</strong>, go to <strong>Actions</strong> and create a new <strong>Agent flow</strong>.</p>
+  <p>In <strong>Copilot Studio</strong>, got to <strong>Flows</strong> and create a new <strong>Agent flow</strong>.</p>
 
   <h3>Flow Name: <code class="copyable">Email Report to Stakeholders</code></h3>
 
@@ -661,7 +661,7 @@ WHEN INPUT FILES ARE MISSING
     <strong>Pre-requisite:</strong> You need a Planner plan. Go to <a href="https://tasks.office.com" target="_blank" rel="noopener">tasks.office.com</a> → create a new plan called <code class="copyable">MBR Action Items</code> with a bucket called <code class="copyable">From Report</code>.
   </div>
 
-  <p>In <strong>Copilot Studio</strong>, go to <strong>Actions</strong> and create a new <strong>Agent flow</strong>.</p>
+  <p>In <strong>Copilot Studio</strong>, got to <strong>Flows</strong> and create a new <strong>Agent flow</strong>.</p>
 
   <h3>Flow Name: <code class="copyable">Create Planner Task from Report</code></h3>
 
@@ -705,7 +705,7 @@ WHEN INPUT FILES ARE MISSING
   </div>
 
   <!-- A7 -->
-  <h2 id="a7-actions">A7. Add All Flows as Tools in the Agent</h2>
+  <h2 id="a7-Flows">A7. Add All Flows as Tools in the Agent</h2>
   <ol class="steps">
     <li class="step">
       <div class="step-title">Open your agent</div>
@@ -743,7 +743,7 @@ WHEN INPUT FILES ARE MISSING
 
   <div class="callout context">
     <div class="callout-title">📘 Context</div>
-    This is where everything comes together. The topic is the agent's decision tree — when a user says "Generate report", the topic orchestrates: check files → generate report → save document → return link. It's the conductor that coordinates the AI brain with the flow-based actions.
+    This is where everything comes together. The topic is the agent's decision tree — when a user says "Generate report", the topic orchestrates: check files → generate report → save document → return link. It's the conductor that coordinates the AI brain with the flow-based Flows.
   </div>
 
   <ol class="steps">
@@ -848,7 +848,7 @@ WHEN INPUT FILES ARE MISSING
   </div>
 
   <div class="what-happened">
-    <strong>What just happened:</strong> You connected the AI brain (generative answers) with the mechanical arms (check flow + save flow) through a decision tree (topic). The user says one thing — "Generate report" — and the agent coordinates everything: verification, analysis, document creation, and feedback. This is the core pattern of agentic automation: AI + actions + orchestration.
+    <strong>What just happened:</strong> You connected the AI brain (generative answers) with the mechanical arms (check flow + save flow) through a decision tree (topic). The user says one thing — "Generate report" — and the agent coordinates everything: verification, analysis, document creation, and feedback. This is the core pattern of agentic automation: AI + Flows + orchestration.
   </div>
 
   <details class="troubleshooting">
@@ -893,7 +893,7 @@ WHEN INPUT FILES ARE MISSING
     <strong>Where it fits:</strong> After the reminder emails go out and before the agent runs. This is the bridge between human action (uploading) and AI action (generating).
   </div>
 
-  <p>In <strong>Copilot Studio</strong>, go to <strong>Actions</strong> and create a new <strong>Agent flow</strong>.</p>
+  <p>In <strong>Copilot Studio</strong>, got to <strong>Flows</strong> and create a new <strong>Agent flow</strong>.</p>
 
   <h3>Flow Name: <code class="copyable">Monitor MBR Input and Notify</code></h3>
 
@@ -949,7 +949,7 @@ WHEN INPUT FILES ARE MISSING
   </div>
 
   <div class="what-happened">
-    <strong>What just happened:</strong> You created an event-driven automation. Unlike the scheduled Preparation Flow, this one reacts in real-time to user actions. Every upload triggers a check. This pattern — "watch and wait, then act" — is fundamental to workflow automation. It replaces the human habit of periodically checking "is it ready yet?"
+    <strong>What just happened:</strong> You created an event-driven automation. Unlike the scheduled Preparation Flow, this one reacts in real-time to user Flows. Every upload triggers a check. This pattern — "watch and wait, then act" — is fundamental to workflow automation. It replaces the human habit of periodically checking "is it ready yet?"
   </div>
 
   <!-- B2 -->
@@ -1334,22 +1334,22 @@ PMO Automated Reporting</div>
   <div class="url-widget-body" id="url-widget-body">
     <div class="url-widget-row">
       <span class="url-widget-label">Site Address</span>
-      <span class="url-widget-value" id="widget-site" data-source="url-site">Not set</span>
+      <span class="url-widget-value" id="widget-site" data-source="url-site">https://m365x83025535.sharepoint.com/sites/PMIFrontier/</span>
       <button class="url-widget-copy" title="Copy">Copy</button>
     </div>
     <div class="url-widget-row">
       <span class="url-widget-label">MBR Input</span>
-      <span class="url-widget-value" id="widget-input" data-source="url-input">Not set</span>
+      <span class="url-widget-value" id="widget-input" data-source="url-input">https://yoursite.sharepoint.com/...MBR%20Input</span>
       <button class="url-widget-copy" title="Copy">Copy</button>
     </div>
     <div class="url-widget-row">
       <span class="url-widget-label">MBR Output</span>
-      <span class="url-widget-value" id="widget-output" data-source="url-output">Not set</span>
+      <span class="url-widget-value" id="widget-output" data-source="url-output">https://yoursite.sharepoint.com/...MBR%20Output</span>
       <button class="url-widget-copy" title="Copy">Copy</button>
     </div>
     <div class="url-widget-row">
       <span class="url-widget-label">MBR Archive</span>
-      <span class="url-widget-value" id="widget-archive" data-source="url-archive">Not set</span>
+      <span class="url-widget-value" id="widget-archive" data-source="url-archive">https://yoursite.sharepoint.com/...MBR%20Archive</span>
       <button class="url-widget-copy" title="Copy">Copy</button>
     </div>
   </div>
