@@ -190,7 +190,7 @@
     <tbody>
       <tr><td><strong>MBR Input</strong></td><td>Stream leads upload here. Agent reads from here. Cleared monthly.</td></tr>
       <tr><td><strong>MBR Output</strong></td><td>Agent saves completed reports here. Never cleared — serves as report archive.</td></tr>
-      <tr><td><strong>MBR Archive</strong></td><td>Preparation Flow moves old input files here (in dated subfolders like <code>2026-03</code>).</td></tr>
+      <tr><td><strong>MBR Archive</strong></td><td>Preparation Flow moves old input files here (in dated subfolders like <code class="copyable">2026-03</code>).</td></tr>
     </tbody>
   </table>
 
@@ -297,12 +297,12 @@
   <table>
     <thead><tr><th>File</th><th>Stream</th></tr></thead>
     <tbody>
-      <tr><td><code>UX_March2026.docx</code></td><td>UX</td></tr>
-      <tr><td><code>FrontendDev_March2026.docx</code></td><td>Frontend Development</td></tr>
-      <tr><td><code>BackendDev_March2026.docx</code></td><td>Backend Development</td></tr>
-      <tr><td><code>Integration_March2026.docx</code></td><td>Integrations</td></tr>
-      <tr><td><code>Testing_March2026.docx</code></td><td>Testing</td></tr>
-      <tr><td><code>Previous-Report-February-2026.docx</code></td><td>Previous month's consolidated report</td></tr>
+      <tr><td><code class="copyable">UX_March2026.docx</code></td><td>UX</td></tr>
+      <tr><td><code class="copyable">FrontendDev_March2026.docx</code></td><td>Frontend Development</td></tr>
+      <tr><td><code class="copyable">BackendDev_March2026.docx</code></td><td>Backend Development</td></tr>
+      <tr><td><code class="copyable">Integration_March2026.docx</code></td><td>Integrations</td></tr>
+      <tr><td><code class="copyable">Testing_March2026.docx</code></td><td>Testing</td></tr>
+      <tr><td><code class="copyable">Previous-Report-February-2026.docx</code></td><td>Previous month's consolidated report</td></tr>
     </tbody>
   </table>
 
@@ -367,7 +367,7 @@
 
   <div class="code-block">
     <button class="copy-btn">Copy</button>
-<pre><code>ROLE
+<pre><code class="copyable">ROLE
 You are a project reporting analysis agent for a multi-stream application development program.
 
 GOAL
@@ -545,7 +545,7 @@ WHEN INPUT FILES ARE MISSING
   <details class="troubleshooting">
     <summary>⚠️ Troubleshooting</summary>
     <div class="troubleshooting-content">
-      <p>If the flow fails when the folder is empty, the <code>length()</code> expression may be receiving null. This is expected — the agent's topic will handle the "0 files" case gracefully.</p>
+      <p>If the flow fails when the folder is empty, the <code class="copyable">length()</code> expression may be receiving null. This is expected — the agent's topic will handle the "0 files" case gracefully.</p>
     </div>
   </details>
 
@@ -597,7 +597,7 @@ WHEN INPUT FILES ARE MISSING
   </div>
 
   <div class="what-happened">
-    <strong>What just happened:</strong> You built the flow that turns the agent's AI-generated text into a permanent document. The file name includes the year and month (<code>MBR-Report-2026-04.md</code>) so each month's report is kept in MBR Output as a running archive.
+    <strong>What just happened:</strong> You built the flow that turns the agent's AI-generated text into a permanent document. The file name includes the year and month (<code class="copyable">MBR-Report-2026-04.md</code>) so each month's report is kept in MBR Output as a running archive.
   </div>
 
   <!-- A6b -->
@@ -625,9 +625,9 @@ WHEN INPUT FILES ARE MISSING
         <ul>
           <li><strong>To:</strong> your email address (or a distribution list)</li>
           <li><strong>Subject:</strong> <code class="copyable">Monthly Business Report — Ready for Review</code></li>
-          <li><strong>Body:</strong> Type <code>The consolidated monthly report has been generated and saved to SharePoint.</code></li>
-          <li>Press Enter, type <code>Link: </code> then click ⚡ → select <strong>ReportLink</strong></li>
-          <li>Press Enter, type <code>Summary: </code> then click ⚡ → select <strong>ReportSummary</strong></li>
+          <li><strong>Body:</strong> Type <code class="copyable">The consolidated monthly report has been generated and saved to SharePoint.</code></li>
+          <li>Press Enter, type <code class="copyable">Link: </code> then click ⚡ → select <strong>ReportLink</strong></li>
+          <li>Press Enter, type <code class="copyable">Summary: </code> then click ⚡ → select <strong>ReportSummary</strong></li>
         </ul>
       </td></tr>
       <tr><td>3</td><td><strong>Respond to the agent</strong></td><td>
@@ -658,7 +658,7 @@ WHEN INPUT FILES ARE MISSING
     <div class="callout-title">📘 Context</div>
     The monthly report often surfaces action items — open risks, unresolved blockers, and leadership asks. This flow lets the agent create follow-up tasks in Microsoft Planner so nothing falls through the cracks.
     <br><br>
-    <strong>Pre-requisite:</strong> You need a Planner plan. Go to <a href="https://tasks.office.com" target="_blank" rel="noopener">tasks.office.com</a> → create a new plan called <code>MBR Action Items</code> with a bucket called <code>From Report</code>.
+    <strong>Pre-requisite:</strong> You need a Planner plan. Go to <a href="https://tasks.office.com" target="_blank" rel="noopener">tasks.office.com</a> → create a new plan called <code class="copyable">MBR Action Items</code> with a bucket called <code class="copyable">From Report</code>.
   </div>
 
   <p>In <strong>Copilot Studio</strong>, go to <strong>Actions</strong> and create a new <strong>Agent flow</strong>.</p>
@@ -756,7 +756,7 @@ WHEN INPUT FILES ARE MISSING
       <p>Keep trigger as <strong>"The agent chooses"</strong>. Click <strong>Edit</strong> on the trigger → in <strong>"Describe what the topic does"</strong>, paste:</p>
       <div class="code-block">
         <button class="copy-btn">Copy</button>
-        <pre><code>Checks if all 5 stream reports are uploaded to the MBR Input folder and generates the consolidated monthly report if they are present.</code></pre>
+        <pre><code class="copyable">Checks if all 5 stream reports are uploaded to the MBR Input folder and generates the consolidated monthly report if they are present.</code></pre>
       </div>
       <p>Click <strong>Save</strong> on the trigger.</p>
     </li>
@@ -765,10 +765,10 @@ WHEN INPUT FILES ARE MISSING
   <p>Now build the canvas step by step:</p>
 
   <h3>Node 1: Check the files</h3>
-  <p>Click <strong>+</strong> below the trigger → <strong>Add a tool</strong> → select <strong>Check Input MBR (Agent)</strong>. This returns the <code>FileCount</code> variable.</p>
+  <p>Click <strong>+</strong> below the trigger → <strong>Add a tool</strong> → select <strong>Check Input MBR (Agent)</strong>. This returns the <code class="copyable">FileCount</code> variable.</p>
 
   <h3>Node 2: Decision</h3>
-  <p>Click <strong>+</strong> → <strong>Add a node</strong> → <strong>Condition</strong>. Set: <code>FileCount</code> <strong>is greater than or equal to</strong> <code>6</code>.</p>
+  <p>Click <strong>+</strong> → <strong>Add a node</strong> → <strong>Condition</strong>. Set: <code class="copyable">FileCount</code> <strong>is greater than or equal to</strong> <code class="copyable">6</code>.</p>
 
   <h3>Node 3a: YES branch — Generate and save</h3>
   <p>In the <strong>Yes</strong> (left) branch, add these nodes in order:</p>
@@ -779,7 +779,7 @@ WHEN INPUT FILES ARE MISSING
       <p>Click + → <strong>Send a message</strong>. Text:</p>
       <div class="code-block">
         <button class="copy-btn">Copy</button>
-        <pre><code>All reports found. Generating your consolidated report now...</code></pre>
+        <pre><code class="copyable">All reports found. Generating your consolidated report now...</code></pre>
       </div>
     </li>
     <li class="step">
@@ -787,23 +787,23 @@ WHEN INPUT FILES ARE MISSING
       <p>Click + → <strong>Advanced</strong> → <strong>Generative answers</strong>. Input:</p>
       <div class="code-block">
         <button class="copy-btn">Copy</button>
-        <pre><code>Create the consolidated monthly report following your instructions. Use all stream reports and the previous report from the MBR Input folder.</code></pre>
+        <pre><code class="copyable">Create the consolidated monthly report following your instructions. Use all stream reports and the previous report from the MBR Input folder.</code></pre>
       </div>
       <p>Click <strong>Edit</strong> on Data sources → make sure your MBR Input SharePoint knowledge is selected → toggle on <strong>"Search only selected sources"</strong>.</p>
-      <p>Expand the <strong>Advanced</strong> section on the right-hand properties panel → set <strong>Save LLM response</strong> to <strong>Complete (recommended)</strong>. Click on <strong>Save bot response</strong> and save as the variable <code>ReportOutput</code>.</p>
+      <p>Expand the <strong>Advanced</strong> section on the right-hand properties panel → set <strong>Save LLM response</strong> to <strong>Complete (recommended)</strong>. Click on <strong>Save bot response</strong> and save as the variable <code class="copyable">ReportOutput</code>.</p>
     </li>
     <li class="step">
       <div class="step-title">Save the report</div>
-      <p>Click + → <strong>Add a tool</strong> → select <strong>Save MBR Report to SharePoint</strong>. For the <code>ReportContent</code> input, click <strong>fx</strong> (formula) and enter:</p>
+      <p>Click + → <strong>Add a tool</strong> → select <strong>Save MBR Report to SharePoint</strong>. For the <code class="copyable">ReportContent</code> input, click <strong>fx</strong> (formula) and enter:</p>
       <div class="code-block">
         <button class="copy-btn">Copy</button>
-        <pre><code>Topic.ReportOutput.Text.Content</code></pre>
+        <pre><code class="copyable">Topic.ReportOutput.Text.Content</code></pre>
       </div>
-      <p>This returns the <code>FileLink</code> variable.</p>
+      <p>This returns the <code class="copyable">FileLink</code> variable.</p>
     </li>
     <li class="step">
       <div class="step-title">Return the link</div>
-      <p>Click + → <strong>Send a message</strong>. Text: <code>Your report has been saved to SharePoint: </code> then click the <strong>{x}</strong> button in the toolbar and insert the <code>FileLink</code> variable.</p>
+      <p>Click + → <strong>Send a message</strong>. Text: <code class="copyable">Your report has been saved to SharePoint: </code> then click the <strong>{x}</strong> button in the toolbar and insert the <code class="copyable">FileLink</code> variable.</p>
     </li>
   </ol>
 
@@ -816,7 +816,7 @@ WHEN INPUT FILES ARE MISSING
   <ol class="steps">
     <li class="step">
       <div class="step-title">Send a message</div>
-      <p>Click + → <strong>Send a message</strong>. Text: <code>Only </code> then click <strong>{x}</strong> and insert <code>FileCount</code>, then continue typing: <code> file(s) found in MBR Input. Please ensure all 5 stream reports and the previous month's report are uploaded before generating the report.</code></p>
+      <p>Click + → <strong>Send a message</strong>. Text: <code class="copyable">Only </code> then click <strong>{x}</strong> and insert <code class="copyable">FileCount</code>, then continue typing: <code class="copyable"> file(s) found in MBR Input. Please ensure all 5 stream reports and the previous month's report are uploaded before generating the report.</code></p>
     </li>
   </ol>
 
@@ -824,7 +824,7 @@ WHEN INPUT FILES ARE MISSING
 
   <div class="callout checkpoint">
     <div class="callout-title">✅ Checkpoint</div>
-    Click <strong>Test your agent</strong> in the top right. Type: <code>Generate report</code>
+    Click <strong>Test your agent</strong> in the top right. Type: <code class="copyable">Generate report</code>
     <br><br>
     <strong>Expected result (with files in MBR Input):</strong>
     <ul>
@@ -841,9 +841,9 @@ WHEN INPUT FILES ARE MISSING
     <br>
     <strong>Test follow-up questions:</strong> After the report is generated, try asking:
     <ul>
-      <li><code>What are the top risks this month?</code></li>
-      <li><code>What changed since last month?</code></li>
-      <li><code>Summarise just the integrations stream</code></li>
+      <li><code class="copyable">What are the top risks this month?</code></li>
+      <li><code class="copyable">What changed since last month?</code></li>
+      <li><code class="copyable">Summarise just the integrations stream</code></li>
     </ul>
   </div>
 
@@ -859,7 +859,7 @@ WHEN INPUT FILES ARE MISSING
         <tbody>
           <tr><td>"Identifier not recognized in expression 'FileLink'"</td><td>Variable name typed as plain text</td><td>Don't type variable names as text. Use the {x} button in the message toolbar to insert variables.</td></tr>
           <tr><td>Generative answers returns empty</td><td>Knowledge source not linked</td><td>Check that the knowledge source (MBR Input SharePoint folder) is correctly linked and contains files.</td></tr>
-          <tr><td>Save flow fails</td><td>Incorrect folder path</td><td>Verify the folder path includes the <code>Shared Documents/</code> prefix.</td></tr>
+          <tr><td>Save flow fails</td><td>Incorrect folder path</td><td>Verify the folder path includes the <code class="copyable">Shared Documents/</code> prefix.</td></tr>
         </tbody>
       </table>
     </div>
@@ -1018,7 +1018,7 @@ WHEN INPUT FILES ARE MISSING
           <li>Current Site Address: your site</li>
           <li><strong>File to Copy:</strong> click <strong>fx</strong> → paste: <code class="copyable">last(body('Get_output_files')?['value'])?['{Identifier}']</code></li>
           <li><strong>Destination Folder:</strong> <code class="copyable">Shared Documents/MBR Input</code></li>
-          <li><strong>If another file is already there:</strong> <code>Replace</code></li>
+          <li><strong>If another file is already there:</strong> <code class="copyable">Replace</code></li>
         </ul>
       </td></tr>
       <tr><td>7</td><td><strong>Office 365 Outlook — Send an email (V2)</strong></td><td>
@@ -1073,8 +1073,8 @@ PMO Automated Reporting</div>
     <table>
       <thead><tr><th>Check</th><th>Expected</th></tr></thead>
       <tbody>
-        <tr><td>MBR Archive</td><td>New subfolder named with current year-month (e.g., <code>2026-04</code>) containing the files that were in MBR Input</td></tr>
-        <tr><td>MBR Input</td><td>Contains <strong>only</strong> <code>Previous-Report.docx</code> (copied from MBR Output)</td></tr>
+        <tr><td>MBR Archive</td><td>New subfolder named with current year-month (e.g., <code class="copyable">2026-04</code>) containing the files that were in MBR Input</td></tr>
+        <tr><td>MBR Input</td><td>Contains <strong>only</strong> <code class="copyable">Previous-Report.docx</code> (copied from MBR Output)</td></tr>
         <tr><td>MBR Output</td><td>Unchanged — files still there (we copy, not move)</td></tr>
         <tr><td>Your inbox</td><td>Reminder email received with correct content and working folder link</td></tr>
       </tbody>
@@ -1092,9 +1092,9 @@ PMO Automated Reporting</div>
         <thead><tr><th>Error</th><th>Cause</th><th>Fix</th></tr></thead>
         <tbody>
           <tr><td>"File name too long" on Move file</td><td>The "File to Move" field contains the entire JSON object instead of just the file path</td><td>Delete the value and select <strong>Identifier</strong> from dynamic content — not "Body"</td></tr>
-          <tr><td>"Destination not found" on Move file</td><td>Path is missing <code>Shared Documents/</code></td><td>Prefix the destination with <code>Shared Documents/</code></td></tr>
+          <tr><td>"Destination not found" on Move file</td><td>Path is missing <code class="copyable">Shared Documents/</code></td><td>Prefix the destination with <code class="copyable">Shared Documents/</code></td></tr>
           <tr><td>"Source not found" on Move file</td><td>The archive subfolder doesn't exist yet</td><td>Make sure the "Create new folder" step runs before the Apply to each loop</td></tr>
-          <tr><td>Email shows raw HTML tags</td><td>Body was entered as HTML but not rendered</td><td>Use the rich text editor toolbar to format. Insert links using the 🔗 icon, not <code>&lt;a&gt;</code> tags</td></tr>
+          <tr><td>Email shows raw HTML tags</td><td>Body was entered as HTML but not rendered</td><td>Use the rich text editor toolbar to format. Insert links using the 🔗 icon, not <code class="copyable">&lt;a&gt;</code> tags</td></tr>
           <tr><td>Copy file fails (step 6)</td><td>MBR Output is empty (no previous reports)</td><td>Expected on the very first run. Add a condition to check if MBR Output has files, or manually upload a report to MBR Output first.</td></tr>
         </tbody>
       </table>
@@ -1145,7 +1145,7 @@ PMO Automated Reporting</div>
     </li>
     <li class="step">
       <div class="step-title">Generate the report</div>
-      <p>Type: <code>Generate report</code></p>
+      <p>Type: <code class="copyable">Generate report</code></p>
     </li>
     <li class="step">
       <div class="step-title">Verify the output</div>
@@ -1165,9 +1165,9 @@ PMO Automated Reporting</div>
       <div class="step-title">Test follow-up questions</div>
       <p>Ask the agent:</p>
       <ul>
-        <li><code>What are the biggest risks?</code></li>
-        <li><code>What changed compared to last month?</code></li>
-        <li><code>Summarise the integrations stream</code></li>
+        <li><code class="copyable">What are the biggest risks?</code></li>
+        <li><code class="copyable">What changed compared to last month?</code></li>
+        <li><code class="copyable">Summarise the integrations stream</code></li>
       </ul>
     </li>
   </ol>
@@ -1195,8 +1195,8 @@ PMO Automated Reporting</div>
   <h2>Step 5: Test the Missing Files Scenario</h2>
   <ol class="steps">
     <li class="step"><div class="step-title">Clear MBR Input</div><p>After the preparation flow has cleared MBR Input (only Previous-Report.docx remains):</p></li>
-    <li class="step"><div class="step-title">Test the agent</div><p>Open the agent → type: <code>Generate report</code></p></li>
-    <li class="step"><div class="step-title">Verify error handling</div><p>The agent should say: <code>Only 1 file(s) found in MBR Input. Please ensure all 5 stream reports are uploaded.</code></p></li>
+    <li class="step"><div class="step-title">Test the agent</div><p>Open the agent → type: <code class="copyable">Generate report</code></p></li>
+    <li class="step"><div class="step-title">Verify error handling</div><p>The agent should say: <code class="copyable">Only 1 file(s) found in MBR Input. Please ensure all 5 stream reports are uploaded.</code></p></li>
   </ol>
 
   <div class="callout checkpoint">
