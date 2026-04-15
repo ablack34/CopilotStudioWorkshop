@@ -1110,6 +1110,21 @@ pre code.copyable::before { display: none; }
   margin-bottom: 0;
 }
 
+.flow-steps th.step-done-col,
+.flow-steps td.step-done-col {
+  width: 48px;
+  min-width: 48px;
+  text-align: center;
+  vertical-align: top;
+}
+
+.flow-steps td.step-done-col input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+}
+
 /* --- What just happened block --- */
 .what-happened {
   background: var(--color-bg);

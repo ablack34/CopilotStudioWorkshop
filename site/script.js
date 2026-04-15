@@ -235,3 +235,33 @@ function downloadAllFiles() {
     }, i * 300);
   });
 }
+
+// --- Step Table Done Checkboxes ---
+(function () {
+  'use strict';
+
+  document.querySelectorAll('table').forEach(function (table) {
+    var firstTh = table.querySelector('thead tr th:first-child');
+    if (!firstTh || firstTh.textContent.trim() !== 'Step') return;
+
+    // Add header cell as second column
+    var th = document.createElement('th');
+    th.className = 'step-done-col';
+    th.textContent = 'Done';
+    firstTh.after(th);
+
+    // Add checkbox to each body row as second cell
+    table.querySelectorAll('tbody tr').forEach(function (row) {
+      var td = document.createElement('td');
+      td.className = 'step-done-col';
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.setAttribute('aria-label', 'Mark step done');
+      cb.addEventListener('change', function () {
+        row.style.opacity = cb.checked ? '0.33' : '';
+      });
+      td.appendChild(cb);
+      row.cells[0].after(td);
+    });
+  });
+})();
